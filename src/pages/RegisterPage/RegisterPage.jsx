@@ -1,6 +1,6 @@
 const RegisterPage = () => {
   return (
-    <div>RegisterPage</div>
+    <div style={{backgroundColor: 'red'}}>RegisterPage</div>
   )
 }
 

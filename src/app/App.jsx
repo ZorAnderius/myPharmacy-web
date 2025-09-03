@@ -1,10 +1,14 @@
+
 import "./App.css";
+import { router } from "./routes";
+import { RouterProvider } from "react-router-dom";
 
 function App() {
   return (
-    <>
-      <h1>Pharmacy project</h1>
-    </>
+      <RouterProvider
+        router={router}
+        hydrateFallbackElement={<div>Loading app...</div>}
+      />
   );
 }
 
