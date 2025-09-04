@@ -8,13 +8,12 @@ import Loader from "../features/Loader/Loader";
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const [token, setToken] = useState("token");
 
   useEffect(() => {
     const initAuth = async () => {
       try {
-        const token2 = await refreshToken();
-        if (!token2) setToken("No token");
+         await refreshToken();
+
       } catch (err) {
         console.error("Refresh failed on mount:", err);
       } finally {
@@ -33,7 +32,6 @@ function App() {
         router={router}
         hydrateFallbackElement={<div>Loading app...</div>}
       />
-      <div>{token}</div>
     </>
   );
 }

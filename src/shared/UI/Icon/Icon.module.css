@@ -1,0 +1,12 @@
+svg {
+  flex-shrink: 0;
+}
+
+.pharmacy {
+  fill: currentColor;
+}
+
+svg use {
+  width: 100%;
+  height: 100%;
+}

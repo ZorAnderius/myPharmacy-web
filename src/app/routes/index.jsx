@@ -1,45 +1,78 @@
 import { createBrowserRouter } from "react-router-dom";
 import SharedLayout from "../../pages/SharedLayout/SharedLayout";
 import NotFoundPage from "../../pages/NotFoundPage/NotFoundPage";
+import { ROUTES } from "../../constants/routes";
 
-const HomePage = () =>
-  import("../../pages/HomePage/HomePage").then((mod) => ({
-    Component: mod.default,
-  }));
+const HomePage = async () => {
+  try {
+    const mod = await import("../../pages/HomePage/HomePage");
+    return { Component: mod.default };
+  } catch (err) {
+    console.error("Error loading HomePage:", err);
+    throw err;
+  }
+};
 
-const RegisterPage = () =>
-  import("../../pages/RegisterPage/RegisterPage").then((mod) => ({
-    Component: mod.default,
-  }));
+const RegisterPage = async () => {
+  try {
+    const mod = await import("../../pages/RegisterPage/RegisterPage");
+    return { Component: mod.default };
+  } catch (err) {
+    console.error("Error loading RegisterPage:", err);
+    throw err;
+  }
+};
 
-const LoginPage = async () =>
-  {try {
+const LoginPage = async () => {
+  try {
     const mod = await import("../../pages/LoginPage/LoginPage");
     return { Component: mod.default };
   } catch (err) {
-    console.error("Помилка при завантаженні LoginPage:", err);
-    throw err; // важливо! інакше router подумає, що все ок
-  }};
+    console.error("Error loading LoginPage:", err);
+    throw err;
+  }
+};
 
-const ShopPage = () =>
-  import("../../pages/ShopPage/ShopPage").then((mod) => ({
-    Component: mod.default,
-  }));
+const ShopPage = async () => {
+  try {
+    const mod = await import("../../pages/ShopPage/ShopPage");
+    return { Component: mod.default };
+  } catch (err) {
+    console.error("Error loading ShopPage:", err);
+    throw err;
+  }
+};
 
-const CreateShopPage = () =>
-  import("../../pages/CreateShopPage/CreateShopPage").then((mod) => ({
-    Component: mod.default,
-  }));
+const CreateShopPage = async () => {
+  try {
+    const mod = await import("../../pages/CreateShopPage/CreateShopPage");
+    return { Component: mod.default };
+  } catch (err) {
+    console.error("Error loading CreateShopPage:", err);
+    throw err;
+  }
+};
 
-const EditShopPage = () =>
-  import("../../pages/EditShopPage/EditShopPage").then((mod) => ({
-    Component: mod.default,
-  }));
+const EditShopPage = async () => {
+  try {
+    const mod = await import("../../pages/EditShopPage/EditShopPage");
+    return { Component: mod.default };
+  } catch (err) {
+    console.error("Error loading EditShopPage:", err);
+    throw err;
+  }
+};
 
-const MedicinePage = () =>
-  import("../../pages/MedicinePage/MedicinePage").then((mod) => ({
-    Component: mod.default,
-  }));
+const MedicinePage = async () => {
+  try {
+    const mod = await import("../../pages/MedicinePage/MedicinePage");
+    return { Component: mod.default };
+  } catch (err) {
+    console.error("Error loading MedicinePage:", err);
+    throw err;
+  }
+};
+
 
 export const router = createBrowserRouter([
   {
@@ -48,12 +81,12 @@ export const router = createBrowserRouter([
     errorElement: <NotFoundPage />,
     children: [
       { index: true, lazy: HomePage },
-      { path: "register", lazy: RegisterPage },
-      { path: "login", lazy: LoginPage },
-      { path: "shop", lazy: ShopPage },
-      { path: "shop/create", lazy: CreateShopPage },
-      { path: "shop/edit/:id", lazy: EditShopPage },
-      { path: "medicine/:id", lazy: MedicinePage },
+      { path: ROUTES.REGISTER, lazy: RegisterPage },
+      { path: ROUTES.LOGIN, lazy: LoginPage },
+      { path: ROUTES.SHOP, lazy: ShopPage },
+      { path: ROUTES.CREATE_SHOP, lazy: CreateShopPage },
+      { path: ROUTES.EDIT_SHOP, lazy: EditShopPage },
+      { path: ROUTES.MEDICINE, lazy: MedicinePage },
     ],
     loader: () => new Promise((res) => setTimeout(res, 500)),
   },

@@ -1,0 +1,18 @@
+.logo-container {
+  display: flex;
+  align-items:center;
+
+  gap: 1rem;
+  line-height: 1;
+  letter-spacing: -1.12px;
+  color: var(--whote-clr);
+}
+
+.logo {
+  color: var(--primary-clr);
+}
+
+.logo-home{
+  font-weight: 800;
+  color: var(--secondary-txt-clr);
+}

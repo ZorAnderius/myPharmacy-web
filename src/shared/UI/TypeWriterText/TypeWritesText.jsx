@@ -69,7 +69,6 @@ const TypeWriterText = ({
     delay,
     thinkingPause,
   ]);
-  console.log(`${styles["typewriter"]} ${styles[style]})`);
   return (
     <span className={styles["typewriter"]} >
       {currentText}

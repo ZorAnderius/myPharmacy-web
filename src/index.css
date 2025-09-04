@@ -1,5 +1,14 @@
 @import "modern-normalize";
 
+@font-face {
+  font-family: 'Open Sans';
+  src: url('/fonts/OpenSans-Regular.woff2') format('woff2'),
+    url('/fonts/OpenSans-Regular.woff') format('woff'),
+    url('/fonts/OpenSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
 :root {
   --primary-clr: #22c55e;
   --white-clr: white;
@@ -19,4 +28,12 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+}
+
+ul{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
 }

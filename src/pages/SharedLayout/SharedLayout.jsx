@@ -1,5 +1,8 @@
 import Header from "../../widgets/Header/Header";
 import AnimatedRoutes from "../../app/routes/AnimatedRouter";
+import { useLocation } from "react-router-dom";
+import { ROUTES } from "../../constants/routes";
+import styles from "./SharedLayout.module.css";
 
 const pageVariants = {
   initial: { opacity: 0, x: 50 },
@@ -8,8 +11,10 @@ const pageVariants = {
 };
 
 const SharedLayout = () => {
+  const location = useLocation();
+  const isHome = location.pathname === ROUTES.MAIN;
   return (
-    <div className="layout-wrapper">
+    <div className={isHome ? styles["home-bg"] : ""}>
       <Header />
       <main style={{ flex: 1 }}>
         <AnimatedRoutes />

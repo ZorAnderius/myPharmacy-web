@@ -1,0 +1,32 @@
+.routes-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.link-btn {
+  display: flex;
+  padding: 15px 20px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  color: inherit;
+  border: 1px solid var(--white-clr);
+  transition: border var(--transition-time) var(--transition-func);
+}
+
+.active-btn,
+.link-btn:is(:hover, :focus) {
+  border-color: var(--primary-clr);
+   box-shadow: 0 4px 15px var(--box-shadow-clr);
+}
+
+.home > li > * {
+  border-color: var(--border-home-clr);
+
+  &:is(:hover, :focus){
+    border-color: var(--input-line-clr);
+  }
+}
