@@ -12,10 +12,14 @@ const RegisterPage = () =>
     Component: mod.default,
   }));
 
-const LoginPage = () =>
-  import("../../pages/LoginPage/LoginPage").then((mod) => ({
-    Component: mod.default,
-  }));
+const LoginPage = async () =>
+  {try {
+    const mod = await import("../../pages/LoginPage/LoginPage");
+    return { Component: mod.default };
+  } catch (err) {
+    console.error("Помилка при завантаженні LoginPage:", err);
+    throw err; // важливо! інакше router подумає, що все ок
+  }};
 
 const ShopPage = () =>
   import("../../pages/ShopPage/ShopPage").then((mod) => ({
@@ -40,7 +44,7 @@ const MedicinePage = () =>
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <SharedLayout />, // тут Outlet + Header/Footer + анімація
+    element: <SharedLayout />,
     errorElement: <NotFoundPage />,
     children: [
       { index: true, lazy: HomePage },

@@ -1,7 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
 import Header from "../../widgets/Header/Header";
-import { AnimatePresence, motion } from "framer-motion";
-import { Suspense } from "react";
 import AnimatedRoutes from "../../app/routes/AnimatedRouter";
 
 const pageVariants = {
@@ -11,8 +8,6 @@ const pageVariants = {
 };
 
 const SharedLayout = () => {
-  const location = useLocation();
-
   return (
     <div className="layout-wrapper">
       <Header />
