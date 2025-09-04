@@ -4,10 +4,12 @@ import { router } from "./routes";
 import { RouterProvider } from "react-router-dom";
 import { refreshToken } from "./providers/authService";
 import { responseStatuses } from "../constants/responseStatuses";
+import Loader from "../features/Loader/Loader";
 
 function App() {
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState("token");
+
   useEffect(() => {
     const initAuth = async () => {
       try {
@@ -24,7 +26,7 @@ function App() {
   }, []);
 
   return loading ? (
-    <div>Loading...</div>
+    <Loader />
   ) : (
     <>
       <RouterProvider

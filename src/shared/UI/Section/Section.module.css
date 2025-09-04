@@ -1,0 +1,23 @@
+.hero {
+    height:calc( 100vh - 51px);
+    display: flex;
+    align-items: center;
+    padding: 2rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.gradient {
+    background: var(--home-bgr);
+    color: var(--white-clr);
+}
+
+.white {
+    background: var(--white-clr);
+    color: var(--dark-bg);
+}
+
+.light {
+    background: #f8fafc;
+    color: var(--dark-bg);
+}

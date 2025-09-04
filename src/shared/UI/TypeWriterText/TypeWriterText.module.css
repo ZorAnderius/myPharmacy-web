@@ -1,0 +1,9 @@
+.typewriter {
+  display: inline-block;
+  position: relative;
+  min-height: 1.2em; /* Fix height to prevent jumping */
+  min-width: 200px; /* Fix width to prevent jumping */
+  line-height: 1.2;
+  vertical-align: top;
+  color: var(--typewriter-text-clr);
+}

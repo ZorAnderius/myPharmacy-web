@@ -1,0 +1,327 @@
+.capsules-wrap {
+  /* position: relative; */
+  height: 600px;
+}
+
+.capsule {
+  position: absolute;
+  border-radius: 30px;
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.15),
+    0 4px 10px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.capsule:hover {
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.25),
+    0 6px 15px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(34, 197, 94, 0.4),
+    0 0 40px rgba(34, 197, 94, 0.2);
+  transform: translateY(-2px) scale(1.1);
+  filter: brightness(1.1);
+}
+
+/* Different glow colors for different capsule types */
+.default:hover {
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.25),
+    0 6px 15px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(34, 197, 94, 0.4),
+    0 0 40px rgba(34, 197, 94, 0.2);
+}
+
+.custom:hover {
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.25),
+    0 6px 15px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(251, 191, 36, 0.4),
+    0 0 40px rgba(251, 191, 36, 0.2);
+}
+
+.premium:hover {
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.25),
+    0 6px 15px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(124, 58, 237, 0.4),
+    0 0 40px rgba(124, 58, 237, 0.2);
+}
+
+.vitamin:hover {
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.25),
+    0 6px 15px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(220, 38, 38, 0.4),
+    0 0 40px rgba(220, 38, 38, 0.2);
+}
+
+/* Sizes */
+.xlarge {
+  width: 220px;
+  height: 100px;
+}
+
+.large {
+  width: 190px;
+  height: 90px;
+}
+
+.medium {
+  width: 180px;
+  height: 90px;
+}
+
+.small {
+  width: 160px;
+  height: 80px;
+}
+
+/* Colors and variants */
+.default {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #22c55e 100%);
+}
+
+.custom {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #059669 100%);
+}
+
+.premium {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #7c3aed 100%);
+}
+
+.vitamin {
+  background: linear-gradient(135deg, #fecaca 0%, #fca5a5 50%, #dc2626 100%);
+}
+
+/* Variants */
+.standard .capsule-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.gel .capsule-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.hard .capsule-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  border-radius: 30px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.soft .capsule-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  border-radius: 30px;
+  overflow: hidden;
+  filter: blur(0.5px);
+}
+
+.capsule-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.capsule-half {
+  flex: 1;
+  height: 100%;
+}
+
+.default .capsule-half:first-child {
+  background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 50%, #e2e8f0 100%);
+}
+
+.default .capsule-half:last-child {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%);
+}
+
+.custom .capsule-half:first-child {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+}
+
+.custom .capsule-half:last-child {
+  background: linear-gradient(135deg, #059669 0%, #047857 50%, #065f46 100%);
+}
+
+.premium .capsule-half:first-child {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fcd34d 100%);
+}
+
+.premium .capsule-half:last-child {
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 50%, #5b21b6 100%);
+}
+
+.vitamin .capsule-half:first-child {
+  background: linear-gradient(135deg, #fecaca 0%, #fca5a5 50%, #f87171 100%);
+}
+
+.vitamin .capsule-half:last-child {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 50%, #991b1b 100%);
+}
+
+/* Shine effect */
+.shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Positions and animations */
+.capsule1 {
+  top: 15%;
+  right: 50%;
+  transform: rotate(-20deg);
+  animation: float1 8s ease-in-out infinite;
+}
+
+.capsule2 {
+  top: 7%;
+  left: 67%;
+  transform: rotate(-60deg);
+  animation: float2 10s ease-in-out infinite;
+}
+
+.capsule3 {
+  bottom: 15%;
+  right: 40%;
+  transform: rotate(-5deg);
+  animation: float3 9s ease-in-out infinite;
+}
+
+.capsule4 {
+  top: 25%;
+  left: 23%;
+  transform: rotate(15deg);
+  animation: float4 7s ease-in-out infinite;
+}
+
+.capsule5 {
+  bottom: 35%;
+  left: 30%;
+  transform: rotate(-25deg);
+  animation: float5 11s ease-in-out infinite;
+}
+
+@keyframes float1 {
+  0%, 100% { transform: rotate(-20deg) translateY(0px) scale(1); }
+  50% { transform: rotate(-20deg) translateY(-25px) scale(1.05); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: rotate(30deg) translateY(0px) scale(1); }
+  50% { transform: rotate(30deg) translateY(-20px) scale(1.03); }
+}
+
+@keyframes float3 {
+  0%, 100% { transform: rotate(-5deg) translateY(0px) scale(1); }
+  50% { transform: rotate(-50deg) translateY(-30px) scale(1.08); }
+}
+
+@keyframes float4 {
+  0%, 100% { transform: rotate(15deg) translateY(0px) scale(1); }
+  50% { transform: rotate(15deg) translateY(-18px) scale(1.02); }
+}
+
+@keyframes float5 {
+  0%, 100% { transform: rotate(-45deg) translateY(0px) scale(1); }
+  50% { transform: rotate(-25deg) translateY(-22px) scale(1.04); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .capsules-wrap {
+    height: 400px;
+  }
+  
+  .xlarge {
+    width: 200px;
+    height: 90px;
+  }
+  
+  .large {
+    width: 175px;
+    height: 80px;
+  }
+  
+  .medium {
+    width: 150px;
+    height: 70px;
+  }
+  
+  .small {
+    width: 135px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .capsules {
+    height: 270px;
+  }
+  
+  .xlarge {
+    width: 130px;
+    height: 80px;
+  }
+  
+  .large {
+    width: 100px;
+    height: 45px;
+  }
+  
+  .medium {
+    width: 80px;
+    height: 35px;
+  }
+  
+  .small {
+    width: 70px;
+    height: 40px;
+  }
+}
