@@ -13,8 +13,8 @@ const Logo = ({ location }) => {
         location ? styles["logo-home"] : styles["logo"]
       )}
       >
-          <Icon name="pharmacy" size={32} />
-          <p>myPharmacy</p>
+          <Icon name="pharmacy" size={48} />
+          <p className={styles['logo-title']}>myPharmacy</p>
     </Link>
   );
 };

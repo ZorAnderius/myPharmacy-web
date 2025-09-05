@@ -8,19 +8,19 @@
 
 .link-btn {
   display: flex;
-  padding: 15px 20px;
+  padding: 10px 20px;
   justify-content: center;
   align-items: center;
   border-radius: 30px;
-  color: inherit;
-  border: 1px solid var(--white-clr);
+  color: var(--white-clr);
+  border: 1px solid var(--secondary-txt-clr);
   transition: border var(--transition-time) var(--transition-func);
 }
 
 .active-btn,
 .link-btn:is(:hover, :focus) {
-  border-color: var(--primary-clr);
-   box-shadow: 0 4px 15px var(--box-shadow-clr);
+  border-color: var(--secondary-txt-clr);
+   box-shadow: 0 4px 5px var(--border-home-clr);
 }
 
 .home > li > * {

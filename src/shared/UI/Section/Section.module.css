@@ -1,10 +1,9 @@
 .hero {
-    height:calc( 100vh - 82px);
+    margin-top: 13rem;
     display: flex;
     align-items: center;
     padding: 2rem 0;
     position: relative;
-    overflow: hidden;
 }
 
 .gradient {

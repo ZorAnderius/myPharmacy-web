@@ -3,7 +3,6 @@ import "./App.css";
 import { router } from "./routes";
 import { RouterProvider } from "react-router-dom";
 import { refreshToken } from "./providers/authService";
-import { responseStatuses } from "../constants/responseStatuses";
 import Loader from "../features/Loader/Loader";
 
 function App() {

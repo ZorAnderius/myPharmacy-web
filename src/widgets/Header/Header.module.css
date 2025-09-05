@@ -1,7 +1,9 @@
-.nav-wrapper{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 800px;
-    padding: 0 2rem;;
+.nav-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 800px;
+  padding: 0 2rem;
+  height: 60px;
+  color: var(--secondary-txt-clr);
 }

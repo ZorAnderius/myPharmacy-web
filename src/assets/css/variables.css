@@ -1,0 +1,34 @@
+:root {
+  --primary-clr: #22c55e; /* замінено з #f6b83d */
+  --secondary-clr: #dcf9e1; /* аналог світліший відтінок замість #fff4df */
+  --primary-txt-clr: #262626;
+  --secondary-txt-clr: #ffffff;
+  --text-comment-clr: #2b2b2a;
+  --inactive-secondary--txt-clr: rgba(38, 38, 38, 0.5);
+  --input-line-clr: rgba(38, 38, 38, 0.15);
+  --border-home-clr: rgba(255, 255, 255, 0.4);
+  --btn-hover-clr: #1fa34a; /* трохи темніший зелений замість #f9b020 */
+  --pet-block-bg: #4ade80; /* замінено з #f7bf50 */
+  --body-bg-clr: #f9f9f9;
+  --third-txt-clr: rgba(38, 38, 38, 0.8);
+  --pagination-disable-clr: rgba(38, 38, 38, 0.05);
+  --pagination-active-clr: rgba(38, 38, 38, 0.2);
+  --select-option-clr: rgba(38, 38, 38, 0.4);
+  --select-secondary-clr: rgba(38, 38, 38, 0.6);
+  --scrollbar-bg-clr: rgba(38, 38, 38, 0.08);
+  --separator-clr: rgba(38, 38, 38, 0.1);
+  --overlay-modal-clr: rgba(38, 38, 38, 0.3);
+  --home-bgr: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+
+  --rating-clr: #ffc531;
+  --icon-primary-blue-clr: #54adff;
+  --icon-secondary-blue-clr: rgba(84, 173, 255, 0.1);
+  --icon-secondary-red-clr: rgba(244, 63, 94, 0.1);
+  --icon-primary-red-clr: #f43f5e;
+  --icon-success-clr: #08aa83;
+  --icon-error-clr: #ef2447;
+  --icon-edit-bg-clr: #d4f4c8; /* замінено з #fbe7c1 */
+
+  --transition-time: 0.25s;
+  --transition-func: ease-in-out;
+}

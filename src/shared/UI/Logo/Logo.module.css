@@ -1,18 +1,22 @@
 .logo-container {
   display: flex;
-  align-items:center;
+  align-items: center;
 
   gap: 1rem;
-  line-height: 1;
-  letter-spacing: -1.12px;
-  color: var(--whote-clr);
+  color: var(--white-clr);
 }
 
 .logo {
   color: var(--primary-clr);
 }
 
-.logo-home{
+.logo-home {
   font-weight: 800;
   color: var(--secondary-txt-clr);
+}
+
+.logo-title {
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing:1px;
 }

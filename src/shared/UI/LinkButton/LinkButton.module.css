@@ -1,0 +1,107 @@
+.link-btn {
+  color: inherit;
+  border-radius: 30px;
+}
+
+.login,
+.login-home {
+  color: var(--secondary-txt-clr);
+  padding: 15px 35px;
+  transition: background-color var(--transition-time) var(--transition-func),
+    color var(--transition-time) var(--transition-func);
+}
+
+.login-attention {
+  padding: 14px 0;
+  text-align: center;
+  color: var(--secondary-txt-clr);
+  transition: background-color var(--transition-time) var(--transition-func),
+    color var(--transition-time) var(--transition-func);
+}
+
+.login,
+.login-attention {
+  background-color: var(--primary-clr);
+  border: none;
+}
+
+.login-home {
+  border: 1px solid var(--border-home-clr);
+}
+
+.login:is(:hover, :focus) .login-attention:is(:hover, :focus) {
+  background-color: var(--btn-hover-clr);
+}
+
+.login-home:is(:hover, :focus) {
+  background-color: var(--secondary-clr);
+  color: var(--primary-clr);
+}
+
+.register {
+  padding: 15px 20px;
+  background-color: var(--secondary-clr);
+  color: var(--primary-clr);
+  transition: background-color var(--transition-time) var(--transition-func);
+}
+
+.register:is(:hover, :focus) {
+  background-color: var(--icon-edit-bg-clr);
+}
+
+.user-bar-wrap {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.auth-link {
+  color: var(--primary-clr);
+  font-weight: 700;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: none;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+}
+
+.news-item-link {
+  color: var(--primary-clr);
+}
+
+.friends-info-link {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--primary-txt-clr);
+  transition: color var(--transition-time) var(--transition-func);
+}
+
+.friends-info-link:is(:hover, :focus) {
+  color: var(--primary-clr);
+}
+
+.add-pet {
+  display: flex;
+  gap: 4px;
+  align-items: flex-end;
+  padding: 10px 20px;
+  border-radius: 30px;
+  color: var(--secondary-txt-clr);
+  background-color: var(--primary-clr);
+}
+
+.notice-contact {
+  display: block;
+  padding: 14px;
+  text-align: center;
+  background-color: var(--secondary-clr);
+  color: var(--primary-clr);
+  border-radius: 30px;
+  transition: background-color var(--transition-time) var(--transition-func);
+}
+
+.notice-contact:is(:hover, :focus) {
+  background-color: var(--icon-edit-bg-clr);
+}
