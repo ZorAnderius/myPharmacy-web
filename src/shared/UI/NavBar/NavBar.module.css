@@ -4,6 +4,11 @@
   align-items: center;
   font-size: 16px;
   font-weight: 500;
+  color: var(--primary-txt-clr);
+}
+
+.routes-nav.home {
+  color: var(--white-clr);
 }
 
 .link-btn {
@@ -12,21 +17,27 @@
   justify-content: center;
   align-items: center;
   border-radius: 30px;
-  color: var(--white-clr);
-  border: 1px solid var(--secondary-txt-clr);
-  transition: border var(--transition-time) var(--transition-func);
+  color: inherit;
+  background-color: transparent;
+  transition: background-color var(--transition-time) var(--transition-func);
 }
 
 .active-btn,
 .link-btn:is(:hover, :focus) {
-  border-color: var(--secondary-txt-clr);
-   box-shadow: 0 4px 5px var(--border-home-clr);
+  background-color: var(--pet-block-bg);
+  box-shadow: 0 4px 5px var(--border-home-clr);
 }
 
-.home > li > * {
-  border-color: var(--border-home-clr);
+.link-btn.active-btn{
+  border: 1px solid var(--border-home-clr);
+  background-color: transparent;
+  box-shadow: none;
+  transition: background-color var(--transition-time) var(--transition-func),
+    color var(--transition-time) var(--transition-func);
+}
 
-  &:is(:hover, :focus){
-    border-color: var(--input-line-clr);
-  }
+.link-btn.active-btn:is(:hover, :focus){
+  color: var(--primary-clr);
+  background-color: var(--pet-block-bg);
+  box-shadow: none;
 }

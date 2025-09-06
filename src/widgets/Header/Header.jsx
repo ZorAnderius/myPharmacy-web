@@ -6,7 +6,7 @@ import Logo from "../../shared/UI/Logo/Logo";
 import Container from "../../shared/UI/Container/Container";
 import NavBar from "../../shared/UI/NavBar/NavBar";
 import styles from "./Header.module.css";
-import AuthNavBar from "../../shared/UI/AuthNavBar/AuthNavBar";
+import UserNavBar from "../../shared/UI/UserNavBar/UserNavBar";
 
 const Header = () => {
   const isAuthenticate = useSelector(selectIsAuthenticate);
@@ -18,7 +18,7 @@ const Header = () => {
         <nav className={styles["nav-wrapper"]}>
           <Logo location={isHome} />
           <NavBar location={isHome} />
-          {isAuthenticate && <AuthNavBar location={isHome}/>}
+          {!isAuthenticate && <UserNavBar location={isHome}/>}
         </nav>
       </Container>
     </header>

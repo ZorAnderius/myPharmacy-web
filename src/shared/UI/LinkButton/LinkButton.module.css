@@ -33,6 +33,11 @@
   background-color: var(--btn-hover-clr);
 }
 
+.login:is(:hover, :focus){
+  background-color: var(--pet-block-bg);
+  color: var(--icon-success-clr);
+}
+
 .login-home:is(:hover, :focus) {
   background-color: var(--secondary-clr);
   color: var(--primary-clr);

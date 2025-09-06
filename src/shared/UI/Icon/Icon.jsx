@@ -1,6 +1,6 @@
-import clsx from 'clsx';
-import icons from "../../../../public/sprite.svg";
-import styles from './Icon.module.css';
+import clsx from "clsx";
+import icons from "../../../assets/sprite.svg";
+import styles from "./Icon.module.css";
 
 const Icon = ({ name, size = 20, type = "", styleWidth = "", width = "" }) => {
   return (
@@ -15,4 +15,4 @@ const Icon = ({ name, size = 20, type = "", styleWidth = "", width = "" }) => {
   );
 };
 
-export default Icon
+export default Icon;

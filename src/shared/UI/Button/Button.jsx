@@ -6,7 +6,7 @@ const Button = ({
   type = "button",
   variant = "primary",
   size = "medium",
-  className = "",
+  style = "",
   disabled = false,
   fullWidth = false,
   ...props
@@ -16,7 +16,7 @@ const Button = ({
     styles[variant],
     styles[size],
     fullWidth && styles.fullWidth,
-    className,
+    styles[style],
   ]
     .filter(Boolean)
     .join(" ");

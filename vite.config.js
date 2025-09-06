@@ -7,4 +7,8 @@ export default defineConfig({
   build: {
     sourcemap: true,
   },
+  server: {
+    port: 5179,
+    strictPort: true,
+  },
 });

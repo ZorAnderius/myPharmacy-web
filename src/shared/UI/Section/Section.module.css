@@ -1,14 +1,9 @@
 .hero {
-    margin-top: 13rem;
+    margin-top:2vh;
     display: flex;
     align-items: center;
     padding: 2rem 0;
     position: relative;
-}
-
-.gradient {
-    background: var(--home-bgr);
-    color: var(--white-clr);
 }
 
 .white {
