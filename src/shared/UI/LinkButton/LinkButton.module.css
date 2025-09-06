@@ -33,7 +33,8 @@
   background-color: var(--btn-hover-clr);
 }
 
-.login:is(:hover, :focus){
+.login:is(:hover, :focus),
+.login-mobile:is(:hover, :focus) {
   background-color: var(--pet-block-bg);
   color: var(--icon-success-clr);
 }
@@ -50,7 +51,8 @@
   transition: background-color var(--transition-time) var(--transition-func);
 }
 
-.register:is(:hover, :focus) {
+.register:is(:hover, :focus),
+.register-mobile:is(:hover, :focus) {
   background-color: var(--icon-edit-bg-clr);
 }
 
@@ -109,4 +111,27 @@
 
 .notice-contact:is(:hover, :focus) {
   background-color: var(--icon-edit-bg-clr);
+}
+
+.register-mobile,
+.login-mobile {
+  min-width: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  border-radius: 30px;
+  font-size: var(--font-size-4xl);
+  width: 100%;
+}
+
+.register-mobile {
+  background-color: var(--pet-block-bg);
+  color: var(--primary-clr);
+}
+
+.login-mobile {
+  color: var(--icon-success-clr);
+  background-color: var( --icon-edit-bg-clr);
 }

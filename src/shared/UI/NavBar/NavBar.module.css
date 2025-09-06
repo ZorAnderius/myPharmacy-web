@@ -41,3 +41,20 @@
   background-color: var(--pet-block-bg);
   box-shadow: none;
 }
+.routes-nav.mobile{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: var(--font-size-3xl);
+  height: 100vh;
+  gap: 3rem;
+
+}
+
+.routes-nav.mobile > ul{
+  display: flex;
+  flex-direction: column;
+  max-height: 10vh;
+  background-color: var(--body-bg-clr);
+  gap: 2rem;
+}

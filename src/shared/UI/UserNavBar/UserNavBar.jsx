@@ -9,27 +9,41 @@ import UserBar from "../UserBar/UserBar";
 
 const UserNavBar = ({ location, isMobile }) => {
   const isAuthenticate = useSelector(selectIsAuthenticate);
-  const prefix = location ? "-home" : "";
+  let prefix = "";
+  if (location === ROUTES.MAIN) prefix = "-home";
+  if (isMobile) prefix = "-mobile";
   return !isAuthenticate ? (
-    <ul className={clsx(styles["auth-nav"], location && styles["home"], isMobile && styles["mobile"])}>
+    <ul
+      className={clsx(
+        styles["auth-nav"],
+        location && styles["home"],
+        isMobile && styles["mobile"]
+      )}
+    >
       <li>
         <LinkButton type={`login${prefix}`} direction={ROUTES.LOGIN}>
           Log In
         </LinkButton>
       </li>
       <li>
-        <LinkButton type="register" direction={ROUTES.REGISTER}>
+        <LinkButton type={`register${prefix}`} direction={ROUTES.REGISTER}>
           Registration
         </LinkButton>
       </li>
     </ul>
   ) : (
-    <ul className={clsx(styles["user-nav"], location && styles["home"], isMobile && styles["mobile"])}>
+    <ul
+      className={clsx(
+        styles["user-nav"],
+        location && styles["home"],
+        isMobile && styles["mobile"]
+      )}
+    >
       <li>
-        <LogOutBtn />
+        <LogOutBtn style={isMobile ? 'mobile' : ''} />
       </li>
       <li>
-        <UserBar />
+        <UserBar style={isMobile ? 'mobile' : ''} />
       </li>
     </ul>
   );

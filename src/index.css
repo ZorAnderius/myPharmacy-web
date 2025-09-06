@@ -1,13 +1,21 @@
 @import "./assets/css/reset.css";
+@import "modern-normalize";
 @import "./assets/css/variables.css";
 @import "./assets/fonts/font.css";
-@import "modern-normalize";
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
 }
 
 body {
   font-family: "Manrope", sans-serif;
+  background-color: var(--color-background-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent scroll when modal is open */
+.no-scroll {
+  overflow: hidden !important;
+  overflow-x: hidden !important;
 }

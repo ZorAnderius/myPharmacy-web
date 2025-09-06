@@ -22,7 +22,7 @@ const Header = () => {
         <nav className={styles["nav-wrapper"]}>
           <Logo location={isHome} />
           <NavBar location={isHome} />
-          {!isAuthenticate && <UserNavBar location={isHome} />}
+          <UserNavBar location={isHome} />
           <MobileMenu
             isOpen={isOpen}
             setIsOpen={setIsOpen}

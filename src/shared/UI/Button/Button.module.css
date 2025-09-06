@@ -39,8 +39,8 @@
   transform: none !important;
 }
 
+.mobile-logout,
 .logout {
-  padding: 10px 20px;
   border-radius: 30px;
   border: none;
   font: inherit;
@@ -51,7 +51,12 @@
   color: var(--secondary-txt-clr);
 }
 
-.user-bar {
+.logout {
+  padding: 10px 20px;
+}
+
+.user-bar,
+.mobile-user-bar {
   display: flex;
   position: relative;
   color: var(--secondary-txt-clr);
@@ -87,4 +92,25 @@
 
 .user-bar:is(:hover, :focus) {
   color: var(--pet-block-bg);
+}
+
+.mobile-user-bar {
+  position: absolute;
+  z-index: 2;
+  top: 9vh;
+  left: 10vw;
+  width: 100%;
+  background-color: transparent;
+  color: var(--text-comment-clr);
+  justify-content: start;
+  align-items: flex-start;
+}
+
+.mobile-user-bar > *:first-child {
+  width: 80px;
+  height: 80px;
+}
+
+.mobile-user-bar > *:last-child {
+  padding-top: 1rem;
 }

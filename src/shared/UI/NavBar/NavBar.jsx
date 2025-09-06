@@ -9,10 +9,10 @@ const buildStyles = ({ isActive }) => {
   return clsx(styles["link-btn"], isActive && styles["active-btn"]);
 };
 
-const NavBar = ({ location }) => {
+const NavBar = ({ location, isMobile }) => {
   const isAuthenticate = useSelector(selectIsAuthenticate);
   return (
-    <div className={clsx(styles["routes-nav"], location && styles["home"])}>
+    <div className={clsx(styles["routes-nav"], location && styles["home"], isMobile && styles["mobile"])}>
       <ul>
         <li>
           <NavLink to={ROUTES.MAIN} className={buildStyles}>

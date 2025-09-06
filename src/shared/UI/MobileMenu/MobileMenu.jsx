@@ -42,15 +42,19 @@ const MobileMenu = ({ isOpen, setIsOpen }) => {
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden";
-      document.body.style.overflowX = "hidden";
+      // Add no-scroll class to body and html
+      document.body.classList.add("no-scroll");
+      document.documentElement.classList.add("no-scroll");
     } else {
-      document.body.style.overflow = "unset";
-      document.body.style.overflowX = "unset";
+      // Remove no-scroll class
+      document.body.classList.remove("no-scroll");
+      document.documentElement.classList.remove("no-scroll");
     }
+
+    // Cleanup on unmount
     return () => {
-      document.body.style.overflow = "unset";
-      document.body.style.overflowX = "unset";
+      document.body.classList.remove("no-scroll");
+      document.documentElement.classList.remove("no-scroll");
     };
   }, [isOpen]);
 
@@ -101,8 +105,11 @@ const MobileMenu = ({ isOpen, setIsOpen }) => {
               isAnimated && styles["animated"]
             )}
           >
+            <div className={styles["line"]}></div>
             {!isHome && <NavBar location={isHome} />}
+            {/* { <NavBar location={isHome} isMobile={true} />} */}
             <UserNavBar location={isHome} isMobile={true} />
+            <div className={styles["line"]}></div>
           </nav>
         </div>
       )}

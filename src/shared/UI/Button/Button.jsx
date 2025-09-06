@@ -11,12 +11,13 @@ const Button = ({
   fullWidth = false,
   ...props
 }) => {
+  console.log(style);
   const buttonClasses = [
     styles.button,
     styles[variant],
+    styles[style],
     styles[size],
     fullWidth && styles.fullWidth,
-    styles[style],
   ]
     .filter(Boolean)
     .join(" ");
