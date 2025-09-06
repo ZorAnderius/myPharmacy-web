@@ -6,3 +6,10 @@
   align-items: center;
   text-transform: uppercase;
 }
+
+@media screen and (max-width: 768px) {
+  .auth-nav,
+  .user-nav {
+    display: none;
+  }
+}

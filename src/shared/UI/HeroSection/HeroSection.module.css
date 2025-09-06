@@ -73,13 +73,19 @@
 .hero-visual {
   position: absolute;
   height: 80vh;
-  max-width: 80vw;
+  max-width: clamp(120px, 80%, 2500px);
   width: 100%;
   top: 0;
-  left: 20%;
+  right: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media screen and (min-width: 1200px) {
+  .hero-visual {
+    right: 0;
+  }
 }
 
 /* Responsive */
@@ -106,7 +112,7 @@
 
   .hero-visual {
     order: -1;
-    left: 0;
+    left: 10vw;
   }
 
   .hero-text {
@@ -117,7 +123,6 @@
   .hero-visual {
     position: absolute;
     top: 10%;
-    left: 10%;
     display: flex;
     align-items: center;
     justify-content: center;

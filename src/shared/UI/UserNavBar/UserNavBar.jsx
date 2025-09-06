@@ -7,11 +7,11 @@ import { useSelector } from "react-redux";
 import LogOutBtn from "../LogOutBtn/LogOutBtn";
 import UserBar from "../UserBar/UserBar";
 
-const UserNavBar = ({ location }) => {
+const UserNavBar = ({ location, isMobile }) => {
   const isAuthenticate = useSelector(selectIsAuthenticate);
   const prefix = location ? "-home" : "";
-  return isAuthenticate ? (
-    <ul className={clsx(styles["auth-nav"], location && styles["home"])}>
+  return !isAuthenticate ? (
+    <ul className={clsx(styles["auth-nav"], location && styles["home"], isMobile && styles["mobile"])}>
       <li>
         <LinkButton type={`login${prefix}`} direction={ROUTES.LOGIN}>
           Log In
@@ -24,7 +24,7 @@ const UserNavBar = ({ location }) => {
       </li>
     </ul>
   ) : (
-    <ul className={clsx(styles["user-nav"], location && styles["home"])}>
+    <ul className={clsx(styles["user-nav"], location && styles["home"], isMobile && styles["mobile"])}>
       <li>
         <LogOutBtn />
       </li>

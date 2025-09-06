@@ -1,18 +1,21 @@
 .container {
   margin: 0 auto;
-  max-width: 375px;
   width: 100%;
-  padding: 0 2rem;
+  max-width: clamp(375px, 90%, 1440px);
+  padding: 0 1rem;
 }
 
-@media screen and (min-width: 768px) {
+@media (max-width: 480px) {
   .container {
-    max-width: 768px;
+    padding: 0 1.2rem;
   }
 }
 
-@media screen and (min-width: 1440px) {
+
+@media (max-width: 768px) {
   .container {
-    max-width: 1440px;
+    padding: 0 1.5rem;
   }
 }
+
+

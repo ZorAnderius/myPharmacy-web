@@ -24,7 +24,7 @@ const HomePage = () => {
   };
 
   return (
-    <Section style="hero" baground="gradient">
+    <Section style="hero">
       <Container>
         <HeroSection
           title="Your medication {{typewriter}}"

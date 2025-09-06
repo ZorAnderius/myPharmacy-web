@@ -1,10 +1,8 @@
-import clsx from "clsx";
 import styles from "./Section.module.css";
 
-const Section = ({ children, style = "", baground = "" }) => {
-    console.log(baground);
+const Section = ({ children, style = "" }) => {
   return (
-    <section className={clsx(styles[style], baground && styles[baground])}>
+    <section className={styles[style]}>
       {children}
     </section>
   );

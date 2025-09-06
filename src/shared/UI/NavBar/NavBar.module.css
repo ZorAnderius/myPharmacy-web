@@ -8,7 +8,7 @@
 }
 
 .routes-nav.home {
-  color: var(--white-clr);
+  display: none;
 }
 
 .link-btn {

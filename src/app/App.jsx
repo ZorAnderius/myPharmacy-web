@@ -29,7 +29,7 @@ function App() {
     <>
       <RouterProvider
         router={router}
-        hydrateFallbackElement={<div>Loading app...</div>}
+        HydrateFallbackElement={<div>Loading app...</div>}
       />
     </>
   );
