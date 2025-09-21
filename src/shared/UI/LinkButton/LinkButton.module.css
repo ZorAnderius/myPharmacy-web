@@ -73,45 +73,6 @@
   text-underline-position: from-font;
 }
 
-.news-item-link {
-  color: var(--primary-clr);
-}
-
-.friends-info-link {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: var(--primary-txt-clr);
-  transition: color var(--transition-time) var(--transition-func);
-}
-
-.friends-info-link:is(:hover, :focus) {
-  color: var(--primary-clr);
-}
-
-.add-pet {
-  display: flex;
-  gap: 4px;
-  align-items: flex-end;
-  padding: 10px 20px;
-  border-radius: 30px;
-  color: var(--secondary-txt-clr);
-  background-color: var(--primary-clr);
-}
-
-.notice-contact {
-  display: block;
-  padding: 14px;
-  text-align: center;
-  background-color: var(--secondary-clr);
-  color: var(--primary-clr);
-  border-radius: 30px;
-  transition: background-color var(--transition-time) var(--transition-func);
-}
-
-.notice-contact:is(:hover, :focus) {
-  background-color: var(--icon-edit-bg-clr);
-}
 
 .register-mobile,
 .login-mobile {

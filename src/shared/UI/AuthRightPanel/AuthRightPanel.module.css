@@ -1,0 +1,55 @@
+.auth-right-panel {
+  height: auto;
+  max-width: 614px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-right-panel-heading {
+  position: relative;
+  color: var(--primary-txt-clr);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.11;
+}
+
+.auth-right-panel-heading::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  right: -11px;
+  max-width: 95px;
+  width: 100%;
+  max-height: 93px;
+  height: 100%;
+  background-image: url("../../../assets/img/tablet_1x.avif");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+@media (min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .auth-right-panel-heading::before {
+    background-image: url("../../../assets/img/tablet_2x.avif");
+  }
+}
+
+.auth-right-panel-highlight {
+  color: var(--primary-clr);
+}
+
+@media (min-width: 768px) {
+  .auth-right-panel-heading::before {
+    max-width: 179px;
+  }
+
+  .auth-right-panel-heading {
+    font-size: var(--font-size-6xl);
+  }
+}
+
+@media (min-width: 1280px) {
+  .auth-right-panel {
+    height: 100vh;
+  }
+}
