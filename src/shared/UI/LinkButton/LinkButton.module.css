@@ -35,7 +35,7 @@
 
 .login:is(:hover, :focus),
 .login-mobile:is(:hover, :focus) {
-  background-color: var(--pet-block-bg);
+  background-color: var(--hover-bg-clr);
   color: var(--icon-success-clr);
 }
 

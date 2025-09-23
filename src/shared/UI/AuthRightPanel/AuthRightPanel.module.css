@@ -1,6 +1,7 @@
 .auth-right-panel {
+  margin: 100px auto;
   height: auto;
-  max-width: 614px;
+  max-width: 223px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,7 +10,7 @@
 .auth-right-panel-heading {
   position: relative;
   color: var(--primary-txt-clr);
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-3xl);
   font-weight: var(--font-weight-semibold);
   line-height: 1.11;
 }
@@ -17,11 +18,11 @@
 .auth-right-panel-heading::before {
   content: "";
   position: absolute;
-  top: -20px;
-  right: -11px;
-  max-width: 95px;
+  top: -25px;
+  right: 40px;
+  max-width: 60px;
   width: 100%;
-  max-height: 93px;
+  max-height: 60px;
   height: 100%;
   background-image: url("../../../assets/img/tablet_1x.avif");
   background-size: contain;
@@ -38,7 +39,30 @@
   color: var(--primary-clr);
 }
 
+@media screen and (min-width: 468px) {
+  .auth-right-panel {
+    max-width: 320px;
+  }
+
+  .auth-right-panel-heading::before {
+    top: -25px;
+    right: 0;
+  }
+}
+
 @media (min-width: 768px) {
+  .auth-right-panel {
+    margin: 120px 0;
+    max-width: 614px;
+  }
+
+  .auth-right-panel-heading::before {
+    top: -25px;
+    right: -11px;
+    max-width: 95px;
+    max-height: 93px;
+  }
+
   .auth-right-panel-heading::before {
     max-width: 179px;
   }
@@ -50,6 +74,6 @@
 
 @media (min-width: 1280px) {
   .auth-right-panel {
-    height: 100vh;
+    height: 100%;
   }
 }

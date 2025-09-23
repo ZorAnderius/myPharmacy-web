@@ -1,44 +1,91 @@
-import { Field, Form, Formik } from "formik";
+import { FastField, Form, Formik } from "formik";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import Input from "../Input/Input";
+import AuthBtnGroup from "../../../group/AuthBtnGroup/AuthBtnGroup";
 import styles from "./RegisterForm.module.css";
+
+const initialValues = {
+  first_name: "",
+  last_name: "",
+  email: "",
+  phone: "",
+  password: "",
+  confirm_password: "",
+};
 
 const RegisterForm = () => {
   return (
     <div className={styles.registerFormContainer}>
       <motion.div>
-        <Formik>
+        <Formik initialValues={initialValues} onSubmit={() => {}}>
           {() => (
             <Form className={styles.registerForm}>
-              <div className={styles.formGroup}>
-                <label htmlFor="first_name">First Name</label>
-                <Field type="text" id="first_name" name="first_name" className={styles.formField} />
-              </div>
-              <div className={styles.formGroup}>
-                <label htmlFor="last_name">Last Name</label>
-                <Field type="text" id="last_name" name="last_name" className={styles.formField} />
-              </div>
-              <div className={styles.formGroup}>
-                <label htmlFor="email">Email</label>
-                <Field type="email" id="email" name="email" className={styles.formField} />
-              </div>
-              <div className={styles.formGroup}>
-                <label htmlFor="phone">Phone</label>
-                <Field type="tel" id="phone" name="phone" className={styles.formField} />
-              </div>
-              <div className={styles.formGroup}>
-                <label htmlFor="password">Password</label>
-                <Field type="password" id="password" name="password" className={styles.formField} />
-              </div>
-              <div className={styles.formGroup}>
-                <label htmlFor="confirm_password">Confirm Password</label>
-                <Field
-                  type="password"
-                  id="confirm_password"
-                  name="confirm_password"
-                  className={styles.formField}
-                />
-              </div>
-              <button type="submit">Register</button>
+              <FastField name="first_name">
+                {({ field, meta }) => (
+                  <Input
+                    id="first_name"
+                    label="First Name"
+                    field={field}
+                    meta={meta}
+                  />
+                )}
+              </FastField>
+              <FastField name="last_name">
+                {({ field, meta }) => (
+                  <Input
+                    id="last_name"
+                    label="Last Name"
+                    field={field}
+                    meta={meta}
+                  />
+                )}
+              </FastField>
+              <FastField name="email">
+                {({ field, meta }) => (
+                  <Input
+                    id="email"
+                    label="Email"
+                    type="email"
+                    field={field}
+                    meta={meta}
+                  />
+                )}
+              </FastField>
+              <FastField name="phone">
+                {({ field, meta }) => (
+                  <Input
+                    id="phone"
+                    label="Phone"
+                    type="tel"
+                    field={field}
+                    meta={meta}
+                  />
+                )}
+              </FastField>
+              <FastField name="password">
+                {({ field, meta }) => (
+                  <Input
+                    id="password"
+                    label="Password"
+                    type="password"
+                    field={field}
+                    meta={meta}
+                  />
+                )}
+              </FastField>
+              <FastField name="confirm_password">
+                {({ field, meta }) => (
+                  <Input
+                    id="confirm_password"
+                    label="Confirm Password"
+                    type="password"
+                    field={field}
+                    meta={meta}
+                  />
+                )}
+              </FastField>
+              <AuthBtnGroup authType="register" />
             </Form>
           )}
         </Formik>

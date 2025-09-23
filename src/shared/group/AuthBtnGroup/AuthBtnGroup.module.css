@@ -1,0 +1,71 @@
+.authBtnGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 70px;
+}
+
+.btnGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+}
+
+.authBtn {
+  width: 100%;
+  max-width: 220px;
+  padding: 1.5rem 2rem;
+  border-radius: var(--radius-xl);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--body-bg-clr);
+  background-color: var(--primary-clr);
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--transition-time) var(--transition-func);
+}
+
+.btnGroup .authBtn:is(:hover, :focus) {
+  color: var(--body-bg-clr);
+  background-color: var(--btn-hover-clr);
+}
+
+.switchLink {
+  font-size: var(--font-size-lg);
+  color: var(--btn-hover-clr);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.authBtn:is(:hover, :focus) {
+  color: var(--primary-clr);
+  font-weight: var(--font-weight-extrabold);
+}
+
+.googleAuth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.googleBtn {
+  gap: 12px;
+  width: 100%;
+  max-width: 120px;
+  padding: 1rem 2rem;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--body-bg-clr);
+  background-color: var(--icon-edit-bg-clr);
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--transition-time) var(--transition-func);
+}
+
+.googleBtn:is(:hover, :focus) {
+  text-decoration: none;
+  background-color: var(--icon-success-clr);
+}

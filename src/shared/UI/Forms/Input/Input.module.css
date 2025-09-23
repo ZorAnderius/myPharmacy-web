@@ -1,0 +1,59 @@
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.formGroup label {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  transition: 0.5s ease all;
+  display: block;
+  margin-bottom: 8px;
+  color: var(--input-placeholder-clr);
+}
+
+.formGroup label::after{
+  content: "*";
+  color: transparent;
+  margin-left: 2px;
+  font-size: 1.2rem;
+  line-height: 1;
+  transition: color 0.3s ease 0.3s;
+}
+
+.formGroup:is(:hover, :focus) label,
+.formField.active + label {
+  transform: translateY(-30px);
+  color: var(--primary-clr);
+  background-color: var(--body-bg-clr);
+  padding: 0 4px;
+}
+
+.formGroup:is(:hover, :focus) label::after,
+.formField.active + label::after {
+  color: var(--icon-error-clr);
+}
+
+
+.formField {
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 10px;
+  outline: none;
+  border: 2px solid var(--input-line-clr);
+  background-color: var(--secondary-txt-clr);
+  transition: border-color var(--transition-slow);
+  flex: 1;
+}
+
+.formField:focus {
+    border: 1px solid var(--primary-clr);
+}
+
+.error {
+  color: var(--icon-error-clr);
+  font-size: 0.8rem;
+  margin-top: 4px;
+}

@@ -8,7 +8,7 @@
   --input-line-clr: rgba(38, 38, 38, 0.15);
   --border-home-clr: rgba(255, 255, 255, 0.4);
   --btn-hover-clr: #1fa34bab; 
-  --pet-block-bg: #7ff1a9;
+  --pages-bg: #F7F8FA;
   --body-bg-clr: #f9f9f9;
   --third-txt-clr: rgba(38, 38, 38, 0.8);
   --pagination-disable-clr: rgba(38, 38, 38, 0.05);
@@ -19,15 +19,18 @@
   --separator-clr: rgba(38, 38, 38, 0.1);
   --overlay-modal-clr: rgba(38, 38, 38, 0.621);
   --home-bgr: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  --hover-bg-clr: #149f47; 
+
 
   --rating-clr: #ffc531;
   --icon-primary-blue-clr: #a0fbc6;
   --icon-secondary-blue-clr: rgba(84, 173, 255, 0.1);
   --icon-secondary-red-clr: rgba(244, 63, 94, 0.1);
   --icon-primary-red-clr: #f43f5e;
-  --icon-success-clr: #08aa83;
+  --icon-success-clr: #84e891cf;
   --icon-error-clr: #ef2447;
   --icon-edit-bg-clr: #d4f4c8; 
+  --input-placeholder-clr: rgba(38, 38, 38, 0.4);
 
   --transition-time: 0.25s;
   --transition-func: ease-in-out;

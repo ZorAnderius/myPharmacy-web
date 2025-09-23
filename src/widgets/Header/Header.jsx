@@ -9,6 +9,7 @@ import styles from "./Header.module.css";
 import UserNavBar from "../../shared/UI/UserNavBar/UserNavBar";
 import MobileMenu from "../../shared/UI/MobileMenu/MobileMenu";
 import { useState } from "react";
+import clsx from "clsx";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +18,7 @@ const Header = () => {
   const isHome = location.pathname === ROUTES.MAIN;
 
   return (
-    <header>
+    <header className={clsx(styles.header, isHome && styles["home"])}>
       <Container>
         <nav className={styles["nav-wrapper"]}>
           <Logo location={isHome} />

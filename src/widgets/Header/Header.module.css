@@ -1,3 +1,21 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  background-color: var(--bg-clr);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(25px);
+}
+
+.header.home{
+  background-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+
 .nav-wrapper {
   display: flex;
   align-items: center;
