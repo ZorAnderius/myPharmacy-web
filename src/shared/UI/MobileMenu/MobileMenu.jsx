@@ -1,17 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import styles from "./MobileMenu.module.css";
 import clsx from "clsx";
 import Button from "../Button/Button";
 import NavBar from "../NavBar/NavBar";
-import { useSelector } from "react-redux";
-import { selectIsAuthenticate } from "../../../redux/auth/selectors";
 import { useLocation } from "react-router-dom";
 import { ROUTES } from "../../../constants/routes";
 import UserNavBar from "../UserNavBar/UserNavBar";
 
 const MobileMenu = ({ isOpen, setIsOpen }) => {
   const [isAnimated, setIsAnimated] = useState(false);
-  const isAuthenticate = useSelector(selectIsAuthenticate);
   const location = useLocation();
   const isHome = location.pathname === ROUTES.MAIN;
 
@@ -33,12 +30,12 @@ const MobileMenu = ({ isOpen, setIsOpen }) => {
     }
   };
 
-  const closeMenu = () => {
+  const closeMenu = useCallback(() => {
     setIsAnimated(false);
     setTimeout(() => {
       setIsOpen(false);
     }, 200);
-  };
+  }, [setIsOpen]);
 
   useEffect(() => {
     if (isOpen) {
@@ -70,7 +67,7 @@ const MobileMenu = ({ isOpen, setIsOpen }) => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [isOpen]);
+  }, [isOpen, closeMenu]);
 
   return (
     <>

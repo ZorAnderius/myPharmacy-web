@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import styles from "./TypeWriterText.module.css";
-import clsx from "clsx";
 
 const TypeWriterText = ({
   words = [],
@@ -8,7 +7,6 @@ const TypeWriterText = ({
   deleteSpeed = 50,
   delay = 2000,
   thinkingPause = 1500,
-  style = "",
 }) => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState("");

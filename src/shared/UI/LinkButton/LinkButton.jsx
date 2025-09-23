@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import styles from "./LinkButton.module.css";
 import clsx from "clsx";
+import { ROUTES } from "../../../constants/routes";
 
 const LinkButton = ({
   children,
   type = "",
-  direction = ROUTES.HOME,
+  direction = ROUTES.MAIN,
   newTab,
   handleClick,
 }) => {

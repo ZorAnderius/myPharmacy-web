@@ -3,6 +3,7 @@ import SharedLayout from "../../pages/SharedLayout/SharedLayout";
 import NotFoundPage from "../../pages/NotFoundPage/NotFoundPage";
 import { ROUTES } from "../../constants/routes";
 
+// eslint-disable-next-line react-refresh/only-export-components
 const HomePage = async () => {
   try {
     const mod = await import("../../pages/HomePage/HomePage");
@@ -13,6 +14,7 @@ const HomePage = async () => {
   }
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 const RegisterPage = async () => {
   try {
     const mod = await import("../../pages/RegisterPage/RegisterPage");
@@ -23,6 +25,7 @@ const RegisterPage = async () => {
   }
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 const LoginPage = async () => {
   try {
     const mod = await import("../../pages/LoginPage/LoginPage");
@@ -33,6 +36,7 @@ const LoginPage = async () => {
   }
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 const ShopPage = async () => {
   try {
     const mod = await import("../../pages/ShopPage/ShopPage");
@@ -43,6 +47,7 @@ const ShopPage = async () => {
   }
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 const CreateShopPage = async () => {
   try {
     const mod = await import("../../pages/CreateShopPage/CreateShopPage");
@@ -53,6 +58,7 @@ const CreateShopPage = async () => {
   }
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 const EditShopPage = async () => {
   try {
     const mod = await import("../../pages/EditShopPage/EditShopPage");
@@ -63,6 +69,7 @@ const EditShopPage = async () => {
   }
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 const MedicinePage = async () => {
   try {
     const mod = await import("../../pages/MedicinePage/MedicinePage");

@@ -1,7 +1,5 @@
 import { useLocation } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-import { useSelector } from "react-redux";
-import { selectIsAuthenticate } from "../../redux/auth/selectors";
 import Logo from "../../shared/UI/Logo/Logo";
 import Container from "../../shared/UI/Container/Container";
 import NavBar from "../../shared/UI/NavBar/NavBar";
@@ -13,7 +11,6 @@ import clsx from "clsx";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const isAuthenticate = useSelector(selectIsAuthenticate);
   const location = useLocation();
   const isHome = location.pathname === ROUTES.MAIN;
 

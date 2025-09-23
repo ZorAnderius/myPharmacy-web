@@ -1,5 +1,4 @@
 import { FastField, Form, Formik } from "formik";
-import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import Input from "../Input/Input";
 import AuthBtnGroup from "../../../group/AuthBtnGroup/AuthBtnGroup";
@@ -32,7 +31,7 @@ const RegisterForm = () => {
 
   return (
     <div className={styles.registerFormContainer}>
-      <motion.div>
+      <div>
         <Formik
           initialValues={initialValues}
           validationSchema={registerValidationSchema}
@@ -108,7 +107,7 @@ const RegisterForm = () => {
             </Form>
           )}
         </Formik>
-      </motion.div>
+      </div>
     </div>
   );
 };

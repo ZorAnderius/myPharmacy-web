@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.3.0",
     "axios": "^1.7.8",
     "clsx": "^2.1.1",
+    "dompurify": "^3.2.7",
     "formik": "^2.4.6",
     "framer-motion": "^12.23.12",
     "modern-normalize": "^3.0.1",

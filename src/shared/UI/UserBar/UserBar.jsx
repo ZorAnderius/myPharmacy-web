@@ -2,9 +2,9 @@ import styles from "./UserBar.module.css";
 import Icon from "../Icon/Icon";
 import Button from "../Button/Button";
 
-const UserBar = ({ style = "" }) => {
+const UserBar = ({ className = "" }) => {
   return (
-    <Button style={style ? `${style}-user-bar` : "user-bar"}>
+    <Button className={className ? `${className}-user-bar` : "user-bar"}>
       <div className={styles["avatar-thumb"]}>
         <Icon name="user" size={32} />
       </div>

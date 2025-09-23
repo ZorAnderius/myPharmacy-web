@@ -1,48 +1,134 @@
 import axios from "axios";
-import { getAccessToken, refreshToken } from "./authService.js";
+import { getAccessToken, refreshToken, setAccessToken } from "./tokenManager.js";
+import { getCSRFToken, clearCSRFToken } from "./csrfService.js";
+import { sanitizeInput } from "../../utils/security/sanitizeInput.js";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api",
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
-    "X-No-CSRF": "1",
   },
-  timeout: import.meta.env.VITE_API_TIMEOUT || 15000,
+  timeout: import.meta.env.VITE_API_TIMEOUT || 10000,
 });
 
-// Request interceptor added accessToken
-api.interceptors.request.use((config) => {
-  console.log(config);
+api.interceptors.request.use(async (config) => {
+  // Add access token
   const token = getAccessToken();
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  const method = config.method?.toUpperCase();
+  const requiresCSRF = ["POST", "PUT", "PATCH", "DELETE"].includes(method);
+  const isAuthEndpoint =
+    config.url?.includes("/users/login") ||
+    config.url?.includes("/users/register") ||
+    config.url?.includes("/users/confirm-oauth") ||
+    config.url?.includes("/users/request-google-oauth");
+
+  if (requiresCSRF && !isAuthEndpoint) {
+    try {
+      const csrfToken = await getCSRFToken();
+      if (csrfToken) {
+        config.headers["x-csrf-token"] = csrfToken;
+      }
+    } catch (error) {
+      console.warn("Failed to get CSRF token:", error);
+      // Don't block the request if CSRF token is not available
+      // The server will handle this appropriately
+    }
+  }
+
+  if (
+    config.data &&
+    typeof config.data === "object" &&
+    !(config.data instanceof FormData)
+  ) {
+    config.data = sanitizeRequestData(config.data);
+  }
+
   return config;
 });
 
-// Response interceptor for 401 + refresh
+// Response interceptor for handling errors
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const originalRequest = error.config;
+    // Handle CSRF token errors
+    if (
+      error.response?.status === 403 &&
+      (error.response?.data?.message === "CSRF header missing" ||
+        error.response?.data?.error === "CSRF token mismatch")
+    ) {
+      clearCSRFToken();
+      // Retry the request with a new CSRF token (only once)
+      if (error.config && !error.config._csrfRetry) {
+        error.config._csrfRetry = true;
+        try {
+          const csrfToken = await getCSRFToken();
+          if (csrfToken) {
+            error.config.headers["x-csrf-token"] = csrfToken;
+            return api.request(error.config);
+          }
+        } catch (csrfError) {
+          console.error("Failed to retry with new CSRF token:", csrfError);
+          // If we can't get a new CSRF token, redirect to login or show error
+          if (typeof window !== 'undefined') {
+            // Optionally redirect to login page or show error message
+            console.error("CSRF token unavailable. Please refresh the page or log in again.");
+          }
+        }
+      }
+    }
 
-    if (!originalRequest || originalRequest._retry)
-      return Promise.reject(error);
-
-    if (error.response?.status === 401) {
-      originalRequest._retry = true;
-
+    // Handle token refresh on 401 and 403 errors (but not CSRF errors)
+    if (
+      (error.response?.status === 401 || error.response?.status === 403) &&
+      error.config &&
+      !error.config._retry &&
+      !error.config._csrfRetry // Don't retry if this was already a CSRF retry
+    ) {
+      error.config._retry = true;
       try {
-        const newToken = await refreshToken();
-        originalRequest.headers.Authorization = `Bearer ${newToken}`;
-        return api(originalRequest);
-      } catch (err) {
-        console.error("Refresh failed:", err);
-        return Promise.reject(err);
+        console.log("Attempting token refresh due to 401/403 error");
+        await refreshToken();
+        const newToken = getAccessToken();
+        if (newToken) {
+          error.config.headers.Authorization = `Bearer ${newToken}`;
+          return api.request(error.config);
+        }
+      } catch (refreshError) {
+        console.error("Token refresh failed:", refreshError);
+        // Clear invalid token
+        setAccessToken(null);
       }
     }
 
     return Promise.reject(error);
   }
 );
+
+// Helper function to sanitize request data
+const sanitizeRequestData = (data) => {
+  if (typeof data === "string") {
+    return sanitizeInput(data);
+  }
+
+  if (Array.isArray(data)) {
+    return data.map((item) => sanitizeRequestData(item));
+  }
+
+  if (data && typeof data === "object") {
+    const sanitized = {};
+    for (const [key, value] of Object.entries(data)) {
+      const sanitizedKey = sanitizeInput(key);
+      sanitized[sanitizedKey] = sanitizeRequestData(value);
+    }
+    return sanitized;
+  }
+
+  return data;
+};
 
 export default api;

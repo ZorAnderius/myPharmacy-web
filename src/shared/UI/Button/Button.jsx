@@ -8,7 +8,6 @@ const Button = React.memo(
     type = "button",
     variant = "primary",
     size = "medium",
-    style = "",
     disabled = false,
     fullWidth = false,
     ...props
@@ -18,7 +17,6 @@ const Button = React.memo(
       styles[variant],
       styles[size],
       fullWidth && styles.fullWidth,
-      
     ]
       .filter(Boolean)
       .join(" ");

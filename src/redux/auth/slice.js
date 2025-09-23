@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import initialState from "./initialState";
 import { responseStatuses } from "../../constants/responseStatuses";
-import { b } from "framer-motion/client";
 import { registerThunk } from "./operations";
 
 const sliceAuth = createSlice({
@@ -17,7 +16,7 @@ const sliceAuth = createSlice({
     clearAuth(state) {
       state.isAuthenticated = false;
       state.user = null;
-      state.status = resetStatus.IDLE;
+      state.status = responseStatuses.IDLE;
       state.error = null;
     },
     setLoading(state) {
