@@ -3,12 +3,12 @@ import clsx from "clsx";
 import React from "react";
 
 const buildStyle = (value = false, error = false) => {
-  if (error) return styles.error;
+  if (!error && value) return styles.active;
   if (value) return styles.active;
   return "";
 };
 
-const Input = React.memo(({ field, id, label, meta, ...props }) => {
+const Input = React.memo(({ field, id, label, meta, error = "", ...props }) => {
   return (
     <div className={styles.formGroup}>
       <input
@@ -21,8 +21,8 @@ const Input = React.memo(({ field, id, label, meta, ...props }) => {
       <label className={styles.formLabel} htmlFor={id}>
         {label}
       </label>
-      {meta.touched && meta.error && (
-        <span className={styles.errorMsg}>{meta.error}</span>
+      {((meta.touched && meta.error) || error) && (
+        <span className={styles.errorMsg}>{error ? error : meta.error}</span>
       )}
     </div>
   );

@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import initialState from "./initialState";
 import { responseStatuses } from "../../constants/responseStatuses";
+import { b } from "framer-motion/client";
+import { registerThunk } from "./operations";
 
 const sliceAuth = createSlice({
   name: "auth",
@@ -31,6 +33,21 @@ const sliceAuth = createSlice({
     resetStatus: (state) => {
       state.status = responseStatuses.IDLE;
     },
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(registerThunk.pending, (state) => {
+        state.status = responseStatuses.LOADING;
+      })
+      .addCase(registerThunk.fulfilled, (state, action) => {
+        state.status = responseStatuses.SUCCEEDED;
+        state.user = action.payload;
+        state.error = null;
+      })
+      .addCase(registerThunk.rejected, (state, action) => {
+        state.status = responseStatuses.FAILED;
+        state.error = action.payload;
+      });
   },
 });
 

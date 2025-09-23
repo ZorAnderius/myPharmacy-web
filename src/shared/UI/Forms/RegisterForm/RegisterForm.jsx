@@ -1,27 +1,46 @@
 import { FastField, Form, Formik } from "formik";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useDispatch } from "react-redux";
 import Input from "../Input/Input";
 import AuthBtnGroup from "../../../group/AuthBtnGroup/AuthBtnGroup";
 import styles from "./RegisterForm.module.css";
+import registerValidationSchema from "../../../../utils/validationForm/register";
+import { registerThunk } from "../../../../redux/auth/operations";
 
 const initialValues = {
-  first_name: "",
-  last_name: "",
+  firstName: "",
+  lastName: "",
   email: "",
-  phone: "",
+  phoneNumber: "",
   password: "",
-  confirm_password: "",
+  confirmPassword: "",
 };
 
 const RegisterForm = () => {
+  const dispatch = useDispatch();
+  const handleSubmit = (values) => {
+    const { firstName, lastName, email, phoneNumber, password } = values;
+    const userData = {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      password,
+    };
+    dispatch(registerThunk(userData));
+  };
+
   return (
     <div className={styles.registerFormContainer}>
       <motion.div>
-        <Formik initialValues={initialValues} onSubmit={() => {}}>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={registerValidationSchema}
+          onSubmit={handleSubmit}
+        >
           {() => (
             <Form className={styles.registerForm}>
-              <FastField name="first_name">
+              <FastField name="firstName">
                 {({ field, meta }) => (
                   <Input
                     id="first_name"
@@ -31,7 +50,7 @@ const RegisterForm = () => {
                   />
                 )}
               </FastField>
-              <FastField name="last_name">
+              <FastField name="lastName">
                 {({ field, meta }) => (
                   <Input
                     id="last_name"
@@ -52,7 +71,7 @@ const RegisterForm = () => {
                   />
                 )}
               </FastField>
-              <FastField name="phone">
+              <FastField name="phoneNumber">
                 {({ field, meta }) => (
                   <Input
                     id="phone"
@@ -74,7 +93,7 @@ const RegisterForm = () => {
                   />
                 )}
               </FastField>
-              <FastField name="confirm_password">
+              <FastField name="confirmPassword">
                 {({ field, meta }) => (
                   <Input
                     id="confirm_password"

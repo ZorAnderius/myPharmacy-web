@@ -14,7 +14,7 @@
   color: var(--input-placeholder-clr);
 }
 
-.formGroup label::after{
+.formGroup label::after {
   content: "*";
   color: transparent;
   margin-left: 2px;
@@ -36,7 +36,6 @@
   color: var(--icon-error-clr);
 }
 
-
 .formField {
   width: 100%;
   padding: 1.5rem;
@@ -49,11 +48,13 @@
 }
 
 .formField:focus {
-    border: 1px solid var(--primary-clr);
+  border: 1px solid var(--primary-clr);
 }
 
-.error {
+.errorMsg {
+  position: absolute;
+  bottom: -20px;
+  left: 10px;
   color: var(--icon-error-clr);
   font-size: 0.8rem;
-  margin-top: 4px;
 }
