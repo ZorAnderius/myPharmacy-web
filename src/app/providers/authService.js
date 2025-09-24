@@ -14,4 +14,8 @@ export const authServices = {
     setAccessToken(accessToken, user);
     return { accessToken, user };
   },
+  logout: async () => {
+    await api.post("users/logout");
+    setAccessToken(null);
+  },
 };

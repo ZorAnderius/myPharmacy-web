@@ -12,20 +12,25 @@ const buildStyles = ({ isActive }) => {
 const NavBar = ({ location, isMobile }) => {
   const isAuthenticate = useSelector(selectIsAuthenticate);
   return (
-    <div className={clsx(styles["routes-nav"], location && styles["home"], isMobile && styles["mobile"])}>
-      <ul>
-        <li>
-          <NavLink to={ROUTES.MAIN} className={buildStyles}>
-            Home
-          </NavLink>
-        </li>
-      </ul>
-
+    <div
+      className={clsx(
+        styles["routes-nav"],
+        location && styles["home"],
+        isMobile && styles["mobile"]
+      )}
+    >
       {isAuthenticate && (
-        <ul>
+        <ul className={styles["routes-list"]}>
+          {!location && (
+            <li>
+              <NavLink to={ROUTES.MAIN} className={buildStyles}>
+                Home
+              </NavLink>
+            </li>
+          )}
           <li>
             <NavLink to={ROUTES.SHOP} className={buildStyles}>
-              Medicine store
+              Store
             </NavLink>
           </li>
           <li>

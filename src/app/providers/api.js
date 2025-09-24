@@ -31,7 +31,7 @@ api.interceptors.request.use(async (config) => {
     try {
       const csrfToken = await getCSRFToken();
       if (csrfToken) {
-        config.headers["x-csrf-token"] = csrfToken;
+        config.headers["X-Csrf-Token"] = csrfToken;
       }
     } catch (error) {
       console.warn("Failed to get CSRF token:", error);
@@ -68,7 +68,7 @@ api.interceptors.response.use(
         try {
           const csrfToken = await getCSRFToken();
           if (csrfToken) {
-            error.config.headers["x-csrf-token"] = csrfToken;
+            error.config.headers["X-Csrf-Token"] = csrfToken;
             return api.request(error.config);
           }
         } catch (csrfError) {

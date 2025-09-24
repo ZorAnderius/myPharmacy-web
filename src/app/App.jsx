@@ -17,13 +17,8 @@ function App() {
         // Wait a bit for Redux persist to rehydrate
         await new Promise((resolve) => setTimeout(resolve, 50));
 
-        // Initialize CSRF token
-        try {
-          await getCSRFToken();
-        } catch (csrfError) {
-          console.warn("CSRF token initialization failed:", csrfError);
-          // Continue without CSRF token - it will be handled per request
-        }
+        // CSRF token will be obtained when needed (during auth requests)
+        // No need to initialize it at app startup
 
         // Only try to refresh token if we have one and it might be expired
         const existingToken = getAccessToken();
@@ -48,7 +43,7 @@ function App() {
   ) : (
     <RouterProvider
       router={router}
-      HydrateFallbackElement={<div>Loading app...</div>}
+      fallbackElement={<div>Loading app...</div>}
     />
   );
 }

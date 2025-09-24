@@ -12,6 +12,12 @@
 
 .logout {
   padding: 10px 20px;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+.logout:is(:hover, :focus) {
+  background-color: var(--secondary-clr);
+  color: var(--primary-clr);
 }
 
 /* Mobile specific styles */

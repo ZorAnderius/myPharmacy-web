@@ -39,3 +39,14 @@ export const authenticateWithGoogleOAuth = createAsyncThunk(
     }
   }
 );
+
+export const logoutThunk = createAsyncThunk(
+  "auth/logout",
+  async (__dirname, thunkAPI) => {
+    try {
+      await authServices.logout();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

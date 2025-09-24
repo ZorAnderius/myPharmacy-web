@@ -16,3 +16,10 @@ export const handleAuth = (state, action) => {
   state.user = action.payload.user;
   state.error = null;
 };
+
+export const handleLogout = (state) => {
+  state.isAuthenticated = false;
+  state.user = null;
+  state.status = responseStatuses.IDLE;
+  state.error = null;
+};

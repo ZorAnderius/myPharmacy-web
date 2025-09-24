@@ -8,12 +8,17 @@
   gap: 30px;
 }
 
+@media screen and (min-width: 480px) {
+  .authPage {
+    align-items: center;
+  }
+}
+
 @media screen and (min-width: 768px) {
   .authPage {
     flex-direction: row;
-    align-items: center;
     padding: 100px 20px 40px 20px;
-    gap: 60px;
+    gap: 0px;
     max-width: 1200px;
     margin: 0 auto;
   }

@@ -7,7 +7,7 @@
   color: var(--primary-txt-clr);
 }
 
-.routes-nav.home {
+.routes-list{
   display: none;
 }
 
@@ -28,7 +28,7 @@
   box-shadow: 0 4px 5px var(--border-home-clr);
 }
 
-.link-btn.active-btn{
+.link-btn.active-btn {
   border: 1px solid var(--border-home-clr);
   background-color: transparent;
   box-shadow: none;
@@ -36,25 +36,34 @@
     color var(--transition-time) var(--transition-func);
 }
 
-.link-btn.active-btn:is(:hover, :focus){
+.link-btn.active-btn:is(:hover, :focus) {
   color: var(--primary-clr);
   background-color: var(--pet-block-bg);
   box-shadow: none;
 }
-.routes-nav.mobile{
+.routes-nav.mobile {
   display: flex;
   flex-direction: column;
   justify-content: center;
   font-size: var(--font-size-3xl);
   height: 100vh;
   gap: 3rem;
-
 }
 
-.routes-nav.mobile > ul{
+.routes-nav.mobile > ul {
   display: flex;
   flex-direction: column;
   max-height: 10vh;
   background-color: var(--body-bg-clr);
   gap: 2rem;
+}
+
+@media screen and (min-width: 768px) {
+  .routes-list {
+    display: flex;
+    width: 300px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 }

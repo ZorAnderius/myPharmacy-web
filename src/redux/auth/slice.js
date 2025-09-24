@@ -5,8 +5,14 @@ import {
   registerThunk,
   authenticateWithGoogleOAuth,
   loginThunk,
+  logoutThunk,
 } from "./operations";
-import { handleAuth, handlePending, handleRejected } from "./handlers";
+import {
+  handleAuth,
+  handleLogout,
+  handlePending,
+  handleRejected,
+} from "./handlers";
 
 const sliceAuth = createSlice({
   name: "auth",
@@ -40,6 +46,7 @@ const sliceAuth = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(logoutThunk.fulfilled, handleLogout)
       .addMatcher(
         isAnyOf(
           registerThunk.fulfilled,
@@ -52,7 +59,8 @@ const sliceAuth = createSlice({
         isAnyOf(
           registerThunk.pending,
           authenticateWithGoogleOAuth.pending,
-          loginThunk.pending
+          loginThunk.pending,
+          logoutThunk.pending
         ),
         handlePending
       )
@@ -60,7 +68,8 @@ const sliceAuth = createSlice({
         isAnyOf(
           registerThunk.rejected,
           authenticateWithGoogleOAuth.rejected,
-          loginThunk.rejected
+          loginThunk.rejected,
+          logoutThunk.rejected
         ),
         handleRejected
       );

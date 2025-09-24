@@ -48,30 +48,8 @@ export const getCSRFToken = async () => {
     return csrfToken;
   }
 
-  // Try to fetch CSRF token from server
-  try {
-    const response = await fetch('/api/csrf-token', {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      const token = data.csrfToken || data.token;
-      if (token) {
-        setCSRFToken(token);
-        return token;
-      }
-    }
-  } catch (error) {
-    console.warn("Failed to fetch CSRF token from server:", error);
-  }
-
-  // If no valid token, throw error
-  throw new Error("No valid CSRF token available. Please authenticate first.");
+  // If no valid token, return null instead of throwing error
+  return null;
 };
 
 /**
@@ -111,10 +89,11 @@ export const initializeCSRFToken = async () => {
  */
 export const refreshCSRFToken = async () => {
   clearCSRFToken();
-  try {
-    return await getCSRFToken();
-  } catch (error) {
-    console.error("Failed to refresh CSRF token:", error);
-    throw error;
+  // Try to get fresh token from cookies
+  const cookieToken = getCSRFTokenFromCookie();
+  if (cookieToken) {
+    setCSRFToken(cookieToken);
+    return cookieToken;
   }
+  throw new Error("No CSRF token available in cookies");
 };
