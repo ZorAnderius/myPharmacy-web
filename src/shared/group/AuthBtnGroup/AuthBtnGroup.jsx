@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styles from "./AuthBtnGroup.module.css";
 import Button from "../../UI/Button/Button";
-import Icon from "../../UI/Icon/Icon";
+import GoogleAuthButton from "../../UI/GoogleAuthButton/GoogleAuthButton";
 
 const AuthBtnGroup = ({ authType }) => {
   return (
@@ -21,9 +21,7 @@ const AuthBtnGroup = ({ authType }) => {
       </div>
       <div className={styles.googleAuth}>
         <p>or sign in with Google</p>
-        <Button className={styles.googleBtn} size="icon">
-          <Icon name="google" size={40} />
-        </Button>
+        <GoogleAuthButton />
       </div>
     </div>
   );

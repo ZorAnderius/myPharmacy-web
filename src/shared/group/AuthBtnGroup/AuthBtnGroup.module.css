@@ -50,22 +50,3 @@
   gap: 16px;
 }
 
-.googleBtn {
-  gap: 12px;
-  width: 100%;
-  max-width: 120px;
-  padding: 1rem 2rem;
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  color: var(--body-bg-clr);
-  background-color: var(--icon-edit-bg-clr);
-  border: none;
-  cursor: pointer;
-  transition: background-color var(--transition-time) var(--transition-func);
-}
-
-.googleBtn:is(:hover, :focus) {
-  text-decoration: none;
-  background-color: var(--icon-success-clr);
-}

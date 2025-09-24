@@ -6,6 +6,7 @@ import Loader from "../features/Loader/Loader";
 import { useDispatch } from "react-redux";
 import { getAccessToken } from "./providers/tokenManager";
 import { getCSRFToken } from "./providers/csrfService";
+import { GoogleOAuthProvider } from "./providers/GoogleOAuthProvider";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -47,12 +48,12 @@ function App() {
   return loading ? (
     <Loader />
   ) : (
-    <>
+    <GoogleOAuthProvider>
       <RouterProvider
         router={router}
         HydrateFallbackElement={<div>Loading app...</div>}
       />
-    </>
+    </GoogleOAuthProvider>
   );
 }
 

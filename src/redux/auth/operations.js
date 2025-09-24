@@ -12,3 +12,18 @@ export const registerThunk = createAsyncThunk(
     }
   }
 );
+
+export const authenticateWithGoogleOAuth = createAsyncThunk(
+  "auth/googleOAuth",
+  async (oauthData, thunkAPI) => {
+    try {
+      const { accessToken, user } = oauthData;
+      // Store token and user data
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('user', JSON.stringify(user));
+      return { accessToken, user };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

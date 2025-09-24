@@ -80,6 +80,17 @@ const MedicinePage = async () => {
   }
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
+const OAuthCallbackPage = async () => {
+  try {
+    const mod = await import("../../pages/OAuthCallbackPage/OAuthCallbackPage");
+    return { Component: mod.default };
+  } catch (err) {
+    console.error("Error loading OAuthCallbackPage:", err);
+    throw err;
+  }
+};
+
 
 export const router = createBrowserRouter([
   {
@@ -94,6 +105,7 @@ export const router = createBrowserRouter([
       { path: ROUTES.CREATE_SHOP, lazy: CreateShopPage },
       { path: ROUTES.EDIT_SHOP, lazy: EditShopPage },
       { path: ROUTES.MEDICINE, lazy: MedicinePage },
+      { path: "/oauth/callback", lazy: OAuthCallbackPage },
     ],
     loader: () => new Promise((res) => setTimeout(res, 500)),
   },

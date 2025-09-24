@@ -1,0 +1,55 @@
+.googleAuthContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.googleBtn {
+  gap: 12px;
+  width: 100%;
+  max-width: 300px;
+  padding: 1rem 2rem;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--body-bg-clr);
+  background-color: var(--icon-edit-bg-clr);
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--transition-time) var(--transition-func);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.googleBtn:is(:hover, :focus) {
+  text-decoration: none;
+  background-color: var(--icon-success-clr);
+}
+
+.googleBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.loadingSpinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.errorMessage {
+  color: var(--error-clr, #ff4444);
+  font-size: var(--font-size-sm);
+  text-align: center;
+  margin-top: 8px;
+}

@@ -1,0 +1,10 @@
+.loginPage {
+  background-color: var(--primary-clr);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--body-bg-clr);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}

@@ -1,0 +1,40 @@
+.errorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.errorTitle {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--error-clr, #ff4444);
+  margin: 0;
+}
+
+.errorMessage {
+  font-size: var(--font-size-lg);
+  color: var(--text-clr);
+  text-align: center;
+  margin: 0;
+  max-width: 500px;
+}
+
+.returnButton {
+  padding: 1rem 2rem;
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--body-bg-clr);
+  background-color: var(--primary-clr);
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--transition-time) var(--transition-func);
+}
+
+.returnButton:hover {
+  background-color: var(--btn-hover-clr);
+}

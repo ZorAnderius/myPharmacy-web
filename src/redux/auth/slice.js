@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import initialState from "./initialState";
 import { responseStatuses } from "../../constants/responseStatuses";
-import { registerThunk } from "./operations";
+import { registerThunk, authenticateWithGoogleOAuth } from "./operations";
 
 const sliceAuth = createSlice({
   name: "auth",
@@ -40,10 +40,24 @@ const sliceAuth = createSlice({
       })
       .addCase(registerThunk.fulfilled, (state, action) => {
         state.status = responseStatuses.SUCCEEDED;
-        state.user = action.payload;
+        state.isAuthenticated = true;
+        state.user = action.payload.user;
         state.error = null;
       })
       .addCase(registerThunk.rejected, (state, action) => {
+        state.status = responseStatuses.FAILED;
+        state.error = action.payload;
+      })
+      .addCase(authenticateWithGoogleOAuth.pending, (state) => {
+        state.status = responseStatuses.LOADING;
+      })
+      .addCase(authenticateWithGoogleOAuth.fulfilled, (state, action) => {
+        state.status = responseStatuses.SUCCEEDED;
+        state.isAuthenticated = true;
+        state.user = action.payload.user;
+        state.error = null;
+      })
+      .addCase(authenticateWithGoogleOAuth.rejected, (state, action) => {
         state.status = responseStatuses.FAILED;
         state.error = action.payload;
       });
