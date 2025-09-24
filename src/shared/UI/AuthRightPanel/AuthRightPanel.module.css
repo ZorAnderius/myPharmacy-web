@@ -1,10 +1,11 @@
 .auth-right-panel {
-  margin: 100px auto;
+  margin: 0;
   height: auto;
-  max-width: 223px;
+  max-width: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 1;
 }
 
 .auth-right-panel-heading {
@@ -52,28 +53,27 @@
 
 @media (min-width: 768px) {
   .auth-right-panel {
-    margin: 120px 0;
-    max-width: 614px;
+    max-width: 500px;
   }
 
   .auth-right-panel-heading::before {
-    top: -25px;
-    right: -11px;
-    max-width: 95px;
-    max-height: 93px;
-  }
-
-  .auth-right-panel-heading::before {
-    max-width: 179px;
+    top: -20px;
+    right: -10px;
+    max-width: 80px;
+    max-height: 80px;
   }
 
   .auth-right-panel-heading {
-    font-size: var(--font-size-6xl);
+    font-size: var(--font-size-4xl);
   }
 }
 
 @media (min-width: 1280px) {
   .auth-right-panel {
-    height: 100%;
+    max-width: 600px;
+  }
+  
+  .auth-right-panel-heading {
+    font-size: var(--font-size-5xl);
   }
 }

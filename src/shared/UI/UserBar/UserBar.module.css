@@ -9,6 +9,9 @@
   background-color: transparent;
   padding: 0 20px 0 0;
   overflow: hidden;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
   transition: color var(--transition-time) var(--transition-func),
     color var(--transition-time) var(--transition-func) 0.5s;
 }
@@ -17,9 +20,10 @@
   content: "";
   position: absolute;
   top: 0;
-  left: 15px;
+  left: 0;
   width: 100%;
   height: 100%;
+  border-color: transparent;
   border-radius: 30px;
   background-color: var(--overlay-modal-clr);
   z-index: -1;
@@ -29,12 +33,15 @@
 }
 
 .user-bar:hover::after {
-  width: 100%;
+  width: 60%;
   transform: scaleX(1);
 }
 
 .user-bar:is(:hover, :focus) {
   color: var(--pet-block-bg);
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .mobile-user-bar {
@@ -74,6 +81,9 @@
   align-items: flex-start;
   padding: 10px 0;
   margin: 10px 0;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .avatar-thumb {

@@ -1,24 +1,27 @@
 .registerPage {
   display: flex;
   justify-content: space-between;
-  align-items: stretch;
+  align-items: center;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
+  padding: 80px 20px 20px 20px;
+  gap: 30px;
 }
 
 @media screen and (min-width: 768px) {
   .registerPage {
+    flex-direction: row;
     align-items: center;
-    padding: 40px 20px 20px 20px;
-    gap: 40px;
+    padding: 100px 20px 40px 20px;
+    gap: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
   }
-  
 }
 
-@media (min-width: 1279px) {
+@media (min-width: 1280px) {
   .registerPage {
-    flex-direction: row;
-    padding: 0 20px 40px 20px;
-    gap: 40px;
+    gap: 80px;
+    padding: 120px 40px 60px 40px;
   }
 }

@@ -7,4 +7,5 @@
   color: var(--body-bg-clr);
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
+  padding-top: 80px;
 }

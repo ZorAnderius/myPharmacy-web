@@ -1,35 +1,40 @@
 .registerFormContainer {
   width: 100%;
-  height: auto;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
+  flex: 1;
 }
 
 .registerForm {
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: stretch;
+  justify-content: center;
   align-items: stretch;
-  gap: 40px;
+  gap: 20px;
 }
-
 
 @media (min-width: 768px) {
   .registerFormContainer {
-    padding: 40px;
-    width:800px;
+    max-width: 450px;
+    padding: 20px;
+  }
+  
+  .registerForm {
+    gap: 24px;
   }
 }
 
 @media (min-width: 1280px) {
   .registerFormContainer {
-    width: 100%;
-    padding: 2rem;
-    height: 100vh;
-    padding-top: 520px;
+    max-width: 500px;
+    padding: 30px;
+  }
+  
+  .registerForm {
+    gap: 28px;
   }
 }
