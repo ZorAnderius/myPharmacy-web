@@ -29,22 +29,15 @@ export const GoogleOAuthProvider = ({ children }) => {
 
         return response.data.data?.url || response.data.url;
       } catch (fetchError) {
-        console.warn('Backend OAuth endpoint not available, using fallback');
+        console.error('Backend OAuth endpoint not available:', fetchError);
         
-        // Fallback: construct OAuth URL manually for testing
-        const baseUrl = window.location.origin; // http://localhost:5179
-        const redirectUri = encodeURIComponent(`${baseUrl}/oauth/callback`);
-        
-        // You'll need to replace YOUR_CLIENT_ID with your actual Google Client ID
-        const clientId = 'YOUR_CLIENT_ID'; // Replace with your actual Client ID
-        const scope = encodeURIComponent('openid email profile');
-        
-        return `https://accounts.google.com/o/oauth2/v2/auth?` +
-          `client_id=${clientId}&` +
-          `redirect_uri=${redirectUri}&` +
-          `scope=${scope}&` +
-          `response_type=code&` +
-          `access_type=offline`;
+        if (fetchError.response?.status === 404) {
+          throw new Error('OAuth endpoint not found. Please contact support.');
+        } else if (fetchError.code === 'ERR_NETWORK') {
+          throw new Error('Cannot connect to server. Please check your internet connection.');
+        } else {
+          throw new Error('OAuth service unavailable. Please try again later.');
+        }
       }
     } catch (err) {
       console.error('Error getting OAuth URL:', err);
@@ -60,24 +53,88 @@ export const GoogleOAuthProvider = ({ children }) => {
       setIsLoading(true);
       setError(null);
 
-      const response = await api.post('/users/confirm-oauth', { code }, {
-        headers: {
-          'X-No-CSRF': '1', // Disable CSRF check for OAuth
-        }
-      });
-
-      if (!response.data?.data && !response.data?.accessToken) {
-        throw new Error('Invalid response from OAuth authentication');
+      // Validate code format - Google OAuth codes can contain various characters
+      if (!code || typeof code !== 'string' || code.length < 10) {
+        throw new Error('Invalid authorization code');
       }
 
-      const data = response.data.data || response.data;
-      return {
-        accessToken: data.accessToken,
-        user: data.user
-      };
+      // Try backend first, but with timeout and single attempt
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+        
+        // Get real CSRF token from cookies
+        const csrfToken = document.cookie
+          .split('; ')
+          .find(row => row.startsWith('csrf-token='))
+          ?.split('=')[1];
+        
+
+        const response = await api.post('/users/confirm-oauth', { 
+          code: code.trim() 
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+            ...(csrfToken && { 'x-csrf-token': csrfToken }),
+          },
+          signal: controller.signal
+        });
+
+        clearTimeout(timeoutId);
+
+        if (!response.data?.data && !response.data?.accessToken) {
+          throw new Error('Invalid response from OAuth authentication');
+        }
+
+        const data = response.data.data || response.data;
+        
+        // Validate response structure
+        if (!data.accessToken || !data.user) {
+          throw new Error('Invalid authentication response structure');
+        }
+
+        return {
+          accessToken: data.accessToken,
+          user: data.user
+        };
+      } catch (backendError) {
+        console.error('Backend OAuth endpoint failed:', backendError);
+
+        // Provide more specific error messages based on response
+        if (backendError.response?.status === 400) {
+          const errorData = backendError.response?.data;
+          if (errorData?.message) {
+            throw new Error(`Backend error: ${errorData.message}`);
+          } else {
+            throw new Error('Invalid OAuth code. Please try logging in again.');
+          }
+        } else if (backendError.response?.status === 401) {
+          throw new Error('OAuth session expired. Please try again.');
+        } else if (backendError.response?.status === 403) {
+          throw new Error('Access denied. Please check your Google account permissions.');
+        } else if (backendError.response?.status >= 500) {
+          throw new Error('Server error. Please try again later.');
+        } else {
+          throw new Error('Authentication service unavailable. Please try again later.');
+        }
+      }
     } catch (err) {
       console.error('Error authenticating with Google:', err);
-      setError(err.message);
+      
+      // Provide user-friendly error messages
+      let errorMessage = 'Authentication failed. Please try again.';
+      
+      if (err.response?.status === 401) {
+        errorMessage = 'Authentication expired. Please try again.';
+      } else if (err.response?.status === 403) {
+        errorMessage = 'Access denied. Please check your permissions.';
+      } else if (err.code === 'ECONNABORTED') {
+        errorMessage = 'Request timeout. Please check your connection.';
+      } else if (err.message?.includes('Invalid')) {
+        errorMessage = err.message;
+      }
+      
+      setError(errorMessage);
       throw err;
     } finally {
       setIsLoading(false);
@@ -94,7 +151,12 @@ export const GoogleOAuthProvider = ({ children }) => {
         throw new Error('No OAuth URL received');
       }
 
-      // Use redirect flow instead of popup for better reliability
+      // Validate OAuth URL
+      if (!oauthUrl.startsWith('https://accounts.google.com/')) {
+        throw new Error('Invalid OAuth URL');
+      }
+
+      // Use redirect flow for better security
       window.location.href = oauthUrl;
     } catch (err) {
       console.error('Error redirecting to Google Auth:', err);

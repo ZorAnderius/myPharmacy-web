@@ -82,6 +82,30 @@ api.interceptors.response.use(
       }
     }
 
+    // Handle CORS errors - don't retry
+    if (error.code === 'ERR_NETWORK' || error.message?.includes('CORS')) {
+      console.warn('CORS error detected, not retrying:', error.message);
+      return Promise.reject(error);
+    }
+
+    // Handle OAuth endpoint errors - don't retry
+    if (error.config?.url?.includes('confirm-oauth')) {
+      console.warn('OAuth endpoint error, not retrying:', error.message);
+      return Promise.reject(error);
+    }
+
+    // Handle timeout errors - don't retry
+    if (error.code === 'ECONNABORTED' || error.message?.includes('timeout')) {
+      console.warn('Request timeout, not retrying:', error.message);
+      return Promise.reject(error);
+    }
+
+    // Handle abort errors - don't retry
+    if (error.name === 'AbortError' || error.code === 'ABORT_ERR') {
+      console.warn('Request aborted, not retrying:', error.message);
+      return Promise.reject(error);
+    }
+
     // Handle token refresh on 401 and 403 errors (but not CSRF errors)
     if (
       (error.response?.status === 401 || error.response?.status === 403) &&
@@ -91,7 +115,6 @@ api.interceptors.response.use(
     ) {
       error.config._retry = true;
       try {
-        console.log("Attempting token refresh due to 401/403 error");
         await refreshToken();
         const newToken = getAccessToken();
         if (newToken) {

@@ -120,18 +120,15 @@ export const refreshToken = async () => {
   }
 
   if (!tokenToUse) {
-    console.log("No token to refresh");
     return null;
   }
 
   if (isRefreshing) {
-    console.log("Token refresh already in progress, queuing request");
     return new Promise((resolve, reject) =>
       pendingQueue.push({ resolve, reject })
     );
   }
 
-  console.log("Starting token refresh");
   isRefreshing = true;
 
   try {
@@ -153,13 +150,11 @@ export const refreshToken = async () => {
       response.data.data || response.data;
 
     if (newAccessToken) {
-      console.log("Token refresh successful");
       setAccessToken(newAccessToken, user);
       processQueue(null, newAccessToken);
       return newAccessToken;
     }
 
-    console.log("No new token received from refresh");
     return null;
   } catch (err) {
     console.error("Token refresh failed:", err);
@@ -168,6 +163,5 @@ export const refreshToken = async () => {
     throw err;
   } finally {
     isRefreshing = false;
-    console.log("Token refresh process completed");
   }
 };

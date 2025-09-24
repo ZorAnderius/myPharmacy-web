@@ -6,7 +6,6 @@ import Loader from "../features/Loader/Loader";
 import { useDispatch } from "react-redux";
 import { getAccessToken } from "./providers/tokenManager";
 import { getCSRFToken } from "./providers/csrfService";
-import { GoogleOAuthProvider } from "./providers/GoogleOAuthProvider";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -32,7 +31,6 @@ function App() {
           // Check if token is expired or about to expire (optional)
           // For now, let's not automatically refresh on app start
           // The API interceptor will handle token refresh when needed
-          console.log("Token found, will be refreshed on first API call if needed");
         }
         // If no token, don't try to get current user - user is not authenticated
       } catch {
@@ -48,12 +46,10 @@ function App() {
   return loading ? (
     <Loader />
   ) : (
-    <GoogleOAuthProvider>
-      <RouterProvider
-        router={router}
-        HydrateFallbackElement={<div>Loading app...</div>}
-      />
-    </GoogleOAuthProvider>
+    <RouterProvider
+      router={router}
+      HydrateFallbackElement={<div>Loading app...</div>}
+    />
   );
 }
 

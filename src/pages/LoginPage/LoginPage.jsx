@@ -10,7 +10,6 @@ const LoginPage = () => {
     const getCategory = async () => {
       try {
         const res = await api.get("/categories");
-        console.log(res.data);
       } catch (err) {
         console.error("Помилка при отриманні категорій:", err);
       }

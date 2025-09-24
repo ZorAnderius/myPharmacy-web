@@ -16,11 +16,9 @@ const typewriterWords = [
 
 const HomePage = () => {
   const handleGetStarted = () => {
-    console.log("GetStarted");
   };
 
   const handleLearnMore = () => {
-    console.log("LearnMor");
   };
 
   return (

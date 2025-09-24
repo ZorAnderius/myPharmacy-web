@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import SharedLayout from "../../pages/SharedLayout/SharedLayout";
 import NotFoundPage from "../../pages/NotFoundPage/NotFoundPage";
+import { GoogleOAuthProvider } from "../../app/providers/GoogleOAuthProvider";
 import { ROUTES } from "../../constants/routes";
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -95,7 +96,11 @@ const OAuthCallbackPage = async () => {
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <SharedLayout />,
+    element: (
+      <GoogleOAuthProvider>
+        <SharedLayout />
+      </GoogleOAuthProvider>
+    ),
     errorElement: <NotFoundPage />,
     children: [
       { index: true, lazy: HomePage },
