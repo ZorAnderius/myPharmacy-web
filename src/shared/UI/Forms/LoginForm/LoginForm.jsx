@@ -14,29 +14,33 @@ const LoginForm = () => {
   };
 
   return (
-    <Formik className={styles.loginFormContainer} initialValues={initialValues} onSubmit={handleSubmit}>
-      {() => (
-        <Form className={styles.loginForm}>
-          <FastField name="email">
-            {({ field, meta }) => (
-              <Input id="email" label="Email" field={field} meta={meta} />
-            )}
-          </FastField>
-          <FastField name="password">
-            {({ field, meta }) => (
-              <Input
-                id="password"
-                label="Password"
-                type="password"
-                field={field}
-                meta={meta}
-              />
-            )}
-          </FastField>
-          <AuthBtnGroup authType="login" />
-        </Form>
-      )}
-    </Formik>
+    <div className={styles.loginFormContainer}>
+      <div>
+        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+          {() => (
+            <Form className={styles.loginForm}>
+              <FastField name="email">
+                {({ field, meta }) => (
+                  <Input id="email" label="Email" field={field} meta={meta} />
+                )}
+              </FastField>
+              <FastField name="password">
+                {({ field, meta }) => (
+                  <Input
+                    id="password"
+                    label="Password"
+                    type="password"
+                    field={field}
+                    meta={meta}
+                  />
+                )}
+              </FastField>
+              <AuthBtnGroup authType="login" />
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </div>
   );
 };
 

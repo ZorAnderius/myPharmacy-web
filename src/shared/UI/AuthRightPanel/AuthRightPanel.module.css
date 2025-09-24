@@ -1,11 +1,11 @@
 .auth-right-panel {
   margin: 0;
-  min-height: 100%;
-  max-width: 350px;
+  height: auto;
+  max-width: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 0 0 auto;
+  flex: 1;
 }
 
 .auth-right-panel-heading {
@@ -70,7 +70,7 @@
 
 @media (min-width: 1280px) {
   .auth-right-panel {
-    max-width: 550px;
+    max-width: 600px;
   }
   
   .auth-right-panel-heading {
