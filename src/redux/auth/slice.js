@@ -1,7 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import initialState from "./initialState";
 import { responseStatuses } from "../../constants/responseStatuses";
-import { registerThunk, authenticateWithGoogleOAuth } from "./operations";
+import {
+  registerThunk,
+  authenticateWithGoogleOAuth,
+  loginThunk,
+} from "./operations";
+import { handleAuth, handlePending, handleRejected } from "./handlers";
 
 const sliceAuth = createSlice({
   name: "auth",
@@ -33,36 +38,41 @@ const sliceAuth = createSlice({
       state.status = responseStatuses.IDLE;
     },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
-      .addCase(registerThunk.pending, (state) => {
-        state.status = responseStatuses.LOADING;
-      })
-      .addCase(registerThunk.fulfilled, (state, action) => {
-        state.status = responseStatuses.SUCCEEDED;
-        state.isAuthenticated = true;
-        state.user = action.payload.user;
-        state.error = null;
-      })
-      .addCase(registerThunk.rejected, (state, action) => {
-        state.status = responseStatuses.FAILED;
-        state.error = action.payload;
-      })
-      .addCase(authenticateWithGoogleOAuth.pending, (state) => {
-        state.status = responseStatuses.LOADING;
-      })
-      .addCase(authenticateWithGoogleOAuth.fulfilled, (state, action) => {
-        state.status = responseStatuses.SUCCEEDED;
-        state.isAuthenticated = true;
-        state.user = action.payload.user;
-        state.error = null;
-      })
-      .addCase(authenticateWithGoogleOAuth.rejected, (state, action) => {
-        state.status = responseStatuses.FAILED;
-        state.error = action.payload;
-      });
+      .addMatcher(
+        isAnyOf(
+          registerThunk.fulfilled,
+          authenticateWithGoogleOAuth.fulfilled,
+          loginThunk.fulfilled
+        ),
+        handleAuth
+      )
+      .addMatcher(
+        isAnyOf(
+          registerThunk.pending,
+          authenticateWithGoogleOAuth.pending,
+          loginThunk.pending
+        ),
+        handlePending
+      )
+      .addMatcher(
+        isAnyOf(
+          registerThunk.rejected,
+          authenticateWithGoogleOAuth.rejected,
+          loginThunk.rejected
+        ),
+        handleRejected
+      );
   },
 });
 
-export const { setAuth, clearAuth, setLoading, setError, clearError, resetStatus } = sliceAuth.actions;
+export const {
+  setAuth,
+  clearAuth,
+  setLoading,
+  setError,
+  clearError,
+  resetStatus,
+} = sliceAuth.actions;
 export const authReducer = sliceAuth.reducer;

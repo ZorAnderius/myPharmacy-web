@@ -10,9 +10,6 @@ import { ROUTES } from "../../constants/routes";
 const AuthPage = () => {
   const location = useLocation();
   const isLogin = location.pathname === ROUTES.LOGIN;
-  
-  console.log('AuthPage - pathname:', location.pathname, 'isLogin:', isLogin);
-  
   return (
     <Section style="authSection">
       <Container>

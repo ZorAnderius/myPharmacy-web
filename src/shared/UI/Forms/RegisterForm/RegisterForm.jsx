@@ -5,6 +5,8 @@ import AuthBtnGroup from "../../../group/AuthBtnGroup/AuthBtnGroup";
 import styles from "./RegisterForm.module.css";
 import registerValidationSchema from "../../../../utils/validationForm/register";
 import { registerThunk } from "../../../../redux/auth/operations";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../../../constants/routes";
 
 const initialValues = {
   firstName: "",
@@ -17,6 +19,7 @@ const initialValues = {
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleSubmit = (values) => {
     const { firstName, lastName, email, phoneNumber, password } = values;
     const userData = {
@@ -27,6 +30,7 @@ const RegisterForm = () => {
       password,
     };
     dispatch(registerThunk(userData));
+    navigate(ROUTES.SHOP);
   };
 
   return (

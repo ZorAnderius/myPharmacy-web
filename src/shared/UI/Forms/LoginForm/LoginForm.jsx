@@ -2,6 +2,12 @@ import { FastField, Form, Formik } from "formik";
 import Input from "../Input/Input";
 import AuthBtnGroup from "../../../group/AuthBtnGroup/AuthBtnGroup";
 import styles from "./LoginForm.module.css";
+import loginValidationSchema from "../../../../utils/validationForm/login";
+import { useDispatch } from "react-redux";
+import { loginThunk } from "../../../../redux/auth/operations";
+import { sanitizeInput } from "../../../../utils/security/sanitizeInput";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../../../constants/routes";
 
 const initialValues = {
   email: "",
@@ -9,14 +15,26 @@ const initialValues = {
 };
 
 const LoginForm = () => {
-  const handleSubmit = (values) => {
-    console.log(values);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (values) => {
+    const userData = {
+      email: sanitizeInput(values.email),
+      password: sanitizeInput(values.password),
+    };
+    await dispatch(loginThunk(userData)).unwrap();
+    navigate(ROUTES.SHOP);
   };
 
   return (
     <div className={styles.loginFormContainer}>
       <div>
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={loginValidationSchema}
+          onSubmit={handleSubmit}
+        >
           {() => (
             <Form className={styles.loginForm}>
               <FastField name="email">

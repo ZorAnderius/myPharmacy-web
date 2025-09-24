@@ -13,14 +13,26 @@ export const registerThunk = createAsyncThunk(
   }
 );
 
+export const loginThunk = createAsyncThunk(
+  "auth/login",
+  async (userData, thunkAPI) => {
+    try {
+      const response = await authServices.login(userData);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 export const authenticateWithGoogleOAuth = createAsyncThunk(
   "auth/googleOAuth",
   async (oauthData, thunkAPI) => {
     try {
       const { accessToken, user } = oauthData;
       // Store token and user data
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("user", JSON.stringify(user));
       return { accessToken, user };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

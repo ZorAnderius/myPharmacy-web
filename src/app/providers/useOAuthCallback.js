@@ -64,8 +64,8 @@ export const useOAuthCallback = () => {
         // Mark as processed to avoid retries
         setHasProcessed(true);
         
-        // Redirect to home page or dashboard
-        navigate('/');
+        // Redirect to shop page after successful authentication
+        navigate('/shop');
       } catch (error) {
         console.error('OAuth callback error:', error);
         setError(error.message);

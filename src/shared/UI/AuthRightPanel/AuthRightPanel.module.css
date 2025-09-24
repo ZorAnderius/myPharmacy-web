@@ -28,6 +28,7 @@
   background-image: url("../../../assets/img/tablet_1x.avif");
   background-size: contain;
   background-repeat: no-repeat;
+  z-index: 1;
 }
 
 @media (min-device-pixel-ratio: 2), (min-resolution: 192dpi) {

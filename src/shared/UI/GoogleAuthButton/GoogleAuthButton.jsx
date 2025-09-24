@@ -27,7 +27,7 @@ const GoogleAuthButton = ({ className, disabled, children, ...props }) => {
         ) : (
           <Icon name="google" size={40} />
         )}
-        {children || (isLoading ? 'Connecting...' : 'Continue with Google')}
+        {children || (isLoading ? 'Connecting...' : '')}
       </Button>
       {error && <p className={styles.errorMessage}>{error}</p>}
     </div>

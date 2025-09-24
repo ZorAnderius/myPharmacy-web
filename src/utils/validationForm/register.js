@@ -1,7 +1,5 @@
 import * as Yup from "yup";
-
-const phoneRegExp = /^07\d{9}$/;
-const emailRegexp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+import { emailRegexp, phoneRegExp } from "./regax";
 
 const registerValidationSchema = Yup.object({
   firstName: Yup.string()
