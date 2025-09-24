@@ -16,23 +16,12 @@ const HomePage = async () => {
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
-const RegisterPage = async () => {
+const AuthPage = async () => {
   try {
-    const mod = await import("../../pages/RegisterPage/RegisterPage");
+    const mod = await import("../../pages/AuthPage/AuthPage");
     return { Component: mod.default };
   } catch (err) {
-    console.error("Error loading RegisterPage:", err);
-    throw err;
-  }
-};
-
-// eslint-disable-next-line react-refresh/only-export-components
-const LoginPage = async () => {
-  try {
-    const mod = await import("../../pages/LoginPage/LoginPage");
-    return { Component: mod.default };
-  } catch (err) {
-    console.error("Error loading LoginPage:", err);
+    console.error("Error loading AuthPage:", err);
     throw err;
   }
 };
@@ -104,8 +93,8 @@ export const router = createBrowserRouter([
     errorElement: <NotFoundPage />,
     children: [
       { index: true, lazy: HomePage },
-      { path: ROUTES.REGISTER, lazy: RegisterPage },
-      { path: ROUTES.LOGIN, lazy: LoginPage },
+      { path: ROUTES.REGISTER, lazy: AuthPage },
+      { path: ROUTES.LOGIN, lazy: AuthPage },
       { path: ROUTES.SHOP, lazy: ShopPage },
       { path: ROUTES.CREATE_SHOP, lazy: CreateShopPage },
       { path: ROUTES.EDIT_SHOP, lazy: EditShopPage },
