@@ -5,6 +5,7 @@ import Container from "../../shared/UI/Container/Container";
 import Section from "../../shared/UI/Section/Section";
 import Button from "../../shared/UI/Button/Button";
 import MedicineCard from "../../shared/UI/MedicineCard/MedicineCard";
+import AddMedicineModal from "../../shared/UI/AddMedicineModal/AddMedicineModal.simple";
 import { getShopByIdThunk } from "../../redux/shops/operations";
 import { selectCurrentShop, selectIsLoading } from "../../redux/shops/selectors";
 import { selectIsLoading as selectGlobalIsLoading } from "../../redux/auth/selectors";
@@ -20,42 +21,49 @@ const MedicinePage = () => {
   const isLoading = useSelector(selectIsLoading);
   const globalIsLoading = useSelector(selectGlobalIsLoading);
   const [medicines, setMedicines] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (shopId) {
-      console.log('Dispatching getShopByIdThunk with shopId:', shopId);
       dispatch(getShopByIdThunk(shopId));
-    } else {
-      console.log('No shopId provided');
     }
   }, [shopId, dispatch]);
 
   useEffect(() => {
     if (shop && shop.products) {
-      console.log('Setting medicines from shop data:', shop.products);
       setMedicines(shop.products);
     }
   }, [shop]);
-
-  console.log('MedicinePage render - shop:', shop, 'isLoading:', isLoading, 'shopId:', shopId);
 
   const handleBackToShops = () => {
     navigate('/shop');
   };
 
   const handleAddMedicine = () => {
-    // TODO: Implement add medicine functionality
-    console.log('Add medicine clicked');
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSubmitMedicine = async (formData) => {
+    try {
+      // TODO: Implement API call to create medicine
+      
+      // For now, just close the modal
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error('Error creating medicine:', error);
+    }
   };
 
   const handleEditMedicine = (medicine) => {
     // TODO: Implement edit medicine functionality
-    console.log('Edit medicine:', medicine);
   };
 
   const handleDeleteMedicine = (medicine) => {
     // TODO: Implement delete medicine functionality
-    console.log('Delete medicine:', medicine);
   };
 
   if (isLoading || globalIsLoading) {
@@ -169,6 +177,13 @@ const MedicinePage = () => {
           </div>
         </div>
       </Container>
+      
+      <AddMedicineModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onSubmit={handleSubmitMedicine}
+        shopId={shopId}
+      />
     </Section>
   );
 };
