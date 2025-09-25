@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useGoogleOAuth } from './GoogleOAuthProvider';
 import { authenticateWithGoogleOAuth } from '../../redux/auth/operations';
+import { PuffLoader } from 'react-spinners';
 
 export const useOAuthCallback = () => {
   const dispatch = useDispatch();

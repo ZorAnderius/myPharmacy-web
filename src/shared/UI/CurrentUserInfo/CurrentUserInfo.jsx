@@ -1,21 +1,23 @@
 import { useSelector, useDispatch } from "react-redux";
-import { selectUser, selectIsAuthenticate } from "../../../redux/auth/selectors";
+import { selectUser, selectIsAuthenticate, selectIsLoading } from "../../../redux/auth/selectors";
 import { getCurrentUserThunk } from "../../../redux/auth/operations";
 import { useEffect, useState } from "react";
+import { PuffLoader } from "react-spinners";
 
 const CurrentUserInfo = () => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(selectIsAuthenticate);
   const user = useSelector(selectUser);
-  const [isLoading, setIsLoading] = useState(false);
+  const isLoading = useSelector(selectIsLoading);
+  const [isLocalLoading, setIsLocalLoading] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated && !user) {
       // If user is authenticated but user data is missing, fetch it from backend
-      setIsLoading(true);
+      setIsLocalLoading(true);
       dispatch(getCurrentUserThunk())
         .unwrap()
-        .finally(() => setIsLoading(false));
+        .finally(() => setIsLocalLoading(false));
     }
   }, [dispatch, isAuthenticated, user]);
 
@@ -23,8 +25,13 @@ const CurrentUserInfo = () => {
     return <div>Not authenticated</div>;
   }
 
-  if (isLoading) {
-    return <div>Loading user profile...</div>;
+  if (isLoading || isLocalLoading) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', padding: '20px' }}>
+        <PuffLoader color="#4ade80" size={40} />
+        <p>Loading user profile...</p>
+      </div>
+    );
   }
 
   if (!user) {

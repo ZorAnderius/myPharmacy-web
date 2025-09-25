@@ -3,6 +3,7 @@ import "./App.css";
 import { router } from "./routes";
 import { RouterProvider } from "react-router-dom";
 import Loader from "../features/Loader/Loader";
+import GlobalLoader from "../shared/UI/GlobalLoader/GlobalLoader";
 import { useDispatch } from "react-redux";
 import { getAccessToken } from "./providers/tokenManager";
 import { PersistGate } from "redux-persist/integration/react";
@@ -55,10 +56,13 @@ function App() {
       {loading ? (
         <Loader />
       ) : (
-        <RouterProvider
-          router={router}
-          fallbackElement={<div>Loading app...</div>}
-        />
+        <>
+          <RouterProvider
+            router={router}
+            fallbackElement={<div>Loading app...</div>}
+          />
+          <GlobalLoader />
+        </>
       )}
     </PersistGate>
   );
