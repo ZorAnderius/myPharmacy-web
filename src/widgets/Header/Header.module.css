@@ -20,14 +20,30 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0;
+  padding: 0 16px;
   height: 60px;
   color: var(--secondary-txt-clr);
+  gap: 16px;
+  min-width: 0;
 }
 
 @media screen and (min-width: 768px) {
   .nav-wrapper {
-    padding: 3rem;
+    padding: 0 3rem;
+    gap: 24px;
   }
-  
+}
+
+@media screen and (min-width: 1024px) {
+  .nav-wrapper {
+    padding: 0 4rem;
+    gap: 32px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .nav-wrapper {
+    padding: 0 12px;
+    gap: 8px;
+  }
 }

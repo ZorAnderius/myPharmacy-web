@@ -23,7 +23,7 @@ const NavBar = ({ location, isMobile }) => {
         isMobile && styles["mobile"]
       )}
     >
-      {isAuthenticate && (
+      {(isAuthenticate || isMobile) && (
         <ul className={styles["routes-list"]}>
           <li>
             <NavLink

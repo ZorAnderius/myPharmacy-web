@@ -8,20 +8,6 @@ const ShopInfo = ({ shop, onEdit, onViewProducts }) => {
     <div className={styles.shopInfoContainer}>
       <div className={styles.shopHeader}>
         <h2 className={styles.shopName}>{shop.name}</h2>
-        <div className={styles.buttonGroup}>
-          <Button 
-            className={styles.viewProductsButton}
-            onClick={onViewProducts}
-          >
-            View products
-          </Button>
-          <Button 
-            className={styles.editButton}
-            onClick={onEdit}
-          >
-            Edit
-          </Button>
-        </div>
       </div>
       
       <div className={styles.shopDetails}>
@@ -53,6 +39,21 @@ const ShopInfo = ({ shop, onEdit, onViewProducts }) => {
             {shop.hasDelivery ? 'Yes' : 'No'}
           </span>
         </div>
+      </div>
+      
+      <div className={styles.buttonGroup}>
+        <Button 
+          className={styles.viewProductsButton}
+          onClick={onViewProducts}
+        >
+          View products
+        </Button>
+        <Button 
+          className={styles.editButton}
+          onClick={onEdit}
+        >
+          Edit
+        </Button>
       </div>
     </div>
   );

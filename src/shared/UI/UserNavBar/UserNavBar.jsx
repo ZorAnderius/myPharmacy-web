@@ -39,12 +39,20 @@ const UserNavBar = ({ location, isMobile }) => {
         isMobile && styles["mobile"]
       )}
     >
-      <li>
-        <LogOutBtn className={isMobile ? 'mobile' : ''} />
-      </li>
-      <li>
-        <UserBar className={isMobile ? 'mobile' : ''} />
-      </li>
+      {isMobile ? (
+        <li>
+          <UserBar className="mobile" />
+        </li>
+      ) : (
+        <>
+          <li>
+            <LogOutBtn />
+          </li>
+          <li>
+            <UserBar />
+          </li>
+        </>
+      )}
     </ul>
   );
 };

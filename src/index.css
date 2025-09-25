@@ -5,6 +5,9 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100vw;
+  height: 100%;
 }
 
 body {
@@ -12,10 +15,26 @@ body {
   background-color: var(--color-background-white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  max-width: 100vw;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 /* Prevent scroll when modal is open */
 .no-scroll {
   overflow: hidden !important;
   overflow-x: hidden !important;
+  overflow-y: hidden !important;
+  position: fixed !important;
+  width: 100% !important;
+  height: 100% !important;
 }

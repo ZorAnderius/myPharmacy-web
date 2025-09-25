@@ -6,11 +6,15 @@ import NavBar from "../NavBar/NavBar";
 import { useLocation } from "react-router-dom";
 import { ROUTES } from "../../../constants/routes";
 import UserNavBar from "../UserNavBar/UserNavBar";
+import LogOutBtn from "../LogOutBtn/LogOutBtn";
+import { useSelector } from "react-redux";
+import { selectIsAuthenticate } from "../../../redux/auth/selectors";
 
 const MobileMenu = ({ isOpen, setIsOpen }) => {
   const [isAnimated, setIsAnimated] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === ROUTES.MAIN;
+  const isAuthenticate = useSelector(selectIsAuthenticate);
 
   const toggleMenu = () => {
     if (window.innerWidth < 768) {
@@ -103,10 +107,17 @@ const MobileMenu = ({ isOpen, setIsOpen }) => {
             )}
           >
             <div className={styles["line"]}></div>
-            {!isHome && <NavBar location={isHome} />}
-            {/* { <NavBar location={isHome} isMobile={true} />} */}
             <UserNavBar location={isHome} isMobile={true} />
             <div className={styles["line"]}></div>
+            <NavBar location={isHome} isMobile={true} />
+            {isAuthenticate && (
+              <>
+                <div className={styles["line"]}></div>
+                <div className={styles["logout-section"]}>
+                  <LogOutBtn className="mobile" />
+                </div>
+              </>
+            )}
           </nav>
         </div>
       )}
@@ -115,3 +126,4 @@ const MobileMenu = ({ isOpen, setIsOpen }) => {
 };
 
 export default MobileMenu;
+

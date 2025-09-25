@@ -3,6 +3,8 @@
   width: 100%;
   max-width: clamp(375px, 90%, 1440px);
   padding: 0 1rem;
+  overflow-x: hidden;
+  height: 100%;
 }
 
 @media (max-width: 480px) {

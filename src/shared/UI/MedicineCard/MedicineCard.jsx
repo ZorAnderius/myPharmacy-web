@@ -19,7 +19,7 @@ const MedicineCard = ({ medicine, onEdit, onDelete, onView }) => {
         <h3 className={styles.medicineName} onClick={() => onView(medicine)}>
           {medicine.name}
         </h3>
-        <p className={styles.medicinePrice}>{medicine.price}</p>
+        <p className={styles.medicinePrice}>£{medicine.price}</p>
         <p className={styles.medicineDescription}>{medicine.description}</p>
       </div>
       <div className={styles.medicineActions}>

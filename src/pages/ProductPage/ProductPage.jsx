@@ -8,8 +8,10 @@ import EditMedicineModal from "../../shared/UI/EditMedicineModal/EditMedicineMod
 import DeleteConfirmModal from "../../shared/UI/DeleteConfirmModal/DeleteConfirmModal";
 import { getShopByIdThunk } from "../../redux/shops/operations";
 import { updateProductThunk, deleteProductThunk } from "../../redux/products/operations";
+import { getProductReviewsThunk } from "../../redux/reviews/operations";
 import { selectCurrentShop, selectIsLoading } from "../../redux/shops/selectors";
 import { selectIsLoading as selectGlobalIsLoading } from "../../redux/auth/selectors";
+import { selectReviews, selectIsLoading as selectReviewsIsLoading } from "../../redux/reviews/selectors";
 import styles from "./ProductPage.module.css";
 
 const ProductPage = () => {
@@ -23,6 +25,8 @@ const ProductPage = () => {
   const shop = useSelector(selectCurrentShop);
   const isLoading = useSelector(selectIsLoading);
   const globalIsLoading = useSelector(selectGlobalIsLoading);
+  const reviews = useSelector(selectReviews);
+  const reviewsIsLoading = useSelector(selectReviewsIsLoading);
   
   const [product, setProduct] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -41,6 +45,12 @@ const ProductPage = () => {
       setProduct(foundProduct);
     }
   }, [shop, productId]);
+
+  useEffect(() => {
+    if (shopId && productId) {
+      dispatch(getProductReviewsThunk({ shopId, productId }));
+    }
+  }, [shopId, productId, dispatch]);
 
   const handleEditProduct = () => {
     setIsEditModalOpen(true);
@@ -129,6 +139,14 @@ const ProductPage = () => {
   return (
     <Section>
       <Container>
+        <div className={styles.backSection}>
+          <Button 
+            className={styles.backButton}
+            onClick={() => navigate(`/medicine?shopId=${shopId}`)}
+          >
+            ← Back to Catalog
+          </Button>
+        </div>
         <div className={styles.productPage}>
           <div className={styles.productCard}>
             <div className={styles.productImage}>
@@ -146,7 +164,7 @@ const ProductPage = () => {
             <div className={styles.productInfo}>
               <h1 className={styles.productName}>{product.name}</h1>
               <p className={styles.productBrand}>{product.category?.name || 'Unknown'}</p>
-              <div className={styles.productPrice}>${product.price}</div>
+              <div className={styles.productPrice}>£{product.price}</div>
             </div>
             <div className={styles.productActions}>
               <Button 
@@ -191,6 +209,7 @@ const ProductPage = () => {
                   
                   <div className={styles.benefits}>
                     <h3>Product Information</h3>
+                    <p><strong>Price:</strong> £{product.price}</p>
                     <p><strong>Quantity:</strong> {product.quantity} units</p>
                     
                     <h3>Description</h3>
@@ -201,7 +220,32 @@ const ProductPage = () => {
               
               {activeTab === 'reviews' && (
                 <div className={styles.reviews}>
-                  <p>Reviews will be implemented later.</p>
+                  {reviewsIsLoading ? (
+                    <div className={styles.loadingContainer}>
+                      <p>Loading reviews...</p>
+                    </div>
+                  ) : reviews && reviews.length > 0 ? (
+                    <div className={styles.reviewsList}>
+                      {reviews.map((review, index) => (
+                        <div key={review.id || index} className={styles.reviewItem}>
+                          <div className={styles.reviewHeader}>
+                            <h4 className={styles.reviewAuthor}>{review.user?.name || 'Anonymous'}</h4>
+                            <div className={styles.reviewRating}>
+                              {'★'.repeat(review.rating || 5)}
+                            </div>
+                          </div>
+                          <p className={styles.reviewText}>{review.comment}</p>
+                          <div className={styles.reviewDate}>
+                            {new Date(review.createdAt).toLocaleDateString()}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className={styles.noReviews}>
+                      <p>No comments yet</p>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

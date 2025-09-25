@@ -133,3 +133,10 @@
 .mobile-nav .line:last-child {
   bottom: 15vh;
 }
+
+.logout-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-lg) 0;
+}

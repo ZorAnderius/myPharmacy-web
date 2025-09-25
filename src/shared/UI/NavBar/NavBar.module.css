@@ -63,6 +63,30 @@
   gap: 2rem;
 }
 
+/* Mobile specific button styles */
+.routes-nav.mobile .link-btn {
+  padding: 15px 35px;
+  color: var(--secondary-txt-clr);
+  background-color: var(--primary-clr);
+  border: none;
+  font-weight: 600;
+}
+
+.routes-nav.mobile .link-btn:is(:hover, :focus) {
+  background-color: var(--btn-hover-clr);
+  color: var(--icon-success-clr);
+}
+
+.routes-nav.mobile .link-btn.active-btn {
+  background-color: var(--secondary-clr);
+  color: var(--primary-clr);
+  border: 1px solid var(--primary-clr);
+}
+
+.routes-nav.mobile .link-btn.active-btn:is(:hover, :focus) {
+  background-color: var(--icon-edit-bg-clr);
+}
+
 @media screen and (min-width: 768px) {
   .routes-list {
     display: flex;
@@ -71,5 +95,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
   }
 }
