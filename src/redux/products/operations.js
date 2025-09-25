@@ -24,3 +24,15 @@ export const updateProductThunk = createAsyncThunk(
     }
   }
 );
+
+export const deleteProductThunk = createAsyncThunk(
+  "products/deleteProduct",
+  async ({ shopId, productId }, thunkAPI) => {
+    try {
+      const response = await productsServices.deleteProduct(shopId, productId);
+      return { productId, response };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

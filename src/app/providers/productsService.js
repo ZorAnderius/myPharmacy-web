@@ -18,4 +18,9 @@ export const productsServices = {
     });
     return response.data;
   },
+
+  deleteProduct: async (shopId, productId) => {
+    const response = await api.delete(`/shops/${shopId}/products/${productId}/delete`);
+    return response.data;
+  },
 };

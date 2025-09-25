@@ -25,3 +25,10 @@ export const handleUpdateProduct = (state, action) => {
   }
   state.error = null;
 };
+
+export const handleDeleteProduct = (state, action) => {
+  state.status = responseStatuses.SUCCEEDED;
+  const { productId } = action.payload;
+  state.products = state.products.filter(product => product.id !== productId);
+  state.error = null;
+};

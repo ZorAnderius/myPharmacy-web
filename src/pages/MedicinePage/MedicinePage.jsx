@@ -7,8 +7,9 @@ import Button from "../../shared/UI/Button/Button";
 import MedicineCard from "../../shared/UI/MedicineCard/MedicineCard";
 import AddMedicineModal from "../../shared/UI/AddMedicineModal/AddMedicineModal.simple";
 import EditMedicineModal from "../../shared/UI/EditMedicineModal/EditMedicineModal";
+import DeleteConfirmModal from "../../shared/UI/DeleteConfirmModal/DeleteConfirmModal";
 import { getShopByIdThunk } from "../../redux/shops/operations";
-import { createProductThunk, updateProductThunk } from "../../redux/products/operations";
+import { createProductThunk, updateProductThunk, deleteProductThunk } from "../../redux/products/operations";
 import { selectCurrentShop, selectIsLoading } from "../../redux/shops/selectors";
 import { selectIsLoading as selectGlobalIsLoading } from "../../redux/auth/selectors";
 import styles from "./MedicinePage.module.css";
@@ -26,6 +27,8 @@ const MedicinePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingMedicine, setEditingMedicine] = useState(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deletingMedicine, setDeletingMedicine] = useState(null);
 
   useEffect(() => {
     if (shopId) {
@@ -100,7 +103,32 @@ const MedicinePage = () => {
   };
 
   const handleDeleteMedicine = (medicine) => {
-    // TODO: Implement delete medicine functionality
+    setDeletingMedicine(medicine);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+    setDeletingMedicine(null);
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      await dispatch(deleteProductThunk({ 
+        shopId, 
+        productId: deletingMedicine.id 
+      })).unwrap();
+      
+      setIsDeleteModalOpen(false);
+      setDeletingMedicine(null);
+      
+      // Remove the medicine from local state immediately
+      setMedicines(prev => 
+        prev.filter(medicine => medicine.id !== deletingMedicine.id)
+      );
+    } catch (error) {
+      console.error('Error deleting medicine:', error);
+    }
   };
 
   if (isLoading || globalIsLoading) {
@@ -227,6 +255,13 @@ const MedicinePage = () => {
         onClose={handleCloseEditModal}
         onSubmit={handleSubmitEditMedicine}
         medicine={editingMedicine}
+      />
+      
+      <DeleteConfirmModal
+        isOpen={isDeleteModalOpen}
+        onClose={handleCloseDeleteModal}
+        onConfirm={handleConfirmDelete}
+        medicine={deletingMedicine}
       />
     </Section>
   );
