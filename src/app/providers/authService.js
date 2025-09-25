@@ -18,4 +18,10 @@ export const authServices = {
     await api.post("users/logout");
     setAccessToken(null);
   },
+  refresh: async () => {
+    const response = await api.post("/users/refresh");
+    const { accessToken, user } = response.data.data;
+    setAccessToken(accessToken, user);
+    return { accessToken, user };
+  },
 };

@@ -6,6 +6,7 @@ import {
   authenticateWithGoogleOAuth,
   loginThunk,
   logoutThunk,
+  refreshThunk,
 } from "./operations";
 import {
   handleAuth,
@@ -51,7 +52,8 @@ const sliceAuth = createSlice({
         isAnyOf(
           registerThunk.fulfilled,
           authenticateWithGoogleOAuth.fulfilled,
-          loginThunk.fulfilled
+          loginThunk.fulfilled,
+          refreshThunk.fulfilled
         ),
         handleAuth
       )
@@ -60,7 +62,8 @@ const sliceAuth = createSlice({
           registerThunk.pending,
           authenticateWithGoogleOAuth.pending,
           loginThunk.pending,
-          logoutThunk.pending
+          logoutThunk.pending,
+          refreshThunk.pending
         ),
         handlePending
       )
@@ -69,7 +72,8 @@ const sliceAuth = createSlice({
           registerThunk.rejected,
           authenticateWithGoogleOAuth.rejected,
           loginThunk.rejected,
-          logoutThunk.rejected
+          logoutThunk.rejected,
+          refreshThunk.rejected
         ),
         handleRejected
       );

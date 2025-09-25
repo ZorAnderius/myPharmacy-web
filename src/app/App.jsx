@@ -5,7 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import Loader from "../features/Loader/Loader";
 import { useDispatch } from "react-redux";
 import { getAccessToken } from "./providers/tokenManager";
-import { getCSRFToken } from "./providers/csrfService";
+import { refreshThunk } from "../redux/auth/operations";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -17,19 +17,23 @@ function App() {
         // Wait a bit for Redux persist to rehydrate
         await new Promise((resolve) => setTimeout(resolve, 50));
 
-        // CSRF token will be obtained when needed (during auth requests)
-        // No need to initialize it at app startup
-
-        // Only try to refresh token if we have one and it might be expired
+        // Try to refresh token if we have one stored
         const existingToken = getAccessToken();
         if (existingToken) {
-          // Check if token is expired or about to expire (optional)
-          // For now, let's not automatically refresh on app start
-          // The API interceptor will handle token refresh when needed
+          try {
+            // Attempt to refresh the token to verify it's still valid
+            await dispatch(refreshThunk()).unwrap();
+            // If successful, user will be authenticated
+          } catch (error) {
+            // If refresh fails, clear the invalid token
+            console.error('Token refresh failed:', error);
+            // Token will be cleared by the auth service
+          }
         }
-        // If no token, don't try to get current user - user is not authenticated
-      } catch {
-        // If refresh fails, user is not authenticated - this is normal
+        // If no token, user is not authenticated - this is normal
+      } catch (error) {
+        console.error('Auth initialization failed:', error);
+        // If initialization fails, user is not authenticated - this is normal
       } finally {
         setLoading(false);
       }
