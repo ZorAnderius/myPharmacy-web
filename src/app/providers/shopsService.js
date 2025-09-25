@@ -20,4 +20,9 @@ export const shopsServices = {
     const response = await api.get(`/shops/${shopId}`);
     return response.data;
   },
+  
+  updateShop: async (shopId, shopData) => {
+    const response = await api.patch(`/shops/${shopId}/update`, shopData);
+    return response.data;
+  },
 };

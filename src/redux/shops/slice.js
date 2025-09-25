@@ -5,6 +5,7 @@ import {
   getUserShopsThunk,
   createShopThunk,
   getShopByIdThunk,
+  updateShopThunk,
 } from "./operations";
 import {
   handleShopsPending,
@@ -12,6 +13,7 @@ import {
   handleGetAllShops,
   handleCreateShop,
   handleGetShopById,
+  handleUpdateShop,
 } from "./handlers";
 
 const sliceShops = createSlice({
@@ -31,12 +33,14 @@ const sliceShops = createSlice({
       .addCase(getUserShopsThunk.fulfilled, handleGetAllShops)
       .addCase(createShopThunk.fulfilled, handleCreateShop)
       .addCase(getShopByIdThunk.fulfilled, handleGetShopById)
+      .addCase(updateShopThunk.fulfilled, handleUpdateShop)
       .addMatcher(
         isAnyOf(
           getAllShopsThunk.pending,
           getUserShopsThunk.pending,
           createShopThunk.pending,
-          getShopByIdThunk.pending
+          getShopByIdThunk.pending,
+          updateShopThunk.pending
         ),
         handleShopsPending
       )
@@ -45,7 +49,8 @@ const sliceShops = createSlice({
           getAllShopsThunk.rejected,
           getUserShopsThunk.rejected,
           createShopThunk.rejected,
-          getShopByIdThunk.rejected
+          getShopByIdThunk.rejected,
+          updateShopThunk.rejected
         ),
         handleShopsRejected
       );

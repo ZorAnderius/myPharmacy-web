@@ -88,6 +88,12 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
+    // Handle CORS preflight issues
+    if (error.response?.status === 0 || error.message?.includes('CORS')) {
+      console.warn('CORS preflight error detected:', error.message);
+      return Promise.reject(error);
+    }
+
     // Handle OAuth endpoint errors - don't retry
     if (error.config?.url?.includes('confirm-oauth')) {
       console.warn('OAuth endpoint error, not retrying:', error.message);

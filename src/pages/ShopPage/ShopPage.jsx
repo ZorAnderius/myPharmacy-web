@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import Container from "../../shared/UI/Container/Container";
 import Section from "../../shared/UI/Section/Section";
 import CreateShopForm from "../../shared/UI/Forms/CreateShopForm/CreateShopForm";
+import EditShopForm from "../../shared/UI/Forms/EditShopForm/EditShopForm";
 import ShopInfo from "../../shared/UI/ShopInfo/ShopInfo";
 import ShopIllustration from "../../shared/UI/ShopIllustration/ShopIllustration";
 import Button from "../../shared/UI/Button/Button";
-import { createShopThunk, getUserShopsThunk } from "../../redux/shops/operations";
+import { createShopThunk, getUserShopsThunk, updateShopThunk } from "../../redux/shops/operations";
 import { selectShops, selectCurrentShop, selectIsShopsLoading } from "../../redux/shops/selectors";
 import styles from "./ShopPage.module.css";
 
@@ -17,6 +18,7 @@ const ShopPage = () => {
   const isLoading = useSelector(selectIsShopsLoading);
   
   const [isCreating, setIsCreating] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   
   // Get user's shop (first shop from the list)
   const userShop = shops.length > 0 ? shops[0] : null;
@@ -43,7 +45,29 @@ const ShopPage = () => {
   };
 
   const handleEditShop = () => {
-    // TODO: Implement edit functionality
+    setIsEditing(true);
+  };
+
+  const handleUpdateShop = async (shopData) => {
+    try {
+      // Check if there are any changes
+      if (Object.keys(shopData).length === 0) {
+        // No changes detected, just close the form
+        setIsEditing(false);
+        return;
+      }
+
+      const result = await dispatch(updateShopThunk({ shopId: userShop.id, shopData })).unwrap();
+      setIsEditing(false);
+      // Optionally show success message
+    } catch (error) {
+      console.error("Error updating shop:", error);
+      // Optionally show error message to user
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
   };
 
   const handleCreateNewShop = () => {
@@ -60,7 +84,7 @@ const ShopPage = () => {
       <Container>
         <div className={styles.shopPage}>
           {/* Header with Create New Shop button */}
-          {!isLoading && userShop && !isCreating && (
+          {!isLoading && userShop && !isCreating && !isEditing && (
             <div className={styles.shopHeader}>
               <h1 className={styles.pageTitle}>My Shops</h1>
               <Button 
@@ -108,7 +132,21 @@ const ShopPage = () => {
             </div>
           )}
 
-          {userShop && !isCreating && (
+          {isEditing && userShop && (
+            <div className={styles.editContainer}>
+              <div className={styles.editContent}>
+                <EditShopForm 
+                  shop={userShop}
+                  onSubmit={handleUpdateShop}
+                  onCancel={handleCancelEdit}
+                  isLoading={isLoading}
+                />
+                <ShopIllustration />
+              </div>
+            </div>
+          )}
+
+          {userShop && !isCreating && !isEditing && (
             <ShopInfo 
               shop={userShop}
               onEdit={handleEditShop}
