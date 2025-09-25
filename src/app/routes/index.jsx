@@ -1,86 +1,30 @@
 import { createBrowserRouter } from "react-router-dom";
-import SharedLayout from "../../pages/SharedLayout/SharedLayout";
-import NotFoundPage from "../../pages/NotFoundPage/NotFoundPage";
+import { lazy } from "react";
 import { GoogleOAuthProvider } from "../../app/providers/GoogleOAuthProvider";
 import { ROUTES } from "../../constants/routes";
+import SharedLayout from "../../pages/SharedLayout/SharedLayout";
+import PublicGuard from "../../shared/guards/PublicGuard/PublicGuard";
+import PrivateGuard from "../../shared/guards/PrivateGuard/PrivateGuard";
 
-// eslint-disable-next-line react-refresh/only-export-components
-const HomePage = async () => {
-  try {
-    const mod = await import("../../pages/HomePage/HomePage");
-    return { Component: mod.default };
-  } catch (err) {
-    console.error("Error loading HomePage:", err);
-    throw err;
-  }
-};
+const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
+const AuthPage = lazy(() => import("../../pages/AuthPage/AuthPage"));
+const ShopPage = lazy(() => import("../../pages/ShopPage/ShopPage"));
+const CreateShopPage = lazy(() =>
+  import("../../pages/CreateShopPage/CreateShopPage")
+);
+const EditShopPage = lazy(() =>
+  import("../../pages/EditShopPage/EditShopPage")
+);
+const MedicinePage = lazy(() =>
+  import("../../pages/MedicinePage/MedicinePage")
+);
+const OAuthCallbackPage = lazy(() =>
+  import("../../pages/OAuthCallbackPage/OAuthCallbackPage")
+);
 
-// eslint-disable-next-line react-refresh/only-export-components
-const AuthPage = async () => {
-  try {
-    const mod = await import("../../pages/AuthPage/AuthPage");
-    return { Component: mod.default };
-  } catch (err) {
-    console.error("Error loading AuthPage:", err);
-    throw err;
-  }
-};
-
-// eslint-disable-next-line react-refresh/only-export-components
-const ShopPage = async () => {
-  try {
-    const mod = await import("../../pages/ShopPage/ShopPage");
-    return { Component: mod.default };
-  } catch (err) {
-    console.error("Error loading ShopPage:", err);
-    throw err;
-  }
-};
-
-// eslint-disable-next-line react-refresh/only-export-components
-const CreateShopPage = async () => {
-  try {
-    const mod = await import("../../pages/CreateShopPage/CreateShopPage");
-    return { Component: mod.default };
-  } catch (err) {
-    console.error("Error loading CreateShopPage:", err);
-    throw err;
-  }
-};
-
-// eslint-disable-next-line react-refresh/only-export-components
-const EditShopPage = async () => {
-  try {
-    const mod = await import("../../pages/EditShopPage/EditShopPage");
-    return { Component: mod.default };
-  } catch (err) {
-    console.error("Error loading EditShopPage:", err);
-    throw err;
-  }
-};
-
-// eslint-disable-next-line react-refresh/only-export-components
-const MedicinePage = async () => {
-  try {
-    const mod = await import("../../pages/MedicinePage/MedicinePage");
-    return { Component: mod.default };
-  } catch (err) {
-    console.error("Error loading MedicinePage:", err);
-    throw err;
-  }
-};
-
-// eslint-disable-next-line react-refresh/only-export-components
-const OAuthCallbackPage = async () => {
-  try {
-    const mod = await import("../../pages/OAuthCallbackPage/OAuthCallbackPage");
-    return { Component: mod.default };
-  } catch (err) {
-    console.error("Error loading OAuthCallbackPage:", err);
-    throw err;
-  }
-};
-
+const NotFoundPage = lazy(() =>
+  import("../../pages/NotFoundPage/NotFoundPage")
+);
 
 export const router = createBrowserRouter([
   {
@@ -92,15 +36,63 @@ export const router = createBrowserRouter([
     ),
     errorElement: <NotFoundPage />,
     children: [
-      { index: true, lazy: HomePage },
-      { path: ROUTES.REGISTER, lazy: AuthPage },
-      { path: ROUTES.LOGIN, lazy: AuthPage },
-      { path: ROUTES.SHOP, lazy: ShopPage },
-      { path: ROUTES.CREATE_SHOP, lazy: CreateShopPage },
-      { path: ROUTES.EDIT_SHOP, lazy: EditShopPage },
-      { path: ROUTES.MEDICINE, lazy: MedicinePage },
-      { path: "/oauth/callback", lazy: OAuthCallbackPage },
+      { index: true, element: <HomePage /> },
+      {
+        path: ROUTES.REGISTER,
+        element: (
+          <PublicGuard>
+            <AuthPage />
+          </PublicGuard>
+        ),
+      },
+      {
+        path: ROUTES.LOGIN,
+        element: (
+          <PublicGuard>
+            <AuthPage />
+          </PublicGuard>
+        ),
+      },
+      {
+        path: ROUTES.SHOP,
+        element: (
+          <PrivateGuard>
+            <ShopPage />
+          </PrivateGuard>
+        ),
+      },
+      {
+        path: ROUTES.CREATE_SHOP,
+        element: (
+          <PrivateGuard>
+            <CreateShopPage />
+          </PrivateGuard>
+        ),
+      },
+      {
+        path: ROUTES.EDIT_SHOP,
+        element: (
+          <PrivateGuard>
+            <EditShopPage />
+          </PrivateGuard>
+        ),
+      },
+      {
+        path: ROUTES.MEDICINE,
+        lazy: (
+          <PrivateGuard>
+            <MedicinePage />
+          </PrivateGuard>
+        ),
+      },
+      {
+        path: "/oauth/callback",
+        element: (
+          <PublicGuard>
+            <OAuthCallbackPage />
+          </PublicGuard>
+        ),
+      },
     ],
-    loader: () => new Promise((res) => setTimeout(res, 500)),
   },
 ]);
