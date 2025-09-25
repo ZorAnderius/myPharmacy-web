@@ -18,6 +18,9 @@ const EditShopPage = lazy(() =>
 const MedicinePage = lazy(() =>
   import("../../pages/MedicinePage/MedicinePage")
 );
+const ProductPage = lazy(() =>
+  import("../../pages/ProductPage/ProductPage")
+);
 const OAuthCallbackPage = lazy(() =>
   import("../../pages/OAuthCallbackPage/OAuthCallbackPage")
 );
@@ -86,12 +89,24 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: ROUTES.PRODUCT,
+        element: (
+          <PrivateGuard>
+            <ProductPage />
+          </PrivateGuard>
+        ),
+      },
+      {
         path: "/oauth/callback",
         element: (
           <PublicGuard>
             <OAuthCallbackPage />
           </PublicGuard>
         ),
+      },
+      {
+        path: "/404",
+        element: <NotFoundPage />,
       },
     ],
   },

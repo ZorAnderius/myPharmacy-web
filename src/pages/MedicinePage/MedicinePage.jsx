@@ -32,9 +32,15 @@ const MedicinePage = () => {
 
   useEffect(() => {
     if (shopId) {
-      dispatch(getShopByIdThunk(shopId));
+      dispatch(getShopByIdThunk(shopId))
+        .unwrap()
+        .catch((error) => {
+          console.error('Error fetching shop:', error);
+          // Redirect to 404 page for server errors
+          navigate('/404');
+        });
     }
-  }, [shopId, dispatch]);
+  }, [shopId, dispatch, navigate]);
 
   useEffect(() => {
     if (shop && shop.products) {
@@ -71,6 +77,10 @@ const MedicinePage = () => {
   const handleEditMedicine = (medicine) => {
     setEditingMedicine(medicine);
     setIsEditModalOpen(true);
+  };
+
+  const handleViewProduct = (medicine) => {
+    navigate(`/product?shopId=${shopId}&productId=${medicine.id}`);
   };
 
   const handleCloseEditModal = () => {
@@ -235,6 +245,7 @@ const MedicinePage = () => {
                     medicine={medicine}
                     onEdit={handleEditMedicine}
                     onDelete={handleDeleteMedicine}
+                    onView={handleViewProduct}
                   />
                 ))}
               </div>

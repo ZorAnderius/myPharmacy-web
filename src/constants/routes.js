@@ -6,6 +6,7 @@ export const ROUTES = Object.freeze({
   CREATE_SHOP: "/create-shop",
   EDIT_SHOP: "/edit-shop",
   MEDICINE: "/medicine",
+  PRODUCT: "/product",
   PRODUCTS: "/products",
   PRODUCT_DETAILS: "/products/:id",
   CART: "/cart",

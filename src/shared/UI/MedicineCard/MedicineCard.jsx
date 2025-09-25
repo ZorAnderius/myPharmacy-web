@@ -1,7 +1,7 @@
 import Button from "../Button/Button";
 import styles from "./MedicineCard.module.css";
 
-const MedicineCard = ({ medicine, onEdit, onDelete }) => {
+const MedicineCard = ({ medicine, onEdit, onDelete, onView }) => {
   const handleImageError = (e) => {
     e.target.src = "/api/placeholder/200/150";
   };
@@ -16,7 +16,9 @@ const MedicineCard = ({ medicine, onEdit, onDelete }) => {
         />
       </div>
       <div className={styles.medicineInfo}>
-        <h3 className={styles.medicineName}>{medicine.name}</h3>
+        <h3 className={styles.medicineName} onClick={() => onView(medicine)}>
+          {medicine.name}
+        </h3>
         <p className={styles.medicinePrice}>{medicine.price}</p>
         <p className={styles.medicineDescription}>{medicine.description}</p>
       </div>
