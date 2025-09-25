@@ -17,6 +17,7 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
   const [categories, setCategories] = useState([]);
   const [productStatuses, setProductStatuses] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (isOpen) {
@@ -50,6 +51,14 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
       ...prev,
       [name]: value
     }));
+    
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ""
+      }));
+    }
   };
 
   const handleImageChange = (e) => {
@@ -62,21 +71,79 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const submitData = new FormData();
-    submitData.append('name', formData.name);
-    submitData.append('price', formData.price);
-    submitData.append('description', formData.description);
-    submitData.append('quantity', formData.quantity);
-    submitData.append('categoryId', formData.categoryId);
-    submitData.append('statusId', formData.statusId);
+  const validateForm = () => {
+    const newErrors = {};
     
-    if (formData.image) {
-      submitData.append('product_image', formData.image);
+    // Name validation (min 3, max 150)
+    if (!formData.name.trim()) {
+      newErrors.name = "Medicine name is required";
+    } else if (formData.name.trim().length < 3) {
+      newErrors.name = "Name should have a minimum length of 3";
+    } else if (formData.name.trim().length > 150) {
+      newErrors.name = "Name should have a maximum length of 150";
     }
     
-    onSubmit(submitData);
+    // Price validation (positive number with 2 decimal places)
+    if (!formData.price.trim()) {
+      newErrors.price = "Price is required";
+    } else if (isNaN(parseFloat(formData.price))) {
+      newErrors.price = "Price should be a type of 'number'";
+    } else if (parseFloat(formData.price) <= 0) {
+      newErrors.price = "Price must be a positive number";
+    }
+    
+    // Description validation (min 10, max 2000)
+    if (!formData.description.trim()) {
+      newErrors.description = "Description is required";
+    } else if (formData.description.trim().length < 10) {
+      newErrors.description = "Description should have a minimum length of 10";
+    } else if (formData.description.trim().length > 2000) {
+      newErrors.description = "Description should have a maximum length of 2000";
+    }
+    
+    // Quantity validation (integer, min 0)
+    if (!formData.quantity.trim()) {
+      newErrors.quantity = "Quantity is required";
+    } else if (isNaN(parseInt(formData.quantity))) {
+      newErrors.quantity = "Quantity should be a type of 'number'";
+    } else if (!Number.isInteger(parseFloat(formData.quantity))) {
+      newErrors.quantity = "Quantity must be an integer";
+    } else if (parseInt(formData.quantity) < 0) {
+      newErrors.quantity = "Quantity cannot be negative";
+    }
+    
+    // Category validation (UUID)
+    if (!formData.categoryId) {
+      newErrors.categoryId = "Category is required";
+    }
+    
+    // Status validation (UUID)
+    if (!formData.statusId) {
+      newErrors.statusId = "Status is required";
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    if (validateForm()) {
+      const submitData = new FormData();
+      submitData.append('name', formData.name);
+      submitData.append('price', formData.price);
+      submitData.append('description', formData.description);
+      submitData.append('quantity', formData.quantity);
+      submitData.append('category_id', formData.categoryId);
+      submitData.append('status_id', formData.statusId);
+      
+      if (formData.image) {
+        submitData.append('product_image', formData.image);
+      }
+      
+      onSubmit(submitData);
+    }
   };
 
   if (!isOpen) return null;
@@ -93,7 +160,13 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
         
         <form onSubmit={handleSubmit} className={styles.modalForm}>
           <div className={styles.imageUploadSection}>
-            <div className={styles.imagePreview}>
+            <label className={styles.imagePreview}>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className={styles.fileInput}
+              />
               {formData.image ? (
                 <img 
                   src={URL.createObjectURL(formData.image)} 
@@ -103,17 +176,9 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
               ) : (
                 <div className={styles.placeholderImage}>
                   <div className={styles.pillIcon}>💊</div>
+                  <div className={styles.uploadText}>Click to upload image</div>
                 </div>
               )}
-            </div>
-            <label className={styles.uploadButton}>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className={styles.fileInput}
-              />
-              📎 Upload image
             </label>
           </div>
 
@@ -128,6 +193,9 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
                 placeholder="Enter text"
                 className={styles.fieldInput}
               />
+              {errors.name && (
+                <span className={styles.errorText}>{errors.name}</span>
+              )}
             </div>
 
             <div className={styles.fieldGroup}>
@@ -140,6 +208,9 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
                 placeholder="Enter text"
                 className={styles.fieldInput}
               />
+              {errors.price && (
+                <span className={styles.errorText}>{errors.price}</span>
+              )}
             </div>
 
             <div className={styles.fieldGroup}>
@@ -152,6 +223,9 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
                 className={styles.textareaInput}
                 rows="3"
               />
+              {errors.description && (
+                <span className={styles.errorText}>{errors.description}</span>
+              )}
             </div>
 
             <div className={styles.fieldGroup}>
@@ -164,6 +238,9 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
                 placeholder="Enter quantity"
                 className={styles.fieldInput}
               />
+              {errors.quantity && (
+                <span className={styles.errorText}>{errors.quantity}</span>
+              )}
             </div>
 
             <div className={styles.fieldGroup}>
@@ -184,6 +261,9 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
                   </option>
                 ))}
               </select>
+              {errors.categoryId && (
+                <span className={styles.errorText}>{errors.categoryId}</span>
+              )}
             </div>
 
             <div className={styles.fieldGroup}>
@@ -204,6 +284,9 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
                   </option>
                 ))}
               </select>
+              {errors.statusId && (
+                <span className={styles.errorText}>{errors.statusId}</span>
+              )}
             </div>
           </div>
 

@@ -7,6 +7,7 @@ import Button from "../../shared/UI/Button/Button";
 import MedicineCard from "../../shared/UI/MedicineCard/MedicineCard";
 import AddMedicineModal from "../../shared/UI/AddMedicineModal/AddMedicineModal.simple";
 import { getShopByIdThunk } from "../../redux/shops/operations";
+import { createProductThunk } from "../../redux/products/operations";
 import { selectCurrentShop, selectIsLoading } from "../../redux/shops/selectors";
 import { selectIsLoading as selectGlobalIsLoading } from "../../redux/auth/selectors";
 import styles from "./MedicinePage.module.css";
@@ -49,10 +50,18 @@ const MedicinePage = () => {
 
   const handleSubmitMedicine = async (formData) => {
     try {
-      // TODO: Implement API call to create medicine
-      
-      // For now, just close the modal
+      const result = await dispatch(createProductThunk({ shopId, productData: formData })).unwrap();
       setIsModalOpen(false);
+      
+      // Add the new product to local medicines state immediately
+      if (result && result.data) {
+        setMedicines(prev => [...prev, result.data]);
+      }
+      
+      // Also refresh shop data to ensure consistency
+      if (shopId) {
+        dispatch(getShopByIdThunk(shopId));
+      }
     } catch (error) {
       console.error('Error creating medicine:', error);
     }
