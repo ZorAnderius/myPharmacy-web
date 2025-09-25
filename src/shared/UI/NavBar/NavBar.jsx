@@ -5,8 +5,12 @@ import { selectIsAuthenticate } from "../../../redux/auth/selectors";
 import { ROUTES } from "../../../constants/routes";
 import clsx from "clsx";
 
-const buildStyles = ({ isActive }) => {
-  return clsx(styles["link-btn"], isActive && styles["active-btn"]);
+const buildStyles = (isActive, location) => {
+  return clsx(
+    styles["link-btn"],
+    isActive && styles["active-btn"],
+    location && styles["home"]
+  );
 };
 
 const NavBar = ({ location, isMobile }) => {
@@ -21,20 +25,27 @@ const NavBar = ({ location, isMobile }) => {
     >
       {isAuthenticate && (
         <ul className={styles["routes-list"]}>
-          {!location && (
-            <li>
-              <NavLink to={ROUTES.MAIN} className={buildStyles}>
-                Home
-              </NavLink>
-            </li>
-          )}
           <li>
-            <NavLink to={ROUTES.SHOP} className={buildStyles}>
+            <NavLink
+              to={ROUTES.MAIN}
+              className={({ isActive }) => buildStyles(isActive, location)}
+            >
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={ROUTES.SHOP}
+              className={({ isActive }) => buildStyles(isActive, location)}
+            >
               Store
             </NavLink>
           </li>
           <li>
-            <NavLink to={ROUTES.MEDICINE} className={buildStyles}>
+            <NavLink
+              to={ROUTES.MEDICINE}
+              className={({ isActive }) => buildStyles(isActive, location)}
+            >
               Medicine
             </NavLink>
           </li>

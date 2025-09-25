@@ -24,4 +24,9 @@ export const authServices = {
     setAccessToken(accessToken, user);
     return { accessToken, user };
   },
+  getCurrentUser: async () => {
+    const response = await api.get("/users/current");
+    const { user } = response.data.data;
+    return { user };
+  },
 };

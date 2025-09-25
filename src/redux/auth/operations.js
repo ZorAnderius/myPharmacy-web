@@ -62,3 +62,15 @@ export const refreshThunk = createAsyncThunk(
     }
   }
 );
+
+export const getCurrentUserThunk = createAsyncThunk(
+  "auth/getCurrentUser",
+  async (_, thunkAPI) => {
+    try {
+      const response = await authServices.getCurrentUser();
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

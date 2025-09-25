@@ -81,8 +81,12 @@ export const setAccessToken = (token, user = null) => {
   // Save to localStorage
   if (token) {
     localStorage.setItem("accessToken", token);
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
   } else {
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("user");
     // Clear CSRF token when access token is cleared
     clearCSRFToken();
   }

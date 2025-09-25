@@ -5,6 +5,9 @@ import { RouterProvider } from "react-router-dom";
 import Loader from "../features/Loader/Loader";
 import { useDispatch } from "react-redux";
 import { getAccessToken } from "./providers/tokenManager";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor } from "../redux/store";
+import { syncWithToken } from "../redux/auth/slice";
 import { refreshThunk } from "../redux/auth/operations";
 
 function App() {
@@ -15,20 +18,25 @@ function App() {
       try {
         setLoading(true);
         // Wait a bit for Redux persist to rehydrate
-        await new Promise((resolve) => setTimeout(resolve, 50));
+        await new Promise((resolve) => setTimeout(resolve, 100));
 
-        // Try to refresh token if we have one stored
+        // Sync Redux state with localStorage first
+        dispatch(syncWithToken());
+        
+        // Check if we have a token stored
         const existingToken = getAccessToken();
         if (existingToken) {
           try {
-            // Attempt to refresh the token to verify it's still valid
+            // Verify and refresh token with backend
+            console.log('Token found, verifying and refreshing with backend...');
             await dispatch(refreshThunk()).unwrap();
-            // If successful, user will be authenticated
+            console.log('Token refreshed successfully, user authenticated');
           } catch (error) {
-            // If refresh fails, clear the invalid token
             console.error('Token refresh failed:', error);
-            // Token will be cleared by the auth service
+            // Token is invalid, user will be logged out
           }
+        } else {
+          console.log('No token found, user is not authenticated');
         }
         // If no token, user is not authenticated - this is normal
       } catch (error) {
@@ -42,13 +50,17 @@ function App() {
     initAuth();
   }, [dispatch]);
 
-  return loading ? (
-    <Loader />
-  ) : (
-    <RouterProvider
-      router={router}
-      fallbackElement={<div>Loading app...</div>}
-    />
+  return (
+    <PersistGate loading={<Loader />} persistor={persistor}>
+      {loading ? (
+        <Loader />
+      ) : (
+        <RouterProvider
+          router={router}
+          fallbackElement={<div>Loading app...</div>}
+        />
+      )}
+    </PersistGate>
   );
 }
 

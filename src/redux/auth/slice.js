@@ -7,6 +7,7 @@ import {
   loginThunk,
   logoutThunk,
   refreshThunk,
+  getCurrentUserThunk,
 } from "./operations";
 import {
   handleAuth,
@@ -44,6 +45,28 @@ const sliceAuth = createSlice({
     resetStatus: (state) => {
       state.status = responseStatuses.IDLE;
     },
+    syncWithToken: (state) => {
+      // This will be called to sync state with token from localStorage
+      const token = localStorage.getItem("accessToken");
+      const user = localStorage.getItem("user");
+      
+      if (token && user) {
+        try {
+          const userData = JSON.parse(user);
+          state.isAuthenticated = true;
+          state.user = userData;
+          state.status = responseStatuses.SUCCEEDED;
+          state.error = null;
+        } catch (error) {
+          console.error("Failed to parse user data from localStorage:", error);
+          state.isAuthenticated = false;
+          state.user = null;
+        }
+      } else {
+        state.isAuthenticated = false;
+        state.user = null;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -53,7 +76,8 @@ const sliceAuth = createSlice({
           registerThunk.fulfilled,
           authenticateWithGoogleOAuth.fulfilled,
           loginThunk.fulfilled,
-          refreshThunk.fulfilled
+          refreshThunk.fulfilled,
+          getCurrentUserThunk.fulfilled
         ),
         handleAuth
       )
@@ -63,7 +87,8 @@ const sliceAuth = createSlice({
           authenticateWithGoogleOAuth.pending,
           loginThunk.pending,
           logoutThunk.pending,
-          refreshThunk.pending
+          refreshThunk.pending,
+          getCurrentUserThunk.pending
         ),
         handlePending
       )
@@ -73,7 +98,8 @@ const sliceAuth = createSlice({
           authenticateWithGoogleOAuth.rejected,
           loginThunk.rejected,
           logoutThunk.rejected,
-          refreshThunk.rejected
+          refreshThunk.rejected,
+          getCurrentUserThunk.rejected
         ),
         handleRejected
       );
@@ -87,5 +113,6 @@ export const {
   setError,
   clearError,
   resetStatus,
+  syncWithToken,
 } = sliceAuth.actions;
 export const authReducer = sliceAuth.reducer;

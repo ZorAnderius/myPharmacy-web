@@ -7,7 +7,7 @@
   color: var(--primary-txt-clr);
 }
 
-.routes-list{
+.routes-list {
   display: none;
 }
 
@@ -29,18 +29,23 @@
 }
 
 .link-btn.active-btn {
-  border: 1px solid var(--border-home-clr);
+  border: 1px solid var(--icon-primary-blue-clr);
   background-color: transparent;
+  color: var(--primary-clr);
   box-shadow: none;
   transition: background-color var(--transition-time) var(--transition-func),
     color var(--transition-time) var(--transition-func);
 }
 
 .link-btn.active-btn:is(:hover, :focus) {
-  color: var(--primary-clr);
   background-color: var(--pet-block-bg);
   box-shadow: none;
 }
+
+.link-btn.active-btn.home {
+  color: var(--secondary-clr);
+}
+
 .routes-nav.mobile {
   display: flex;
   flex-direction: column;
