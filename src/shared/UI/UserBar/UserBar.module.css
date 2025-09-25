@@ -43,6 +43,25 @@
   box-shadow: none !important;
 }
 
+/* Styles for non-home pages */
+.user-bar.non-home {
+  color: var(--primary-clr);
+}
+
+.user-bar.non-home:is(:hover, :focus) {
+  color: var(--secondary-txt-clr);
+}
+
+.user-bar.non-home .avatar-initials {
+  color: var(--primary-clr);
+  background-color: var(--secondary-clr);
+}
+
+.user-bar.non-home:is(:hover, :focus) .avatar-initials {
+  color: var(--secondary-txt-clr);
+  background-color: var(--primary-clr);
+}
+
 .mobile-user-bar {
   position: absolute;
   z-index: 2;
@@ -97,8 +116,54 @@
   background-color: var(--secondary-clr);
 }
 
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.avatar-initials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--primary-clr);
+  background-color: var(--secondary-clr);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 1;
+  letter-spacing: 0.5px;
+}
+
 .username {
   font-size: 1.5rem;
   line-height: 1;
   letter-spacing: -0.6px;
+}
+
+/* Responsive styles for avatar */
+@media (max-width: 768px) {
+  .avatar-thumb {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .avatar-initials {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .avatar-thumb {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .avatar-initials {
+    font-size: 12px;
+  }
 }
