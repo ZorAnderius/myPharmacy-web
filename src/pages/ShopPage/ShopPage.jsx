@@ -70,6 +70,11 @@ const ShopPage = () => {
     setIsEditing(false);
   };
 
+  const handleViewProducts = () => {
+    // Navigate to medicine page for this shop
+    window.location.href = `/medicine?shopId=${userShop.id}`;
+  };
+
   const handleCreateNewShop = () => {
     setIsCreating(true);
   };
@@ -150,6 +155,7 @@ const ShopPage = () => {
             <ShopInfo 
               shop={userShop}
               onEdit={handleEditShop}
+              onViewProducts={handleViewProducts}
             />
           )}
         </div>

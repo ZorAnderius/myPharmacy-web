@@ -1,19 +1,27 @@
 import Button from "../Button/Button";
 import styles from "./ShopInfo.module.css";
 
-const ShopInfo = ({ shop, onEdit }) => {
+const ShopInfo = ({ shop, onEdit, onViewProducts }) => {
   if (!shop) return null;
 
   return (
     <div className={styles.shopInfoContainer}>
       <div className={styles.shopHeader}>
         <h2 className={styles.shopName}>{shop.name}</h2>
-        <Button 
-          className={styles.editButton}
-          onClick={onEdit}
-        >
-          Edit
-        </Button>
+        <div className={styles.buttonGroup}>
+          <Button 
+            className={styles.viewProductsButton}
+            onClick={onViewProducts}
+          >
+            View products
+          </Button>
+          <Button 
+            className={styles.editButton}
+            onClick={onEdit}
+          >
+            Edit
+          </Button>
+        </div>
       </div>
       
       <div className={styles.shopDetails}>

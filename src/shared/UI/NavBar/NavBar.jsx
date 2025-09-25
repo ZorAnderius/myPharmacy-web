@@ -41,14 +41,6 @@ const NavBar = ({ location, isMobile }) => {
               Store
             </NavLink>
           </li>
-          <li>
-            <NavLink
-              to={ROUTES.MEDICINE}
-              className={({ isActive }) => buildStyles(isActive, location)}
-            >
-              Medicine
-            </NavLink>
-          </li>
         </ul>
       )}
     </div>

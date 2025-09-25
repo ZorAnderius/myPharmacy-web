@@ -79,7 +79,7 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.MEDICINE,
-        lazy: (
+        element: (
           <PrivateGuard>
             <MedicinePage />
           </PrivateGuard>
