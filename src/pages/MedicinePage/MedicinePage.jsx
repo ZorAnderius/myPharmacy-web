@@ -6,8 +6,9 @@ import Section from "../../shared/UI/Section/Section";
 import Button from "../../shared/UI/Button/Button";
 import MedicineCard from "../../shared/UI/MedicineCard/MedicineCard";
 import AddMedicineModal from "../../shared/UI/AddMedicineModal/AddMedicineModal.simple";
+import EditMedicineModal from "../../shared/UI/EditMedicineModal/EditMedicineModal";
 import { getShopByIdThunk } from "../../redux/shops/operations";
-import { createProductThunk } from "../../redux/products/operations";
+import { createProductThunk, updateProductThunk } from "../../redux/products/operations";
 import { selectCurrentShop, selectIsLoading } from "../../redux/shops/selectors";
 import { selectIsLoading as selectGlobalIsLoading } from "../../redux/auth/selectors";
 import styles from "./MedicinePage.module.css";
@@ -23,6 +24,8 @@ const MedicinePage = () => {
   const globalIsLoading = useSelector(selectGlobalIsLoading);
   const [medicines, setMedicines] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingMedicine, setEditingMedicine] = useState(null);
 
   useEffect(() => {
     if (shopId) {
@@ -57,18 +60,43 @@ const MedicinePage = () => {
       if (result && result.data) {
         setMedicines(prev => [...prev, result.data]);
       }
-      
-      // Also refresh shop data to ensure consistency
-      if (shopId) {
-        dispatch(getShopByIdThunk(shopId));
-      }
     } catch (error) {
       console.error('Error creating medicine:', error);
     }
   };
 
   const handleEditMedicine = (medicine) => {
-    // TODO: Implement edit medicine functionality
+    setEditingMedicine(medicine);
+    setIsEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+    setEditingMedicine(null);
+  };
+
+  const handleSubmitEditMedicine = async (formData) => {
+    try {
+      const result = await dispatch(updateProductThunk({ 
+        shopId, 
+        productId: editingMedicine.id, 
+        productData: formData 
+      })).unwrap();
+      
+      setIsEditModalOpen(false);
+      setEditingMedicine(null);
+      
+      // Update the medicine in local state immediately
+      if (result && result.data) {
+        setMedicines(prev => 
+          prev.map(medicine => 
+            medicine.id === result.data.id ? result.data : medicine
+          )
+        );
+      }
+    } catch (error) {
+      console.error('Error updating medicine:', error);
+    }
   };
 
   const handleDeleteMedicine = (medicine) => {
@@ -192,6 +220,13 @@ const MedicinePage = () => {
         onClose={handleCloseModal}
         onSubmit={handleSubmitMedicine}
         shopId={shopId}
+      />
+      
+      <EditMedicineModal
+        isOpen={isEditModalOpen}
+        onClose={handleCloseEditModal}
+        onSubmit={handleSubmitEditMedicine}
+        medicine={editingMedicine}
       />
     </Section>
   );

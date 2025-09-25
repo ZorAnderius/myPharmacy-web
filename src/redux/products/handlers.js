@@ -15,3 +15,13 @@ export const handleCreateProduct = (state, action) => {
   state.products.push(action.payload.data);
   state.error = null;
 };
+
+export const handleUpdateProduct = (state, action) => {
+  state.status = responseStatuses.SUCCEEDED;
+  const updatedProduct = action.payload.data;
+  const index = state.products.findIndex(product => product.id === updatedProduct.id);
+  if (index !== -1) {
+    state.products[index] = updatedProduct;
+  }
+  state.error = null;
+};

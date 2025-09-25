@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import Button from "../Button/Button";
 import { othersServices } from "../../../app/providers/othersService";
-import styles from "./AddMedicineModal.module.css";
+import styles from "./EditMedicineModal.module.css";
 
-const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
+const EditMedicineModal = ({ isOpen, onClose, onSubmit, medicine }) => {
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -20,10 +20,19 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && medicine) {
+      setFormData({
+        name: medicine.name || "",
+        price: medicine.price || "",
+        description: medicine.description || "",
+        quantity: String(medicine.quantity || ""),
+        categoryId: medicine.category?.id || medicine.category_id || "",
+        statusId: medicine.status?.id || medicine.status_id || "",
+        image: null
+      });
       loadCategoriesAndStatuses();
     }
-  }, [isOpen]);
+  }, [isOpen, medicine]);
 
   const loadCategoriesAndStatuses = async () => {
     setIsLoading(true);
@@ -33,11 +42,23 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
         othersServices.getProductStatuses()
       ]);
       
-      setCategories(categoriesResponse.data || []);
-      setProductStatuses(statusesResponse.data || []);
+      
+      const categoriesData = Array.isArray(categoriesResponse?.data) ? categoriesResponse.data : [];
+      const statusesData = Array.isArray(statusesResponse?.data) ? statusesResponse.data : [];
+      
+      setCategories(categoriesData);
+      setProductStatuses(statusesData);
+      
+      // Set form data again after categories and statuses are loaded
+      if (medicine) {
+        setFormData(prev => ({
+          ...prev,
+          categoryId: medicine.category?.id || medicine.category_id || "",
+          statusId: medicine.status?.id || medicine.status_id || ""
+        }));
+      }
     } catch (error) {
       console.error("Error loading categories and statuses:", error);
-      // Set empty arrays on error to prevent crashes
       setCategories([]);
       setProductStatuses([]);
     } finally {
@@ -102,7 +123,7 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
     }
     
     // Quantity validation (integer, min 0)
-    if (!formData.quantity.trim()) {
+    if (!formData.quantity || formData.quantity === '') {
       newErrors.quantity = "Quantity is required";
     } else if (isNaN(parseInt(formData.quantity))) {
       newErrors.quantity = "Quantity should be a type of 'number'";
@@ -130,13 +151,28 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
     e.preventDefault();
     
     if (validateForm()) {
+      // Create FormData with only changed fields
       const submitData = new FormData();
-      submitData.append('name', formData.name);
-      submitData.append('price', formData.price);
-      submitData.append('description', formData.description);
-      submitData.append('quantity', formData.quantity);
-      submitData.append('category_id', formData.categoryId);
-      submitData.append('status_id', formData.statusId);
+      
+      // Only add fields that have changed
+      if (formData.name !== medicine.name) {
+        submitData.append('name', formData.name);
+      }
+      if (formData.price !== medicine.price) {
+        submitData.append('price', formData.price);
+      }
+      if (formData.description !== medicine.description) {
+        submitData.append('description', formData.description);
+      }
+      if (formData.quantity !== String(medicine.quantity)) {
+        submitData.append('quantity', formData.quantity);
+      }
+      if (formData.categoryId !== (medicine.category?.id || medicine.category_id)) {
+        submitData.append('category_id', formData.categoryId);
+      }
+      if (formData.statusId !== (medicine.status?.id || medicine.status_id)) {
+        submitData.append('status_id', formData.statusId);
+      }
       
       if (formData.image) {
         submitData.append('product_image', formData.image);
@@ -152,7 +188,7 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
     <div className={styles.modalOverlay} onClick={onClose}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <div className={styles.modalHeader}>
-          <h2 className={styles.modalTitle}>Add medicine to store</h2>
+          <h2 className={styles.modalTitle}>Edit medicine</h2>
           <button className={styles.closeButton} onClick={onClose}>
             ×
           </button>
@@ -171,6 +207,12 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
                 <img 
                   src={URL.createObjectURL(formData.image)} 
                   alt="Preview" 
+                  className={styles.previewImage}
+                />
+              ) : medicine.image_url ? (
+                <img 
+                  src={medicine.image_url} 
+                  alt="Current" 
                   className={styles.previewImage}
                 />
               ) : (
@@ -259,7 +301,7 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
                 <option value="">
                   {isLoading ? "Loading categories..." : "Select category"}
                 </option>
-                {categories.map(category => (
+                {categories && categories.map(category => (
                   <option key={category.id} value={category.id}>
                     {category.name}
                   </option>
@@ -282,7 +324,7 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
                 <option value="">
                   {isLoading ? "Loading statuses..." : "Select status"}
                 </option>
-                {productStatuses.map(status => (
+                {productStatuses && productStatuses.map(status => (
                   <option key={status.id} value={status.id}>
                     {status.name}
                   </option>
@@ -297,8 +339,8 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
           <div className={styles.modalActions}>
             <Button
               type="button"
-              className={styles.cancelButton}
               onClick={onClose}
+              className={styles.cancelButton}
             >
               Cancel
             </Button>
@@ -306,7 +348,7 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
               type="submit"
               className={styles.submitButton}
             >
-              Add medicine
+              Update medicine
             </Button>
           </div>
         </form>
@@ -315,4 +357,4 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
   );
 };
 
-export default AddMedicineModal;
+export default EditMedicineModal;

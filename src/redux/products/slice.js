@@ -1,10 +1,11 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import initialState from "./initialState";
-import { createProductThunk } from "./operations";
+import { createProductThunk, updateProductThunk } from "./operations";
 import {
   handleProductsPending,
   handleProductsRejected,
   handleCreateProduct,
+  handleUpdateProduct,
 } from "./handlers";
 
 const sliceProducts = createSlice({
@@ -18,12 +19,13 @@ const sliceProducts = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createProductThunk.fulfilled, handleCreateProduct)
+      .addCase(updateProductThunk.fulfilled, handleUpdateProduct)
       .addMatcher(
-        isAnyOf(createProductThunk.pending),
+        isAnyOf(createProductThunk.pending, updateProductThunk.pending),
         handleProductsPending
       )
       .addMatcher(
-        isAnyOf(createProductThunk.rejected),
+        isAnyOf(createProductThunk.rejected, updateProductThunk.rejected),
         handleProductsRejected
       );
   },

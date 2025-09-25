@@ -12,3 +12,15 @@ export const createProductThunk = createAsyncThunk(
     }
   }
 );
+
+export const updateProductThunk = createAsyncThunk(
+  "products/updateProduct",
+  async ({ shopId, productId, productData }, thunkAPI) => {
+    try {
+      const response = await productsServices.updateProduct(shopId, productId, productData);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
