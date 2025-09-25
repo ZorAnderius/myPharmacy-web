@@ -5,14 +5,15 @@ import styles from "./CreateShopForm.module.css";
 import createShopValidationSchema from "../../../../utils/validationForm/createShop";
 
 const initialValues = {
-  shopName: "",
+  name: "",
   ownerName: "",
   email: "",
-  phoneNumber: "",
-  streetAddress: "",
+  phone: "",
+  street: "",
   city: "",
+  apartment: "",
   zipCode: "",
-  hasDeliverySystem: false,
+  hasDelivery: false,
 };
 
 const CreateShopForm = ({ onSubmit, onCancel, isLoading }) => {
@@ -37,10 +38,10 @@ const CreateShopForm = ({ onSubmit, onCancel, isLoading }) => {
         {({ values, setFieldValue }) => (
           <Form className={styles.createShopForm}>
             <div className={styles.formGrid}>
-              <FastField name="shopName">
+              <FastField name="name">
                 {({ field, meta }) => (
                   <Input
-                    id="shop_name"
+                    id="name"
                     label="Shop Name"
                     field={field}
                     meta={meta}
@@ -51,7 +52,7 @@ const CreateShopForm = ({ onSubmit, onCancel, isLoading }) => {
               <FastField name="ownerName">
                 {({ field, meta }) => (
                   <Input
-                    id="owner_name"
+                    id="ownerName"
                     label="Shop Owner Name"
                     field={field}
                     meta={meta}
@@ -71,7 +72,7 @@ const CreateShopForm = ({ onSubmit, onCancel, isLoading }) => {
                 )}
               </FastField>
               
-              <FastField name="phoneNumber">
+              <FastField name="phone">
                 {({ field, meta }) => (
                   <Input
                     id="phone"
@@ -83,10 +84,10 @@ const CreateShopForm = ({ onSubmit, onCancel, isLoading }) => {
                 )}
               </FastField>
               
-              <FastField name="streetAddress">
+              <FastField name="street">
                 {({ field, meta }) => (
                   <Input
-                    id="street_address"
+                    id="street"
                     label="Street address"
                     field={field}
                     meta={meta}
@@ -105,10 +106,21 @@ const CreateShopForm = ({ onSubmit, onCancel, isLoading }) => {
                 )}
               </FastField>
               
+              <FastField name="apartment">
+                {({ field, meta }) => (
+                  <Input
+                    id="apartment"
+                    label="Apartment"
+                    field={field}
+                    meta={meta}
+                  />
+                )}
+              </FastField>
+              
               <FastField name="zipCode">
                 {({ field, meta }) => (
                   <Input
-                    id="zip_code"
+                    id="zipCode"
                     label="Zip / Postal"
                     field={field}
                     meta={meta}
@@ -123,10 +135,10 @@ const CreateShopForm = ({ onSubmit, onCancel, isLoading }) => {
                 <label className={styles.radioLabel}>
                   <input
                     type="radio"
-                    name="hasDeliverySystem"
+                    name="hasDelivery"
                     value="true"
-                    checked={values.hasDeliverySystem === true}
-                    onChange={() => setFieldValue("hasDeliverySystem", true)}
+                    checked={values.hasDelivery === true}
+                    onChange={() => setFieldValue("hasDelivery", true)}
                     className={styles.radioInput}
                   />
                   <span className={styles.radioCustom}></span>
@@ -135,10 +147,10 @@ const CreateShopForm = ({ onSubmit, onCancel, isLoading }) => {
                 <label className={styles.radioLabel}>
                   <input
                     type="radio"
-                    name="hasDeliverySystem"
+                    name="hasDelivery"
                     value="false"
-                    checked={values.hasDeliverySystem === false}
-                    onChange={() => setFieldValue("hasDeliverySystem", false)}
+                    checked={values.hasDelivery === false}
+                    onChange={() => setFieldValue("hasDelivery", false)}
                     className={styles.radioInput}
                   />
                   <span className={styles.radioCustom}></span>

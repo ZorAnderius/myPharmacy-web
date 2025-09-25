@@ -71,6 +71,7 @@ export const GoogleOAuthProvider = ({ children }) => {
           ?.split('=')[1];
         
 
+        
         const response = await api.post('/users/confirm-oauth', { 
           code: code.trim() 
         }, {
@@ -80,6 +81,7 @@ export const GoogleOAuthProvider = ({ children }) => {
           },
           signal: controller.signal
         });
+        
 
         clearTimeout(timeoutId);
 

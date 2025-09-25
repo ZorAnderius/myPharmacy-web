@@ -81,10 +81,10 @@ export const useOAuthCallback = () => {
     const code = searchParams.get('code');
     const error = searchParams.get('error');
     
-    if ((code || error) && !hasProcessed && attemptCount < 1) {
+    if ((code || error) && !hasProcessed && !isProcessing && attemptCount < 1) {
       handleOAuthCallback();
     }
-  }, [searchParams, dispatch, navigate, authenticateWithGoogle, isProcessing, hasProcessed, attemptCount]);
+  }, [searchParams, hasProcessed, isProcessing, attemptCount]);
 
   return { isProcessing, error };
 };

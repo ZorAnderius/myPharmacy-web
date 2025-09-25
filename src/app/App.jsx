@@ -29,15 +29,11 @@ function App() {
         if (existingToken) {
           try {
             // Verify and refresh token with backend
-            console.log('Token found, verifying and refreshing with backend...');
             await dispatch(refreshThunk()).unwrap();
-            console.log('Token refreshed successfully, user authenticated');
           } catch (error) {
             console.error('Token refresh failed:', error);
             // Token is invalid, user will be logged out
           }
-        } else {
-          console.log('No token found, user is not authenticated');
         }
         // If no token, user is not authenticated - this is normal
       } catch (error) {

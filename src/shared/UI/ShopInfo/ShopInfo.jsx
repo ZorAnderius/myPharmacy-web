@@ -7,7 +7,7 @@ const ShopInfo = ({ shop, onEdit }) => {
   return (
     <div className={styles.shopInfoContainer}>
       <div className={styles.shopHeader}>
-        <h2 className={styles.shopName}>{shop.shopName}</h2>
+        <h2 className={styles.shopName}>{shop.name}</h2>
         <Button 
           className={styles.editButton}
           onClick={onEdit}
@@ -29,20 +29,20 @@ const ShopInfo = ({ shop, onEdit }) => {
         
         <div className={styles.detailRow}>
           <span className={styles.detailLabel}>Phone:</span>
-          <span className={styles.detailValue}>{shop.phoneNumber}</span>
+          <span className={styles.detailValue}>{shop.phone}</span>
         </div>
         
         <div className={styles.detailRow}>
           <span className={styles.detailLabel}>Address:</span>
           <span className={styles.detailValue}>
-            {shop.streetAddress}, {shop.city}, {shop.zipCode}
+            {shop.address ? `${shop.address.street}, ${shop.address.apartment}, ${shop.address.city}, ${shop.address.zipCode}` : 'No address'}
           </span>
         </div>
         
         <div className={styles.detailRow}>
           <span className={styles.detailLabel}>Delivery System:</span>
           <span className={styles.detailValue}>
-            {shop.hasDeliverySystem ? 'Yes' : 'No'}
+            {shop.hasDelivery ? 'Yes' : 'No'}
           </span>
         </div>
       </div>
