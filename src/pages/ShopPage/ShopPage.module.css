@@ -1,0 +1,115 @@
+.shopPage {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px 20px 20px;
+}
+
+.noShopContainer {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.noShopContent {
+  text-align: center;
+  background: white;
+  border-radius: 16px;
+  padding: 48px 32px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.noShopTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 16px 0;
+}
+
+.noShopDescription {
+  font-size: 16px;
+  color: #6b7280;
+  margin: 0 0 32px 0;
+  line-height: 1.6;
+}
+
+.createButton {
+  padding: 16px 32px;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.createButton:hover {
+  background-color: #059669;
+}
+
+.createContainer {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
+
+.createContent {
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+
+@media (min-width: 768px) {
+  .shopPage {
+    padding: 100px 40px 40px 40px;
+  }
+  
+  .noShopContent {
+    padding: 64px 48px;
+  }
+  
+  .noShopTitle {
+    font-size: 32px;
+  }
+  
+  .noShopDescription {
+    font-size: 18px;
+  }
+  
+  .createContent {
+    grid-template-columns: 3fr 2fr;
+    align-items: start;
+  }
+}
+
+@media (min-width: 1280px) {
+  .shopPage {
+    padding: 120px 60px 60px 60px;
+  }
+  
+  .noShopContent {
+    padding: 80px 64px;
+  }
+  
+  .noShopTitle {
+    font-size: 36px;
+  }
+  
+  .createContent {
+    gap: 30px;
+  }
+}

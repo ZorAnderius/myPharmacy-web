@@ -1,0 +1,99 @@
+.shopInfoContainer {
+  width: 100%;
+  max-width: 600px;
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.shopHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.shopName {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.editButton {
+  padding: 8px 16px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.editButton:hover {
+  background-color: #2563eb;
+}
+
+.shopDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.detailRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detailLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detailValue {
+  font-size: 16px;
+  color: #374151;
+  font-weight: 500;
+}
+
+@media (min-width: 768px) {
+  .shopInfoContainer {
+    max-width: 700px;
+    padding: 40px;
+  }
+  
+  .detailRow {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .detailLabel {
+    min-width: 120px;
+    font-size: 14px;
+  }
+  
+  .detailValue {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .shopInfoContainer {
+    max-width: 800px;
+    padding: 48px;
+  }
+  
+  .shopName {
+    font-size: 28px;
+  }
+}
