@@ -18,7 +18,15 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!assets|api|favicon\\.ico|robots\\.txt|_next|_vercel).*)",
+      "source": "/oauth/assets/(.*)",
+      "destination": "/assets/$1"
+    },
+    {
+      "source": "/oauth/callback",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ],

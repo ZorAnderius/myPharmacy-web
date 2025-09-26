@@ -25,6 +25,6 @@ export default defineConfig({
     port: 5179,
     strictPort: true,
   },
-  // Для SPA на Vercel додаємо publicDir в base
-  base: './',
+  // Вимікаємо base для правильного deploy на Vercel
+  // base: './',
 });
