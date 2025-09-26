@@ -262,7 +262,7 @@ For questions, support, or collaboration opportunities:
 
 *Revolutionizing the pharmacy experience, one application at a time*
 
-[**🌐 Try the Live Demo**](https://my-pharmacy-web-green.vercel.app/)
+[**Try the Live Demo**](https://my-pharmacy-web-green.vercel.app/)
 
 </div>
 
@@ -277,5 +277,3 @@ Thanks to all contributors and the open-source community for making this project
 - All beta testers who helped refine the user experience
 
 ---
-
-*Last updated: January 2025*
