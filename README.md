@@ -4,7 +4,7 @@
 
 myPharmacy is a modern, full-stack web application designed to revolutionize the pharmacy experience. Built with cutting-edge technologies, it offers a seamless platform for managing pharmacies, products, and user experiences with an emphasis on security, performance, and user-friendly design.
 
-🌐 **Live Demo:** [View Live Application](https://my-pharmacy-web-green.vercel.app/)
+**Live Demo:** [View Live Application](https://my-pharmacy-web-green.vercel.app/)
 
 ## Features
 
@@ -66,7 +66,6 @@ Before you begin, ensure you have the following installed on your system:
    Create a `.env` file in the root directory and configure the following:
    ```env
    VITE_API_BASE_URL=http://localhost:3000/api
-   VITE_API_TIMEOUT=10000
    ```
 
 4. **Start the development server**
@@ -195,12 +194,12 @@ npm run build:render
 Special build command with memory allocation for deployment platforms.
 
 ### Deployment Platforms
-- **Vercel** - Instant deployment for frontend applications ⭐ **[Currently Live](https://my-pharmacy-web-green.vercel.app/)**
+- **Vercel** - Instant deployment for frontend applications **[Currently Live](https://my-pharmacy-web-green.vercel.app/)**
 - **Netlify** - Continuous deployment from Git repositories  
 - **Render** - Full-stack hosting solution (includes `render.yaml`)
 - **GitHub Pages** - Free hosting for public repositories
 
-**Current Deployment Status:** ✅ **Live on Vercel**
+**Current Deployment Status:****Live on Vercel**
 - **URL:** https://my-pharmacy-web-green.vercel.app/
 - **Auto-deployment:** Connected to GitHub repository
 - **Status:** Active and operational
@@ -225,8 +224,6 @@ The project includes a `render.yaml` configuration file for easy deployment:
 ### Environment Variables
 ```env
 VITE_API_BASE_URL=https://your-api-domain.com/api
-VITE_API_TIMEOUT=10000
-NODE_ENV=production
 ```
 
 ### Build Configuration
@@ -265,15 +262,5 @@ For questions, support, or collaboration opportunities:
 [**Try the Live Demo**](https://my-pharmacy-web-green.vercel.app/)
 
 </div>
-
-## 🌟 Acknowledgments
-
-Thanks to all contributors and the open-source community for making this project возможным.
-
-**Special mentions:**
-- React team for the amazing framework
-- Vite for the blazing-fast build process
-- Redux Toolkit for state management excellence
-- All beta testers who helped refine the user experience
 
 ---
