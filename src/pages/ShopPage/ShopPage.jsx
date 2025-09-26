@@ -22,23 +22,11 @@ const ShopPage = () => {
   
   // Check if user has shops
   const hasShops = shops && Array.isArray(shops) && shops.length > 0;
-  
-  // Debug logging
-  console.log("ShopPage Debug:", { 
-    shops, 
-    shopsLength: shops?.length, 
-    isArray: Array.isArray(shops),
-    hasShops,
-    isLoading 
-  });
 
   // Load user shops on component mount
   useEffect(() => {
     dispatch(getUserShopsThunk())
       .unwrap()
-      .then((result) => {
-        console.log("User shops loaded:", result);
-      })
       .catch((error) => {
         console.error('Failed to load user shops:', error);
       });

@@ -108,8 +108,8 @@ const MobileMenu = ({ isOpen, setIsOpen }) => {
           >
             <div className={styles["line"]}></div>
             <UserNavBar location={isHome} isMobile={true} />
-            <div className={styles["line"]}></div>
-            <NavBar location={isHome} isMobile={true} />
+            {isAuthenticate && <div className={styles["line"]}></div>}
+            {isAuthenticate && <NavBar location={isHome} isMobile={true} />}
             {isAuthenticate && (
               <>
                 <div className={styles["line"]}></div>

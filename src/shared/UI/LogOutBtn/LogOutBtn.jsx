@@ -11,11 +11,26 @@ const LogOutBtn = ({ className = "" }) => {
   const handleLogout = async () => {
     try {
       await dispatch(logoutThunk()).unwrap();
-      navigate(ROUTES.LOGIN);
+      
+      // Manually clear localStorage to ensure complete cleanup
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("user");
+      localStorage.removeItem("persist:root");
+      sessionStorage.clear();
+      
+      // Navigate to login page using React Router
+      navigate(ROUTES.LOGIN, { replace: true });
     } catch (error) {
       console.error('Logout failed:', error);
+      
+      // Manual cleanup even on failure
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("user");
+      localStorage.removeItem("persist:root");
+      sessionStorage.clear();
+      
       // Even if logout fails, redirect to login page
-      navigate(ROUTES.LOGIN);
+      navigate(ROUTES.LOGIN, { replace: true });
     }
   };
   return (

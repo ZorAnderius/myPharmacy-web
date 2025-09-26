@@ -85,8 +85,17 @@ export const setAccessToken = (token, user = null) => {
       localStorage.setItem("user", JSON.stringify(user));
     }
   } else {
+    // Clear all auth-related items from localStorage
     localStorage.removeItem("accessToken");
     localStorage.removeItem("user");
+    // Clear Redux Persist storage
+    try {
+      localStorage.removeItem("persist:root");
+      // Also clear sessionStorage
+      sessionStorage.clear();
+    } catch (error) {
+      console.warn("Failed to clear persist storage:", error);
+    }
     // Clear CSRF token when access token is cleared
     clearCSRFToken();
   }

@@ -33,15 +33,20 @@ export const authServices = {
     const formData = new FormData();
     formData.append('avatar', avatarFile);
     
-    const response = await api.patch("/users/update-avatar", formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    
-    // Backend returns only avatar URL
-    const avatarUrl = response.data?.data || response.data;
-    
-    return { avatarUrl };
+    try {
+      const response = await api.patch("/users/update-avatar", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      
+      // Backend returns only avatar URL
+      const avatarUrl = response.data?.data || response.data;
+      
+      return { avatarUrl };
+    } catch (error) {
+      console.error("Avatar update failed:", error);
+      throw error;
+    }
   },
 };

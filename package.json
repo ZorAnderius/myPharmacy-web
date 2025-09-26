@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "vite preview --port 3000 --host 0.0.0.0"
+    "start": "npm run build && serve -s dist -l 3000"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.3.0",
@@ -27,6 +27,7 @@
     "react-router-dom": "^7.8.2",
     "react-spinners": "^0.17.0",
     "redux-persist": "^6.0.0",
+    "serve": "^14.2.4",
     "spinners-react": "^1.0.10",
     "yup": "^1.4.0"
   },
