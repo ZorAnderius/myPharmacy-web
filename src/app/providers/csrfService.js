@@ -29,22 +29,41 @@ const getCSRFTokenFromCookie = () => {
 export const setCSRFToken = (token) => {
   csrfToken = token;
   tokenExpiry = Date.now() + TOKEN_LIFETIME;
+  // Зберігаємо в localStorage для production persistence
+  if (typeof window !== 'undefined' && token) {
+    localStorage.setItem('csrf-token', token);
+  }
 };
 
 /**
  * Get current CSRF token
  */
 export const getCSRFToken = async () => {
+  // Sprawdź czy working в browser environment
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return null;
+  }
+
   // First try to get from cookie (backend sets this)
   const cookieToken = getCSRFTokenFromCookie();
   if (cookieToken) {
     csrfToken = cookieToken;
     tokenExpiry = Date.now() + TOKEN_LIFETIME;
+    // Зберігаємо в localStorage як backup для production
+    localStorage.setItem('csrf-token', cookieToken);
     return csrfToken;
   }
 
   // Check if we have a cached token that's still valid
   if (csrfToken && tokenExpiry && Date.now() < tokenExpiry) {
+    return csrfToken;
+  }
+
+  // Fallback to localStorage
+  const storedToken = localStorage.getItem('csrf-token');
+  if (storedToken) {
+    csrfToken = storedToken;
+    tokenExpiry = Date.now() + TOKEN_LIFETIME;
     return csrfToken;
   }
 
@@ -59,9 +78,15 @@ export const clearCSRFToken = () => {
   csrfToken = null;
   tokenExpiry = null;
 
-  // Clear cookie by setting it to expire in the past
-  document.cookie =
-    "csrf_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  // Clear localStorage якщо в browser environment
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem('csrf-token');
+    // Clear cookie by setting it to expire in the past
+    if (typeof document !== 'undefined') {
+      document.cookie =
+        "csrf_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
+  }
 };
 
 /**
@@ -95,5 +120,11 @@ export const refreshCSRFToken = async () => {
     setCSRFToken(cookieToken);
     return cookieToken;
   }
-  throw new Error("No CSRF token available in cookies");
+  // Fallback to localStorage
+  const storedToken = localStorage.getItem('csrf-token');
+  if (storedToken) {
+    setCSRFToken(storedToken);
+    return storedToken;
+  }
+  throw new Error("No CSRF token available in cookies or localStorage");
 };

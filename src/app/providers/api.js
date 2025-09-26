@@ -32,11 +32,27 @@ api.interceptors.request.use(async (config) => {
       const csrfToken = await getCSRFToken();
       if (csrfToken) {
         config.headers["X-Csrf-Token"] = csrfToken;
+        config.headers["x-csrf-token"] = csrfToken; // Додаткова можливість для різних серверів
+        config.headers["X-CSRF-Token"] = csrfToken; // Альтернативний header
+      } else {
+        console.warn("No CSRF token available for", config.method?.toUpperCase(), config.url);
+        // Спробуємо отримати з localStorage як fallback
+        const storedToken = localStorage.getItem('csrf-token');
+        if (storedToken) {
+          config.headers["X-Csrf-Token"] = storedToken;
+          config.headers["x-csrf-token"] = storedToken;
+          config.headers["X-CSRF-Token"] = storedToken;
+        }
       }
     } catch (error) {
       console.warn("Failed to get CSRF token:", error);
-      // Don't block the request if CSRF token is not available
-      // The server will handle this appropriately
+      // Спробуємо з localStorage як fallback
+      const storedToken = localStorage.getItem('csrf-token');
+      if (storedToken) {
+        config.headers["X-Csrf-Token"] = storedToken;
+        config.headers["x-csrf-token"] = storedToken;
+        config.headers["X-CSRF-Token"] = storedToken;
+      }
     }
   }
 
