@@ -74,3 +74,26 @@ export const getCurrentUserThunk = createAsyncThunk(
     }
   }
 );
+
+export const updateAvatarThunk = createAsyncThunk(
+  "auth/updateAvatar",
+  async (avatarFile, thunkAPI) => {
+    try {
+      const response = await authServices.updateAvatar(avatarFile);
+      const { avatarUrl } = response;
+      
+      // Get current user and update with new avatar URL
+      const state = thunkAPI.getState();
+      const currentUser = state.auth.user;
+      
+      if (currentUser && avatarUrl) {
+        const updatedUser = { ...currentUser, avatarUrl };
+        return { user: updatedUser };
+      }
+      
+      return { avatarUrl };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
+    }
+  }
+);

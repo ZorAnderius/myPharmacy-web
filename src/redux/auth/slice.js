@@ -8,6 +8,7 @@ import {
   logoutThunk,
   refreshThunk,
   getCurrentUserThunk,
+  updateAvatarThunk,
 } from "./operations";
 import {
   handleAuth,
@@ -71,6 +72,21 @@ const sliceAuth = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(logoutThunk.fulfilled, handleLogout)
+      .addCase(updateAvatarThunk.pending, (state) => {
+        state.status = responseStatuses.LOADING;
+        state.error = null; // Clear errors when starting avatar update
+      })
+      .addCase(updateAvatarThunk.fulfilled, (state, action) => {
+        if (action.payload.user) {
+          state.user = action.payload.user;
+        }
+        state.status = responseStatuses.SUCCEEDED;
+        state.error = null; // Clear any existing errors
+      })
+      .addCase(updateAvatarThunk.rejected, (state, action) => {
+        state.status = responseStatuses.FAILED;
+        state.error = action.payload;
+      })
       .addMatcher(
         isAnyOf(
           registerThunk.fulfilled,

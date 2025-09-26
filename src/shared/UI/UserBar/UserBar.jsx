@@ -4,11 +4,14 @@ import Button from "../Button/Button";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { selectUser } from "../../../redux/auth/selectors";
+import { useState } from "react";
+import UserProfileModal from "../UserProfileModal/UserProfileModal";
 
 const UserBar = ({ className = "" }) => {
   const user = useSelector(selectUser);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   
   // Get user initials
   const getInitials = () => {
@@ -30,31 +33,42 @@ const UserBar = ({ className = "" }) => {
     return 'U';
   };
 
-  const displayName = user?.firstName && user?.lastName 
-    ? `${user.firstName} ${user.lastName}` 
-    : user?.firstName || user?.name || 'User';
+  // Show only first name
+  const displayName = user?.firstName || user?.name?.split(' ')[0] || 'User';
+
+  const handleProfileClick = () => {
+    setIsProfileModalOpen(true);
+  };
 
   return (
-    <Button 
-      className={`${className ? styles[`${className}-user-bar`] : styles["user-bar"]} ${!isHomePage ? styles["non-home"] : ""}`}
-    >
-      <div className={styles["avatar-thumb"]}>
-        {user?.avatarUrl ? (
-          <img 
-            src={user.avatarUrl} 
-            alt={displayName}
-            className={styles["avatar-image"]}
-          />
-        ) : (
-          <div className={styles["avatar-initials"]}>
-            {getInitials()}
-          </div>
-        )}
-      </div>
-      <p className={styles["username"]}>
-        {displayName}
-      </p>
-    </Button>
+    <>
+      <Button 
+        className={`${className ? styles[`${className}-user-bar`] : styles["user-bar"]} ${!isHomePage ? styles["non-home"] : ""}`}
+        onClick={handleProfileClick}
+      >
+        <div className={styles["avatar-thumb"]}>
+          {user?.avatarUrl ? (
+            <img 
+              src={user.avatarUrl} 
+              alt={displayName}
+              className={styles["avatar-image"]}
+            />
+          ) : (
+            <div className={styles["avatar-initials"]}>
+              {getInitials()}
+            </div>
+          )}
+        </div>
+        <p className={styles["username"]}>
+          {displayName}
+        </p>
+      </Button>
+
+      <UserProfileModal 
+        isOpen={isProfileModalOpen} 
+        onClose={() => setIsProfileModalOpen(false)} 
+      />
+    </>
   );
 };
 

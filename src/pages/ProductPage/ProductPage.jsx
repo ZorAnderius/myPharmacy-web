@@ -7,31 +7,40 @@ import Button from "../../shared/UI/Button/Button";
 import EditMedicineModal from "../../shared/UI/EditMedicineModal/EditMedicineModal";
 import DeleteConfirmModal from "../../shared/UI/DeleteConfirmModal/DeleteConfirmModal";
 import { getShopByIdThunk } from "../../redux/shops/operations";
-import { updateProductThunk, deleteProductThunk } from "../../redux/products/operations";
+import {
+  updateProductThunk,
+  deleteProductThunk,
+} from "../../redux/products/operations";
 import { getProductReviewsThunk } from "../../redux/reviews/operations";
-import { selectCurrentShop, selectIsLoading } from "../../redux/shops/selectors";
+import {
+  selectCurrentShop,
+  selectIsLoading,
+} from "../../redux/shops/selectors";
 import { selectIsLoading as selectGlobalIsLoading } from "../../redux/auth/selectors";
-import { selectReviews, selectIsLoading as selectReviewsIsLoading } from "../../redux/reviews/selectors";
+import {
+  selectReviews,
+  selectIsLoading as selectReviewsIsLoading,
+} from "../../redux/reviews/selectors";
 import styles from "./ProductPage.module.css";
 
 const ProductPage = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
-  const shopId = searchParams.get('shopId');
-  const productId = searchParams.get('productId');
-  
+
+  const shopId = searchParams.get("shopId");
+  const productId = searchParams.get("productId");
+
   const shop = useSelector(selectCurrentShop);
   const isLoading = useSelector(selectIsLoading);
   const globalIsLoading = useSelector(selectGlobalIsLoading);
   const reviews = useSelector(selectReviews);
   const reviewsIsLoading = useSelector(selectReviewsIsLoading);
-  
+
   const [product, setProduct] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('description');
+  const [activeTab, setActiveTab] = useState("description");
 
   useEffect(() => {
     if (shopId) {
@@ -41,7 +50,7 @@ const ProductPage = () => {
 
   useEffect(() => {
     if (shop && shop.products && productId) {
-      const foundProduct = shop.products.find(p => p.id === productId);
+      const foundProduct = shop.products.find((p) => p.id === productId);
       setProduct(foundProduct);
     }
   }, [shop, productId]);
@@ -62,25 +71,27 @@ const ProductPage = () => {
 
   const handleSubmitEditProduct = async (formData) => {
     try {
-      const result = await dispatch(updateProductThunk({ 
-        shopId, 
-        productId, 
-        productData: formData 
-      })).unwrap();
-      
+      const result = await dispatch(
+        updateProductThunk({
+          shopId,
+          productId,
+          productData: formData,
+        })
+      ).unwrap();
+
       setIsEditModalOpen(false);
-      
+
       // Update the product in local state immediately
       if (result && result.data) {
         setProduct(result.data);
       }
-      
+
       // Also refresh shop data to ensure consistency
       if (shopId) {
         dispatch(getShopByIdThunk(shopId));
       }
     } catch (error) {
-      console.error('Error updating product:', error);
+      console.error("Error updating product:", error);
     }
   };
 
@@ -94,17 +105,19 @@ const ProductPage = () => {
 
   const handleConfirmDelete = async () => {
     try {
-      await dispatch(deleteProductThunk({ 
-        shopId, 
-        productId 
-      })).unwrap();
-      
+      await dispatch(
+        deleteProductThunk({
+          shopId,
+          productId,
+        })
+      ).unwrap();
+
       setIsDeleteModalOpen(false);
-      
+
       // Redirect to shop page
       navigate(`/medicine?shopId=${shopId}`);
     } catch (error) {
-      console.error('Error deleting product:', error);
+      console.error("Error deleting product:", error);
     }
   };
 
@@ -140,7 +153,7 @@ const ProductPage = () => {
     <Section>
       <Container>
         <div className={styles.backSection}>
-          <Button 
+          <Button
             className={styles.backButton}
             onClick={() => navigate(`/medicine?shopId=${shopId}`)}
           >
@@ -150,30 +163,30 @@ const ProductPage = () => {
         <div className={styles.productPage}>
           <div className={styles.productCard}>
             <div className={styles.productImage}>
-              <img 
-                src={product.image_url || product.image || "/api/placeholder/300/300"} 
+              <img
+                src={
+                  product.image_url ||
+                  "../../assets/img/no_product_image.webp"
+                }
                 alt={product.name}
                 className={styles.image}
               />
               {product.status && (
-                <div className={styles.statusBadge}>
-                  {product.status.name}
-                </div>
+                <div className={styles.statusBadge}>{product.status.name}</div>
               )}
             </div>
             <div className={styles.productInfo}>
               <h1 className={styles.productName}>{product.name}</h1>
-              <p className={styles.productBrand}>{product.category?.name || 'Unknown'}</p>
+              <p className={styles.productBrand}>
+                {product.category?.name || "Unknown"}
+              </p>
               <div className={styles.productPrice}>£{product.price}</div>
             </div>
             <div className={styles.productActions}>
-              <Button 
-                className={styles.editButton}
-                onClick={handleEditProduct}
-              >
+              <Button className={styles.editButton} onClick={handleEditProduct}>
                 Edit
               </Button>
-              <Button 
+              <Button
                 className={styles.deleteButton}
                 onClick={handleDeleteProduct}
               >
@@ -184,41 +197,51 @@ const ProductPage = () => {
 
           <div className={styles.productDetails}>
             <div className={styles.tabs}>
-              <button 
-                className={`${styles.tab} ${activeTab === 'description' ? styles.activeTab : ''}`}
-                onClick={() => setActiveTab('description')}
+              <button
+                className={`${styles.tab} ${
+                  activeTab === "description" ? styles.activeTab : ""
+                }`}
+                onClick={() => setActiveTab("description")}
               >
                 Description
               </button>
-              <button 
-                className={`${styles.tab} ${activeTab === 'reviews' ? styles.activeTab : ''}`}
-                onClick={() => setActiveTab('reviews')}
+              <button
+                className={`${styles.tab} ${
+                  activeTab === "reviews" ? styles.activeTab : ""
+                }`}
+                onClick={() => setActiveTab("reviews")}
               >
                 Reviews
               </button>
             </div>
 
             <div className={styles.tabContent}>
-              {activeTab === 'description' && (
+              {activeTab === "description" && (
                 <div className={styles.description}>
                   <p className={styles.disclaimer}>
-                    Although it's typically considered safe, excessive consumption can lead to side effects. 
-                    Therefore, it's recommended to consult a healthcare professional before using this product, 
-                    especially if you're pregnant, nursing, or taking other medications.
+                    Although it's typically considered safe, excessive
+                    consumption can lead to side effects. Therefore, it's
+                    recommended to consult a healthcare professional before
+                    using this product, especially if you're pregnant, nursing,
+                    or taking other medications.
                   </p>
-                  
+
                   <div className={styles.benefits}>
                     <h3>Product Information</h3>
-                    <p><strong>Price:</strong> £{product.price}</p>
-                    <p><strong>Quantity:</strong> {product.quantity} units</p>
-                    
+                    <p>
+                      <strong>Price:</strong> £{product.price}
+                    </p>
+                    <p>
+                      <strong>Quantity:</strong> {product.quantity} units
+                    </p>
+
                     <h3>Description</h3>
                     <p>{product.description}</p>
                   </div>
                 </div>
               )}
-              
-              {activeTab === 'reviews' && (
+
+              {activeTab === "reviews" && (
                 <div className={styles.reviews}>
                   {reviewsIsLoading ? (
                     <div className={styles.loadingContainer}>
@@ -227,11 +250,16 @@ const ProductPage = () => {
                   ) : reviews && reviews.length > 0 ? (
                     <div className={styles.reviewsList}>
                       {reviews.map((review, index) => (
-                        <div key={review.id || index} className={styles.reviewItem}>
+                        <div
+                          key={review.id || index}
+                          className={styles.reviewItem}
+                        >
                           <div className={styles.reviewHeader}>
-                            <h4 className={styles.reviewAuthor}>{review.user?.name || 'Anonymous'}</h4>
+                            <h4 className={styles.reviewAuthor}>
+                              {review.user?.name || "Anonymous"}
+                            </h4>
                             <div className={styles.reviewRating}>
-                              {'★'.repeat(review.rating || 5)}
+                              {"★".repeat(review.rating || 5)}
                             </div>
                           </div>
                           <p className={styles.reviewText}>{review.comment}</p>
@@ -258,7 +286,7 @@ const ProductPage = () => {
           onSubmit={handleSubmitEditProduct}
           medicine={product}
         />
-        
+
         <DeleteConfirmModal
           isOpen={isDeleteModalOpen}
           onClose={handleCloseDeleteModal}

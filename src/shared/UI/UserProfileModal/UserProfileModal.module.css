@@ -1,0 +1,330 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay-modal-clr);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: var(--z-modal);
+  padding: 20px;
+  overflow: hidden;
+  max-width: 100vw;
+  max-height: 100vh;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(4px);
+}
+
+.modalContent {
+  background: var(--secondary-txt-clr);
+  border-radius: var(--radius-2xl);
+  max-width: 500px;
+  width: 100%;
+  max-height: 85vh;
+  height: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  animation: modalSlideIn var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 32px;
+  border-bottom: 1px solid var(--separator-clr);
+  background: var(--secondary-clr);
+  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+}
+
+.modalTitle {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-txt-clr);
+  margin: 0;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: var(--font-size-2xl);
+  color: var(--third-txt-clr);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: var(--radius-lg);
+  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.closeButton:hover {
+  background: var(--pagination-disable-clr);
+  color: var(--primary-txt-clr);
+}
+
+.modalBody {
+  padding: 32px;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.profileContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 24px;
+}
+
+.avatarSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatarContainer {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  overflow: visible;
+  background: var(--secondary-clr);
+  border: none;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.avatarContainer:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.avatarInitials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 32px;
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-clr);
+  background-color: var(--secondary-clr);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 1;
+  letter-spacing: 0.5px;
+}
+
+.avatarOverlay {
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 32px;
+  background-color: var(--primary-clr);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: all var(--transition-fast);
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.editIcon {
+  color: var(--secondary-txt-clr);
+  font-size: 16px;
+  font-weight: var(--font-weight-bold);
+  transition: var(--transition-fast);
+}
+
+.avatarOverlay:hover {
+  background-color: var(--hover-bg-clr);
+  transform: translateX(-50%) translateY(-2px) scale(1.1);
+}
+
+.loadingSpinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: var(--secondary-txt-clr);
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  z-index: 3;
+}
+
+.infoSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.userName {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-txt-clr);
+  margin: 0 0 16px 0;
+  letter-spacing: 1px;
+}
+
+.infoField {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.label {
+  font-size: var(--font-size-sm);
+  color: var(--third-txt-clr);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.value {
+  font-size: var(--font-size-base);
+  color: var(--primary-txt-clr);
+  font-weight: var(--font-weight-semibold);
+  word-break: break-word;
+  width: 100%;
+  text-align: left;
+}
+
+.modalActions {
+  padding: 24px 32px;
+  border-top: 1px solid var(--separator-clr);
+  background: var(--secondary-clr);
+  border-radius: 0 0 var(--radius-2xl) var(--radius-2xl);
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.closeModalButton {
+  padding: 12px 32px;
+  background: var(--primary-clr);
+  color: var(--secondary-txt-clr);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+.closeModalButton:hover {
+  background: var(--hover-bg-clr);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(34, 197, 94, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modalOverlay {
+    padding: 10px;
+    align-items: flex-start;
+    padding-top: 5vh;
+  }
+  
+  .modalContent {
+    max-height: 90vh;
+    max-width: 95vw;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .modalHeader {
+    padding: 20px 24px;
+  }
+  
+  .modalBody {
+    padding: 24px;
+  }
+  
+  .modalActions {
+    padding: 20px 24px;
+  }
+  
+  .avatarContainer {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .avatarInitials {
+    font-size: 28px;
+  }
+  
+  .userName {
+    font-size: var(--font-size-xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .modalOverlay {
+    padding: 5px;
+    align-items: flex-start;
+    padding-top: 2vh;
+  }
+  
+  .modalContent {
+    max-width: 98vw;
+    max-height: 96vh;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .modalTitle {
+    font-size: var(--font-size-lg);
+  }
+  
+  .avatarContainer {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .avatarInitials {
+    font-size: 24px;
+  }
+  
+  .userName {
+    font-size: var(--font-size-lg);
+  }
+}

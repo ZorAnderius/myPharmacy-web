@@ -29,4 +29,19 @@ export const authServices = {
     const { user } = response.data.data;
     return { user };
   },
+  updateAvatar: async (avatarFile) => {
+    const formData = new FormData();
+    formData.append('avatar', avatarFile);
+    
+    const response = await api.patch("/users/update-avatar", formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    
+    // Backend returns only avatar URL
+    const avatarUrl = response.data?.data || response.data;
+    
+    return { avatarUrl };
+  },
 };

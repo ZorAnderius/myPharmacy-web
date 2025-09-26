@@ -143,6 +143,10 @@
   font-size: 1.5rem;
   line-height: 1;
   letter-spacing: -0.6px;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* Responsive styles for avatar */
@@ -155,6 +159,11 @@
   .avatar-initials {
     font-size: 14px;
   }
+
+  .username {
+    max-width: 120px;
+    font-size: 1.2rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -165,5 +174,10 @@
   
   .avatar-initials {
     font-size: 12px;
+  }
+
+  .username {
+    max-width: 80px;
+    font-size: 1rem;
   }
 }
