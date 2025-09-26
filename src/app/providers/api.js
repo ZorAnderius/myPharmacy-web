@@ -25,7 +25,8 @@ api.interceptors.request.use(async (config) => {
     config.url?.includes("/users/login") ||
     config.url?.includes("/users/register") ||
     config.url?.includes("/users/confirm-oauth") ||
-    config.url?.includes("/users/request-google-oauth");
+    config.url?.includes("/users/request-google-oauth") ||
+    config.url?.includes("/users/refresh"); // Додаємо refresh endpoint
 
   if (requiresCSRF && !isAuthEndpoint) {
     try {
@@ -133,17 +134,17 @@ api.interceptors.response.use(
       (error.response?.status === 401 || error.response?.status === 403) &&
       error.config &&
       !error.config._retry &&
-      !error.config._csrfRetry // Don't retry if this was already a CSRF retry
+      !error.config._csrfRetry && // Don't retry if this was already a CSRF retry
+      !error.config.url?.includes("/oauth/") // Don't retry on OAuth endpoints
     ) {
-      console.log(`Token expired for ${error.config.url}, refreshing...`);
       error.config._retry = true;
       try {
-        await refreshToken();
-        const newToken = getAccessToken();
+        const newToken = await refreshToken();
         if (newToken) {
-          console.log("Token refreshed, retrying request...");
           error.config.headers.Authorization = `Bearer ${newToken}`;
           return api.request(error.config);
+        } else {
+          setAccessToken(null);
         }
       } catch (refreshError) {
         console.error("Token refresh failed:", refreshError);

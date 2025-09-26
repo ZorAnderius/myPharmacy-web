@@ -122,20 +122,6 @@ export const refreshToken = async () => {
   // Initialize store subscription on first access
   await initializeStoreSubscription();
 
-  // If no token in memory, try to get from localStorage
-  let tokenToUse = accessToken;
-  if (!tokenToUse) {
-    const storedToken = localStorage.getItem("accessToken");
-    if (storedToken) {
-      tokenToUse = storedToken;
-      accessToken = storedToken; // Update memory token
-    }
-  }
-
-  if (!tokenToUse) {
-    return null;
-  }
-
   if (isRefreshing) {
     return new Promise((resolve, reject) =>
       pendingQueue.push({ resolve, reject })
@@ -148,15 +134,10 @@ export const refreshToken = async () => {
     // Import api client here to avoid circular dependency
     const { default: api } = await import("./api.js");
 
-    const response = await api.post(
-      "/users/refresh",
-      {},
-      {
-        headers: {
-          ...(tokenToUse && { Authorization: `Bearer ${tokenToUse}` }),
-        },
-      }
-    );
+    // Refresh token from httpOnly cookie - не передаємо Authorization header
+    const response = await api.post("/users/refresh", {}, {
+      withCredentials: true // Важливо для відправки cookies
+    });
 
     // Extract data from nested structure
     const { accessToken: newAccessToken, user } =
