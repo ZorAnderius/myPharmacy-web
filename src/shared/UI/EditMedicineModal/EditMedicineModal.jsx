@@ -214,12 +214,16 @@ const EditMedicineModal = ({ isOpen, onClose, onSubmit, medicine }) => {
                   src={medicine.image_url} 
                   alt="Current" 
                   className={styles.previewImage}
+                  onError={(e) => {
+                    e.target.src = "/no_product_image.avif";
+                  }}
                 />
               ) : (
-                <div className={styles.placeholderImage}>
-                  <div className={styles.pillIcon}>💊</div>
-                  <div className={styles.uploadText}>Click to upload image</div>
-                </div>
+                <img 
+                  src="/no_product_image.avif" 
+                  alt="Placeholder" 
+                  className={styles.previewImage}
+                />
               )}
             </label>
           </div>

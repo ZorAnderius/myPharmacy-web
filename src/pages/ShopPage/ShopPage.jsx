@@ -8,27 +8,36 @@ import ShopInfo from "../../shared/UI/ShopInfo/ShopInfo";
 import ShopIllustration from "../../shared/UI/ShopIllustration/ShopIllustration";
 import Button from "../../shared/UI/Button/Button";
 import { createShopThunk, getUserShopsThunk, updateShopThunk } from "../../redux/shops/operations";
-import { selectShops, selectCurrentShop, selectIsShopsLoading } from "../../redux/shops/selectors";
+import { selectShops, selectIsShopsLoading } from "../../redux/shops/selectors";
+import Loader from "../../features/Loader/Loader";
 import styles from "./ShopPage.module.css";
 
 const ShopPage = () => {
   const dispatch = useDispatch();
   const shops = useSelector(selectShops);
-  const currentShop = useSelector(selectCurrentShop);
   const isLoading = useSelector(selectIsShopsLoading);
   
   const [isCreating, setIsCreating] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   
   // Get user's shop (first shop from the list)
-  const userShop = shops.length > 0 ? shops[0] : null;
+  const userShop = shops && Array.isArray(shops) && shops.length > 0 ? shops[0] : null;
+  
+  // Debug logging
+  console.log("ShopPage Debug:", { 
+    shops, 
+    shopsLength: shops?.length, 
+    isArray: Array.isArray(shops),
+    userShop,
+    isLoading 
+  });
 
   // Load user shops on component mount
   useEffect(() => {
     dispatch(getUserShopsThunk())
       .unwrap()
       .then((result) => {
-        // User shops loaded successfully
+        console.log("User shops loaded:", result);
       })
       .catch((error) => {
         console.error('Failed to load user shops:', error);
@@ -103,7 +112,7 @@ const ShopPage = () => {
 
           {isLoading && (
             <div className={styles.loadingContainer}>
-              <p>Loading shops...</p>
+              <Loader />
             </div>
           )}
           

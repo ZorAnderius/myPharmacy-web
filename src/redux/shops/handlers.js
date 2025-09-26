@@ -16,6 +16,23 @@ export const handleGetAllShops = (state, action) => {
   state.error = null;
 };
 
+export const handleGetUserShops = (state, action) => {
+  state.status = responseStatuses.SUCCEEDED;
+  
+  // Correctly handle API response structure where shops are nested
+  let shopsData = [];
+  const payloadData = action.payload.data || action.payload;
+  
+  if (payloadData && payloadData.shops && Array.isArray(payloadData.shops)) {
+    shopsData = payloadData.shops;
+  } else if (Array.isArray(payloadData)) {
+    shopsData = payloadData;
+  }
+  
+  state.shops = shopsData;
+  state.error = null;
+};
+
 export const handleCreateShop = (state, action) => {
   state.status = responseStatuses.SUCCEEDED;
   state.currentShop = action.payload.data;

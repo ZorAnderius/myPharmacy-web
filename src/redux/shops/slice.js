@@ -11,6 +11,7 @@ import {
   handleShopsPending,
   handleShopsRejected,
   handleGetAllShops,
+  handleGetUserShops,
   handleCreateShop,
   handleGetShopById,
   handleUpdateShop,
@@ -30,7 +31,7 @@ const sliceShops = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAllShopsThunk.fulfilled, handleGetAllShops)
-      .addCase(getUserShopsThunk.fulfilled, handleGetAllShops)
+      .addCase(getUserShopsThunk.fulfilled, handleGetUserShops)
       .addCase(createShopThunk.fulfilled, handleCreateShop)
       .addCase(getShopByIdThunk.fulfilled, handleGetShopById)
       .addCase(updateShopThunk.fulfilled, handleUpdateShop)

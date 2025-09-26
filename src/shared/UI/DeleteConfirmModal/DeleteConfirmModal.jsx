@@ -17,9 +17,12 @@ const DeleteConfirmModal = ({ isOpen, onClose, onConfirm, medicine }) => {
         <div className={styles.modalBody}>
           <div className={styles.productImage}>
             <img 
-              src={medicine?.image_url || medicine?.image || "/api/placeholder/200/150"} 
+              src={medicine?.image_url || medicine?.image || "/no_product_image.avif"} 
               alt={medicine?.name}
               className={styles.image}
+              onError={(e) => {
+                e.target.src = "/no_product_image.avif";
+              }}
             />
           </div>
           <p className={styles.warningText}>

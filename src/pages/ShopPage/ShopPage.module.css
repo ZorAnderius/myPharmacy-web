@@ -66,14 +66,18 @@
 
 .noShopContainer {
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
+  margin: 10vh auto;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .noShopContent {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background: white;
   border-radius: 16px;
   padding: 48px 32px;

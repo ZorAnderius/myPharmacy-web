@@ -3,14 +3,14 @@ import styles from "./MedicineCard.module.css";
 
 const MedicineCard = ({ medicine, onEdit, onDelete, onView }) => {
   const handleImageError = (e) => {
-    e.target.src = "/api/placeholder/200/150";
+    e.target.src = "/no_product_image.avif";
   };
 
   return (
     <div className={styles.medicineCard}>
       <div className={styles.medicineImage}>
         <img 
-          src={medicine.image_url || medicine.image || "/api/placeholder/200/150"} 
+          src={medicine.image_url || "/no_product_image.avif"} 
           alt={medicine.name}
           onError={handleImageError}
         />

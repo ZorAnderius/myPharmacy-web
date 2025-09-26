@@ -12,12 +12,17 @@ export const handleReviewsRejected = (state, action) => {
 
 export const handleGetProductReviews = (state, action) => {
   state.status = responseStatuses.SUCCEEDED;
-  state.reviews = action.payload.data || action.payload;
+  const reviews = action.payload.data || action.payload;
+  state.reviews = Array.isArray(reviews) ? reviews : [];
   state.error = null;
 };
 
 export const handleCreateProductReview = (state, action) => {
   state.status = responseStatuses.SUCCEEDED;
-  state.reviews.push(action.payload.data);
+  if (Array.isArray(state.reviews)) {
+    state.reviews.push(action.payload.data || action.payload);
+  } else {
+    state.reviews = [action.payload.data || action.payload];
+  }
   state.error = null;
 };

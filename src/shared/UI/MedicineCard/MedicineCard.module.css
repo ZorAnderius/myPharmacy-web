@@ -14,11 +14,11 @@
 }
 
 .medicineImage {
-  width: 100%;
+  width: calc(100% + 40px);
   height: 250px;
   background: #f3f4f6;
-  border-radius: 8px;
-  margin-bottom: 16px;
+  border-radius: 12px 12px 0 0;
+  margin: -20px -20px 16px -20px;
   display: flex;
   align-items: center;
   justify-content: center;
