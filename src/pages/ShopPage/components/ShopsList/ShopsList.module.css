@@ -1,0 +1,13 @@
+.shopsList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+/* Responsive для магазинів */
+@media (max-width: 1024px) {
+  .shopsList {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}

@@ -4,9 +4,9 @@ import Container from "../../shared/UI/Container/Container";
 import Section from "../../shared/UI/Section/Section";
 import CreateShopForm from "../../shared/UI/Forms/CreateShopForm/CreateShopForm";
 import EditShopForm from "../../shared/UI/Forms/EditShopForm/EditShopForm";
-import ShopInfo from "../../shared/UI/ShopInfo/ShopInfo";
 import ShopIllustration from "../../shared/UI/ShopIllustration/ShopIllustration";
 import Button from "../../shared/UI/Button/Button";
+import ShopsList from "./components/ShopsList/ShopsList";
 import { createShopThunk, getUserShopsThunk, updateShopThunk } from "../../redux/shops/operations";
 import { selectShops, selectIsShopsLoading } from "../../redux/shops/selectors";
 import Loader from "../../features/Loader/Loader";
@@ -20,15 +20,15 @@ const ShopPage = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   
-  // Get user's shop (first shop from the list)
-  const userShop = shops && Array.isArray(shops) && shops.length > 0 ? shops[0] : null;
+  // Check if user has shops
+  const hasShops = shops && Array.isArray(shops) && shops.length > 0;
   
   // Debug logging
   console.log("ShopPage Debug:", { 
     shops, 
     shopsLength: shops?.length, 
     isArray: Array.isArray(shops),
-    userShop,
+    hasShops,
     isLoading 
   });
 
@@ -48,12 +48,17 @@ const ShopPage = () => {
     try {
       await dispatch(createShopThunk(shopData)).unwrap();
       setIsCreating(false);
+      // Оновлюємо список магазинів після створення
+      dispatch(getUserShopsThunk());
     } catch (error) {
       console.error("Error creating shop:", error);
     }
   };
 
-  const handleEditShop = () => {
+  const [selectedShop, setSelectedShop] = useState(null);
+
+  const handleEditShop = (shop) => {
+    setSelectedShop(shop);
     setIsEditing(true);
   };
 
@@ -66,9 +71,11 @@ const ShopPage = () => {
         return;
       }
 
-      const result = await dispatch(updateShopThunk({ shopId: userShop.id, shopData })).unwrap();
+      const result = await dispatch(updateShopThunk({ shopId: selectedShop.id, shopData })).unwrap();
       setIsEditing(false);
-      // Optionally show success message
+      setSelectedShop(null);
+      // Оновлюємо список магазинів після редагування
+      dispatch(getUserShopsThunk());
     } catch (error) {
       console.error("Error updating shop:", error);
       // Optionally show error message to user
@@ -77,11 +84,12 @@ const ShopPage = () => {
 
   const handleCancelEdit = () => {
     setIsEditing(false);
+    setSelectedShop(null);
   };
 
-  const handleViewProducts = () => {
+  const handleViewProducts = (shop) => {
     // Navigate to medicine page for this shop
-    window.location.href = `/medicine?shopId=${userShop.id}`;
+    window.location.href = `/medicine?shopId=${shop.id}`;
   };
 
   const handleCreateNewShop = () => {
@@ -98,7 +106,7 @@ const ShopPage = () => {
       <Container>
         <div className={styles.shopPage}>
           {/* Header with Create New Shop button */}
-          {!isLoading && userShop && !isCreating && !isEditing && (
+          {!isLoading && hasShops && !isCreating && !isEditing && (
             <div className={styles.shopHeader}>
               <h1 className={styles.pageTitle}>My Shops</h1>
               <Button 
@@ -116,7 +124,7 @@ const ShopPage = () => {
             </div>
           )}
           
-          {!isLoading && !userShop && !isCreating && (
+          {!isLoading && !hasShops && !isCreating && (
             <div className={styles.noShopContainer}>
               <div className={styles.noShopContent}>
                 <h2 className={styles.noShopTitle}>No Shop Found</h2>
@@ -146,11 +154,11 @@ const ShopPage = () => {
             </div>
           )}
 
-          {isEditing && userShop && (
+          {isEditing && selectedShop && (
             <div className={styles.editContainer}>
               <div className={styles.editContent}>
                 <EditShopForm 
-                  shop={userShop}
+                  shop={selectedShop}
                   onSubmit={handleUpdateShop}
                   onCancel={handleCancelEdit}
                   isLoading={isLoading}
@@ -160,10 +168,10 @@ const ShopPage = () => {
             </div>
           )}
 
-          {userShop && !isCreating && !isEditing && (
-            <ShopInfo 
-              shop={userShop}
-              onEdit={handleEditShop}
+          {shops && Array.isArray(shops) && shops.length > 0 && !isCreating && !isEditing && (
+            <ShopsList 
+              shops={shops}
+              onEditShop={handleEditShop}
               onViewProducts={handleViewProducts}
             />
           )}
