@@ -36,13 +36,19 @@ export const useOAuthCallback = () => {
         if (error) {
           const errorDescription = searchParams.get('error_description');
           setError(`OAuth error: ${error}${errorDescription ? ` - ${errorDescription}` : ''}`);
-          navigate('/login?error=oauth_failed');
+          // Use window.location instead of navigate for error cases
+          setTimeout(() => {
+            window.location.href = '/login?error=oauth_failed';
+          }, 1000);
           return;
         }
 
         if (!code) {
           setError('No authorization code received');
-          navigate('/login?error=no_code');
+          // Force browser navigation in case of missing code
+          setTimeout(() => {
+            window.location.href = '/login?error=no_code';
+          }, 1000);
           return;
         }
 
@@ -66,7 +72,10 @@ export const useOAuthCallback = () => {
         setHasProcessed(true);
         
         // Redirect to shop page after successful authentication
-        navigate('/shop');
+        setTimeout(() => {
+          // Use window.location for better reliability on deployed sites
+          window.location.href = '/shop';
+        }, 500);
       } catch (error) {
         console.error('OAuth callback error:', error);
         setError(error.message);

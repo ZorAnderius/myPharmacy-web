@@ -13,7 +13,10 @@ const OAuthCallbackPage = () => {
         <p className={styles.errorMessage}>{error}</p>
         <button 
           className={styles.returnButton}
-          onClick={() => window.location.href = '/login'}
+          onClick={() => {
+            // Force reload to clean up any dirty states
+            window.location.href = '/login';
+          }}
         >
           Return to Login
         </button>
