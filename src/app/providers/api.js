@@ -19,6 +19,17 @@ api.interceptors.request.use(async (config) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
+  // Debug cookies for refresh endpoint
+  if (config.url?.includes('/refresh')) {
+    console.log('Refresh request config:', {
+      url: config.url,
+      withCredentials: config.withCredentials,
+      headers: config.headers,
+      baseURL: config.baseURL,
+      currentOrigin: window.location.origin
+    });
+  }
+
   const method = config.method?.toUpperCase();
   const requiresCSRF = ["POST", "PUT", "PATCH", "DELETE"].includes(method);
   const isAuthEndpoint =
@@ -70,8 +81,26 @@ api.interceptors.request.use(async (config) => {
 
 // Response interceptor for handling errors
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // Debug cookies for refresh endpoint
+    if (response.config?.url?.includes('/refresh')) {
+      console.log('Refresh response:', {
+        status: response.status,
+        headers: response.headers,
+        data: response.data
+      });
+    }
+    return response;
+  },
   async (error) => {
+    // Debug cookies for refresh endpoint errors
+    if (error.config?.url?.includes('/refresh')) {
+      console.log('Refresh error:', {
+        status: error.response?.status,
+        message: error.response?.data,
+        headers: error.response?.headers
+      });
+    }
     // Handle CSRF token errors
     if (
       error.response?.status === 403 &&

@@ -14,31 +14,16 @@ const UserProfileModal = ({ isOpen, onClose }) => {
 
   useEffect(() => {
     if (isOpen) {
-      // Prevent body and html scroll when modal is open
-      document.documentElement.style.overflow = 'hidden';
+      // Prevent body scroll when modal is open
       document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100%';
-      document.body.style.top = '0';
-      document.body.classList.add('no-scroll');
     } else {
-      // Restore body and html scroll when modal is closed
-      document.documentElement.style.overflow = '';
+      // Restore body scroll when modal is closed
       document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
-      document.body.style.top = '';
-      document.body.classList.remove('no-scroll');
     }
 
     // Cleanup function to restore scroll when component unmounts
     return () => {
-      document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
-      document.body.style.top = '';
-      document.body.classList.remove('no-scroll');
     };
   }, [isOpen]);
 

@@ -134,6 +134,10 @@ export const refreshToken = async () => {
     // Import api client here to avoid circular dependency
     const { default: api } = await import("./api.js");
 
+    console.log("Attempting refresh with cookies...");
+    console.log("Current origin:", window.location.origin);
+    console.log("API base URL:", api.defaults.baseURL);
+    
     // Refresh token from httpOnly cookie - не передаємо Authorization header
     const response = await api.post("/users/refresh", {}, {
       withCredentials: true // Важливо для відправки cookies
