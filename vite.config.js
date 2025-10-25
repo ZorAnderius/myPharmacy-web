@@ -3,7 +3,12 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react({
+      // Вимкнути React DevTools в production для зменшення bundle
+      devtools: process.env.NODE_ENV !== 'production',
+    })
+  ],
   build: {
     sourcemap: false, // Вимикаємо sourcemap для зменшення розміру build'у
     outDir: 'dist',
@@ -18,6 +23,13 @@ export default defineConfig({
           redux: ['@reduxjs/toolkit', 'react-redux', 'redux-persist'],
           ui: ['framer-motion', 'react-router-dom'],
         },
+      },
+      onwarn(warning, warn) {
+        // Ігноруємо попередження про source maps від сторонніх модулів
+        if (warning.message.includes('sourcemap') || warning.message.includes('Source map')) {
+          return;
+        }
+        warn(warning);
       },
     },
   },
