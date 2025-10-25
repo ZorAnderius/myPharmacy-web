@@ -61,7 +61,6 @@ export const updateShopThunk = createAsyncThunk(
       const response = await shopsServices.updateShop(shopId, shopData);
       return response;
     } catch (error) {
-      console.error('updateShopThunk error:', error);
       return thunkAPI.rejectWithValue(error.message);
     }
   }

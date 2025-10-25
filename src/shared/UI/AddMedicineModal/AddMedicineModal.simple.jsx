@@ -36,7 +36,6 @@ const AddMedicineModal = ({ isOpen, onClose, onSubmit, shopId }) => {
       setCategories(categoriesResponse.data || []);
       setProductStatuses(statusesResponse.data || []);
     } catch (error) {
-      console.error("Error loading categories and statuses:", error);
       // Set empty arrays on error to prevent crashes
       setCategories([]);
       setProductStatuses([]);

@@ -74,23 +74,18 @@ const UserProfileModal = ({ isOpen, onClose }) => {
       if (file) {
         setIsImageLoading(true);
         try {
-          console.log('Starting avatar update...');
-          
           // Upload to backend and update Redux state
           const resultAction = await dispatch(updateAvatarThunk(file));
           
           if (updateAvatarThunk.fulfilled.match(resultAction)) {
-            console.log('Avatar update completed successfully');
             // The new avatar URL comes from backend and updates user in Redux
             const updatedUser = resultAction.payload.user;
             if (updatedUser && updatedUser.avatarUrl) {
               setNewAvatarUrl(updatedUser.avatarUrl);
             }
-          } else if (updateAvatarThunk.rejected.match(resultAction)) {
-            console.error('Avatar update failed:', resultAction.payload);
           }
         } catch (error) {
-          console.error('Failed to update avatar:', error);
+          // Failed to update avatar
         } finally {
           setIsImageLoading(false);
         }

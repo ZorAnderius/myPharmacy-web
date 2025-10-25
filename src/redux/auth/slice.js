@@ -59,7 +59,6 @@ const sliceAuth = createSlice({
           state.status = responseStatuses.SUCCEEDED;
           state.error = null;
         } catch (error) {
-          console.error("Failed to parse user data from localStorage:", error);
           state.isAuthenticated = false;
           state.user = null;
         }

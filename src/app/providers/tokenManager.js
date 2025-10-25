@@ -31,7 +31,7 @@ const initializeToken = () => {
       accessToken = storedToken;
     }
   } catch (error) {
-    console.error("Failed to initialize token from localStorage:", error);
+    // Failed to initialize token from localStorage
   }
 };
 
@@ -94,7 +94,7 @@ export const setAccessToken = (token, user = null) => {
       // Also clear sessionStorage
       sessionStorage.clear();
     } catch (error) {
-      console.warn("Failed to clear persist storage:", error);
+      // Failed to clear persist storage
     }
     // Clear CSRF token when access token is cleared
     clearCSRFToken();
@@ -133,10 +133,6 @@ export const refreshToken = async () => {
   try {
     // Import api client here to avoid circular dependency
     const { default: api } = await import("./api.js");
-
-    console.log("Attempting refresh with cookies...");
-    console.log("Current origin:", window.location.origin);
-    console.log("API base URL:", api.defaults.baseURL);
     
     // Refresh token from httpOnly cookie - не передаємо Authorization header
     const response = await api.post("/users/refresh", {}, {
@@ -155,7 +151,6 @@ export const refreshToken = async () => {
 
     return null;
   } catch (err) {
-    console.error("Token refresh failed:", err);
     processQueue(err, null);
     setAccessToken(null);
     throw err;

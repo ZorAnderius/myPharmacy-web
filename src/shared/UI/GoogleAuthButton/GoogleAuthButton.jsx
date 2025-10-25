@@ -10,7 +10,7 @@ const GoogleAuthButton = ({ className, disabled, children, ...props }) => {
     try {
       await redirectToGoogleAuth();
     } catch (error) {
-      console.error('Google OAuth error:', error);
+      // Google OAuth error
     }
   };
 

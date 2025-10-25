@@ -30,8 +30,6 @@ export const GoogleOAuthProvider = ({ children }) => {
 
         return response.data.data?.url || response.data.url;
       } catch (fetchError) {
-        console.error('Backend OAuth endpoint not available:', fetchError);
-        
         if (fetchError.response?.status === 404) {
           throw new Error('OAuth endpoint not found. Please contact support.');
         } else if (fetchError.code === 'ERR_NETWORK') {
@@ -41,7 +39,6 @@ export const GoogleOAuthProvider = ({ children }) => {
         }
       }
     } catch (err) {
-      console.error('Error getting OAuth URL:', err);
       setError(err.message);
       throw err;
     } finally {
@@ -101,8 +98,6 @@ export const GoogleOAuthProvider = ({ children }) => {
           user: data.user
         };
       } catch (backendError) {
-        console.error('Backend OAuth endpoint failed:', backendError);
-
         // Provide more specific error messages based on response
         if (backendError.response?.status === 400) {
           const errorData = backendError.response?.data;
@@ -122,8 +117,6 @@ export const GoogleOAuthProvider = ({ children }) => {
         }
       }
     } catch (err) {
-      console.error('Error authenticating with Google:', err);
-      
       // Provide user-friendly error messages
       let errorMessage = 'Authentication failed. Please try again.';
       
@@ -162,7 +155,6 @@ export const GoogleOAuthProvider = ({ children }) => {
       // Use redirect flow for better security
       window.location.href = oauthUrl;
     } catch (err) {
-      console.error('Error redirecting to Google Auth:', err);
       setError(err.message);
       throw err;
     } finally {

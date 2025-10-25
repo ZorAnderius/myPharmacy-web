@@ -58,7 +58,6 @@ const EditMedicineModal = ({ isOpen, onClose, onSubmit, medicine }) => {
         }));
       }
     } catch (error) {
-      console.error("Error loading categories and statuses:", error);
       setCategories([]);
       setProductStatuses([]);
     } finally {

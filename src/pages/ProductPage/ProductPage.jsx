@@ -82,7 +82,7 @@ const ProductPage = () => {
         dispatch(getShopByIdThunk(shopId));
       }
     } catch (error) {
-      console.error("Error updating product:", error);
+      // Error updating product
     }
   };
 
@@ -108,7 +108,7 @@ const ProductPage = () => {
       // Redirect to shop page
       navigate(`/medicine?shopId=${shopId}`);
     } catch (error) {
-      console.error("Error deleting product:", error);
+      // Error deleting product
     }
   };
 

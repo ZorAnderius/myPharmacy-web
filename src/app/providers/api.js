@@ -19,25 +19,13 @@ api.interceptors.request.use(async (config) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
-  // Debug cookies for refresh endpoint
-  if (config.url?.includes('/refresh')) {
-    console.log('Refresh request config:', {
-      url: config.url,
-      withCredentials: config.withCredentials,
-      headers: config.headers,
-      baseURL: config.baseURL,
-      currentOrigin: window.location.origin
-    });
-  }
-
   const method = config.method?.toUpperCase();
   const requiresCSRF = ["POST", "PUT", "PATCH", "DELETE"].includes(method);
   const isAuthEndpoint =
     config.url?.includes("/users/login") ||
     config.url?.includes("/users/register") ||
     config.url?.includes("/users/confirm-oauth") ||
-    config.url?.includes("/users/request-google-oauth") ||
-    config.url?.includes("/users/refresh"); // Додаємо refresh endpoint
+    config.url?.includes("/users/request-google-oauth");
 
   if (requiresCSRF && !isAuthEndpoint) {
     try {
@@ -47,8 +35,7 @@ api.interceptors.request.use(async (config) => {
         config.headers["x-csrf-token"] = csrfToken; // Додаткова можливість для різних серверів
         config.headers["X-CSRF-Token"] = csrfToken; // Альтернативний header
       } else {
-        console.warn("No CSRF token available for", config.method?.toUpperCase(), config.url);
-        // Спробуємо отримати з localStorage як fallback
+        // No CSRF token available - спробуємо отримати з localStorage як fallback
         const storedToken = localStorage.getItem('csrf-token');
         if (storedToken) {
           config.headers["X-Csrf-Token"] = storedToken;
@@ -57,8 +44,7 @@ api.interceptors.request.use(async (config) => {
         }
       }
     } catch (error) {
-      console.warn("Failed to get CSRF token:", error);
-      // Спробуємо з localStorage як fallback
+      // Failed to get CSRF token - спробуємо з localStorage як fallback
       const storedToken = localStorage.getItem('csrf-token');
       if (storedToken) {
         config.headers["X-Csrf-Token"] = storedToken;
@@ -84,22 +70,14 @@ api.interceptors.response.use(
   (response) => {
     // Debug cookies for refresh endpoint
     if (response.config?.url?.includes('/refresh')) {
-      console.log('Refresh response:', {
-        status: response.status,
-        headers: response.headers,
-        data: response.data
-      });
+      // Debug info removed
     }
     return response;
   },
   async (error) => {
     // Debug cookies for refresh endpoint errors
     if (error.config?.url?.includes('/refresh')) {
-      console.log('Refresh error:', {
-        status: error.response?.status,
-        message: error.response?.data,
-        headers: error.response?.headers
-      });
+      // Debug info removed
     }
     // Handle CSRF token errors
     if (
@@ -118,43 +96,33 @@ api.interceptors.response.use(
             return api.request(error.config);
           }
         } catch (csrfError) {
-          console.error("Failed to retry with new CSRF token:", csrfError);
-          // If we can't get a new CSRF token, redirect to login or show error
-          if (typeof window !== 'undefined') {
-            // Optionally redirect to login page or show error message
-            console.error("CSRF token unavailable. Please refresh the page or log in again.");
-          }
+          // Failed to retry with new CSRF token
         }
       }
     }
 
     // Handle CORS errors - don't retry
     if (error.code === 'ERR_NETWORK' || error.message?.includes('CORS')) {
-      console.warn('CORS error detected, not retrying:', error.message);
       return Promise.reject(error);
     }
 
     // Handle CORS preflight issues
     if (error.response?.status === 0 || error.message?.includes('CORS')) {
-      console.warn('CORS preflight error detected:', error.message);
       return Promise.reject(error);
     }
 
     // Handle OAuth endpoint errors - don't retry
     if (error.config?.url?.includes('confirm-oauth')) {
-      console.warn('OAuth endpoint error, not retrying:', error.message);
       return Promise.reject(error);
     }
 
     // Handle timeout errors - don't retry
     if (error.code === 'ECONNABORTED' || error.message?.includes('timeout')) {
-      console.warn('Request timeout, not retrying:', error.message);
       return Promise.reject(error);
     }
 
     // Handle abort errors - don't retry
     if (error.name === 'AbortError' || error.code === 'ABORT_ERR') {
-      console.warn('Request aborted, not retrying:', error.message);
       return Promise.reject(error);
     }
 
@@ -176,8 +144,7 @@ api.interceptors.response.use(
           setAccessToken(null);
         }
       } catch (refreshError) {
-        console.error("Token refresh failed:", refreshError);
-        // Clear invalid token
+        // Token refresh failed - clear invalid token
         setAccessToken(null);
       }
     }

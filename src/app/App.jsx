@@ -31,13 +31,11 @@ function App() {
             // Verify and refresh token with backend
             await dispatch(refreshThunk()).unwrap();
           } catch (error) {
-            console.error('Token refresh failed:', error);
             // Token is invalid, user will be logged out
           }
         }
         // If no token, user is not authenticated - this is normal
       } catch (error) {
-        console.error('Auth initialization failed:', error);
         // If initialization fails, user is not authenticated - this is normal
       } finally {
         setLoading(false);

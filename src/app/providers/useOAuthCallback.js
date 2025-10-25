@@ -77,7 +77,6 @@ export const useOAuthCallback = () => {
           window.location.href = '/shop';
         }, 500);
       } catch (error) {
-        console.error('OAuth callback error:', error);
         setError(error.message);
         // Mark as processed to avoid retries
         setHasProcessed(true);

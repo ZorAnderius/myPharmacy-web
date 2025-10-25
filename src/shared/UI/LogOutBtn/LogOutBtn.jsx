@@ -21,9 +21,7 @@ const LogOutBtn = ({ className = "" }) => {
       // Navigate to login page using React Router
       navigate(ROUTES.LOGIN, { replace: true });
     } catch (error) {
-      console.error('Logout failed:', error);
-      
-      // Manual cleanup even on failure
+      // Logout failed - manual cleanup even on failure
       localStorage.removeItem("accessToken");
       localStorage.removeItem("user");
       localStorage.removeItem("persist:root");

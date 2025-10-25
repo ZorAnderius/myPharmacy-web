@@ -45,7 +45,6 @@ export const authServices = {
       
       return { avatarUrl };
     } catch (error) {
-      console.error("Avatar update failed:", error);
       throw error;
     }
   },

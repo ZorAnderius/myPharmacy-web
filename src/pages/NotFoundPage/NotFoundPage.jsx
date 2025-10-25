@@ -8,8 +8,6 @@ function NotFoundPage() {
   const error = useRouteError();
   const navigate = useNavigate();
   
-  console.error("Router error:", error);
-
   const handleGoHome = () => {
     navigate('/');
   };

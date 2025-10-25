@@ -28,7 +28,7 @@ const ShopPage = () => {
     dispatch(getUserShopsThunk())
       .unwrap()
       .catch((error) => {
-        console.error('Failed to load user shops:', error);
+        // Failed to load user shops
       });
   }, [dispatch]);
 
@@ -39,7 +39,7 @@ const ShopPage = () => {
       // Оновлюємо список магазинів після створення
       dispatch(getUserShopsThunk());
     } catch (error) {
-      console.error("Error creating shop:", error);
+      // Error creating shop
     }
   };
 
@@ -65,8 +65,7 @@ const ShopPage = () => {
       // Оновлюємо список магазинів після редагування
       dispatch(getUserShopsThunk());
     } catch (error) {
-      console.error("Error updating shop:", error);
-      // Optionally show error message to user
+      // Error updating shop
     }
   };
 

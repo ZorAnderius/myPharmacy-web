@@ -104,7 +104,6 @@ export const initializeCSRFToken = async () => {
     await getCSRFToken();
     return true;
   } catch (error) {
-    console.warn("CSRF token initialization failed:", error);
     return false;
   }
 };
