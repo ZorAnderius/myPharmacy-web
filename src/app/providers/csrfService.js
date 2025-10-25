@@ -11,15 +11,27 @@ const TOKEN_LIFETIME = 30 * 60 * 1000; // 30 minutes
  * Get CSRF token from cookie (since backend sets it in cookie)
  */
 const getCSRFTokenFromCookie = () => {
+  if (typeof document === 'undefined' || !document.cookie) {
+    return null;
+  }
+  
+  // Try to get csrfToken from all cookies
   const cookies = document.cookie.split(";");
-
+  
   for (let cookie of cookies) {
     const [name, value] = cookie.trim().split("=");
-    if (name === "csrf_token" || name === "csrfToken") {
-      const token = decodeURIComponent(value);
-      return token;
+    // Backend використовує назву csrfToken
+    if (name === "csrfToken" || name === "csrf_token") {
+      try {
+        const token = decodeURIComponent(value);
+        return token;
+      } catch (e) {
+        // If decode fails, return as is
+        return value;
+      }
     }
   }
+  
   return null;
 };
 
@@ -29,9 +41,12 @@ const getCSRFTokenFromCookie = () => {
 export const setCSRFToken = (token) => {
   csrfToken = token;
   tokenExpiry = Date.now() + TOKEN_LIFETIME;
-  // Зберігаємо в localStorage для production persistence
-  if (typeof window !== 'undefined' && token) {
-    localStorage.setItem('csrf-token', token);
+  if (typeof window !== "undefined" && token) {
+    localStorage.setItem("csrf-token", token);
+    // Also set cookie for cross-domain access
+    if (typeof document !== "undefined") {
+      document.cookie = `csrfToken=${token}; path=/; max-age=${TOKEN_LIFETIME / 1000}; SameSite=None; Secure`;
+    }
   }
 };
 
@@ -79,12 +94,14 @@ export const clearCSRFToken = () => {
   tokenExpiry = null;
 
   // Clear localStorage якщо в browser environment
-  if (typeof window !== 'undefined') {
-    localStorage.removeItem('csrf-token');
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("csrf-token");
     // Clear cookie by setting it to expire in the past
-    if (typeof document !== 'undefined') {
-      document.cookie =
-        "csrf_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    if (typeof document !== "undefined") {
+      // Clear csrfToken cookie (correct name)
+      document.cookie = 'csrfToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      // Also clear any other possible cookie names
+      document.cookie = 'csrf_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     }
   }
 };

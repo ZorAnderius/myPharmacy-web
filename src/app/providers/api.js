@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getAccessToken, refreshToken, setAccessToken } from "./tokenManager.js";
-import { getCSRFToken, clearCSRFToken } from "./csrfService.js";
+import { getCSRFToken } from "./csrfService.js";
 import { sanitizeInput } from "../../utils/security/sanitizeInput.js";
 
 const api = axios.create({
@@ -19,38 +19,22 @@ api.interceptors.request.use(async (config) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
+  // Add CSRF token to headers for state-changing requests
   const method = config.method?.toUpperCase();
   const requiresCSRF = ["POST", "PUT", "PATCH", "DELETE"].includes(method);
-  const isAuthEndpoint =
-    config.url?.includes("/users/login") ||
-    config.url?.includes("/users/register") ||
-    config.url?.includes("/users/confirm-oauth") ||
-    config.url?.includes("/users/request-google-oauth");
-
+  const isAuthEndpoint = config.url?.includes('/users/login') || 
+                        config.url?.includes('/users/register') || 
+                        config.url?.includes('/users/confirm-oauth') ||
+                        config.url?.includes('/users/request-google-oauth');
+  
   if (requiresCSRF && !isAuthEndpoint) {
     try {
       const csrfToken = await getCSRFToken();
       if (csrfToken) {
-        config.headers["X-Csrf-Token"] = csrfToken;
-        config.headers["x-csrf-token"] = csrfToken; // Додаткова можливість для різних серверів
-        config.headers["X-CSRF-Token"] = csrfToken; // Альтернативний header
-      } else {
-        // No CSRF token available - спробуємо отримати з localStorage як fallback
-        const storedToken = localStorage.getItem('csrf-token');
-        if (storedToken) {
-          config.headers["X-Csrf-Token"] = storedToken;
-          config.headers["x-csrf-token"] = storedToken;
-          config.headers["X-CSRF-Token"] = storedToken;
-        }
+        config.headers['x-csrf-token'] = csrfToken;
       }
     } catch (error) {
-      // Failed to get CSRF token - спробуємо з localStorage як fallback
-      const storedToken = localStorage.getItem('csrf-token');
-      if (storedToken) {
-        config.headers["X-Csrf-Token"] = storedToken;
-        config.headers["x-csrf-token"] = storedToken;
-        config.headers["X-CSRF-Token"] = storedToken;
-      }
+      // CSRF token not available
     }
   }
 
@@ -75,31 +59,7 @@ api.interceptors.response.use(
     return response;
   },
   async (error) => {
-    // Debug cookies for refresh endpoint errors
-    if (error.config?.url?.includes('/refresh')) {
-      // Debug info removed
-    }
-    // Handle CSRF token errors
-    if (
-      error.response?.status === 403 &&
-      (error.response?.data?.message === "CSRF header missing" ||
-        error.response?.data?.error === "CSRF token mismatch")
-    ) {
-      clearCSRFToken();
-      // Retry the request with a new CSRF token (only once)
-      if (error.config && !error.config._csrfRetry) {
-        error.config._csrfRetry = true;
-        try {
-          const csrfToken = await getCSRFToken();
-          if (csrfToken) {
-            error.config.headers["X-Csrf-Token"] = csrfToken;
-            return api.request(error.config);
-          }
-        } catch (csrfError) {
-          // Failed to retry with new CSRF token
-        }
-      }
-    }
+    // CSRF token is handled automatically via cookies
 
     // Handle CORS errors - don't retry
     if (error.code === 'ERR_NETWORK' || error.message?.includes('CORS')) {
@@ -126,12 +86,11 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    // Handle token refresh on 401 and 403 errors (but not CSRF errors)
+    // Handle token refresh on 401 and 403 errors
     if (
       (error.response?.status === 401 || error.response?.status === 403) &&
       error.config &&
       !error.config._retry &&
-      !error.config._csrfRetry && // Don't retry if this was already a CSRF retry
       !error.config.url?.includes("/oauth/") // Don't retry on OAuth endpoints
     ) {
       error.config._retry = true;
