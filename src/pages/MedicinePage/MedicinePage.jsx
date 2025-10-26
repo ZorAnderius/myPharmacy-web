@@ -35,6 +35,7 @@ const MedicinePage = () => {
       dispatch(getShopByIdThunk(shopId))
         .unwrap()
         .catch((error) => {
+          console.error('Error fetching shop:', error);
           // Redirect to 404 page for server errors
           navigate('/404');
         });
@@ -69,7 +70,7 @@ const MedicinePage = () => {
         setMedicines(prev => [...prev, result.data]);
       }
     } catch (error) {
-      // Error creating medicine
+      console.error('Error creating medicine:', error);
     }
   };
 
@@ -107,7 +108,7 @@ const MedicinePage = () => {
         );
       }
     } catch (error) {
-      // Error updating medicine
+      console.error('Error updating medicine:', error);
     }
   };
 
@@ -136,7 +137,7 @@ const MedicinePage = () => {
         prev.filter(medicine => medicine.id !== deletingMedicine.id)
       );
     } catch (error) {
-      // Error deleting medicine
+      console.error('Error deleting medicine:', error);
     }
   };
 

@@ -13,17 +13,24 @@ const UserProfileModal = ({ isOpen, onClose }) => {
   const [isImageLoading, setIsImageLoading] = useState(false);
 
   useEffect(() => {
+    console.log('UserProfileModal: useEffect called', { isOpen });
     if (isOpen) {
       // Prevent body scroll when modal is open
+      console.log('UserProfileModal: Setting overflow hidden');
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
     } else {
       // Restore body scroll when modal is closed
+      console.log('UserProfileModal: Restoring overflow');
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     }
 
     // Cleanup function to restore scroll when component unmounts
     return () => {
+      console.log('UserProfileModal: Cleanup - restoring overflow');
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     };
   }, [isOpen]);
 

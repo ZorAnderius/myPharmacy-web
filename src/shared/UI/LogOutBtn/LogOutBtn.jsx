@@ -5,7 +5,7 @@ import { logoutThunk } from "../../../redux/auth/operations";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../../constants/routes";
 
-const LogOutBtn = ({ className = "" }) => {
+const LogOutBtn = ({ className = "", onNavClick }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogout = async () => {
@@ -20,6 +20,11 @@ const LogOutBtn = ({ className = "" }) => {
       
       // Navigate to login page using React Router
       navigate(ROUTES.LOGIN, { replace: true });
+      
+      // Close mobile menu if onNavClick is provided
+      if (onNavClick) {
+        onNavClick();
+      }
     } catch (error) {
       // Logout failed - manual cleanup even on failure
       localStorage.removeItem("accessToken");
@@ -29,6 +34,11 @@ const LogOutBtn = ({ className = "" }) => {
       
       // Even if logout fails, redirect to login page
       navigate(ROUTES.LOGIN, { replace: true });
+      
+      // Close mobile menu if onNavClick is provided
+      if (onNavClick) {
+        onNavClick();
+      }
     }
   };
   return (

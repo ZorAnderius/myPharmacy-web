@@ -98,6 +98,7 @@
   flex-direction: column;
   border-left: 1px solid var(--secondary-txt-clr);
   overflow-y: auto;
+  pointer-events: auto;
 }
 
 .animated {
@@ -115,6 +116,14 @@
 
 .mobile-nav li {
   list-style: none;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.mobile-nav li > * {
+  width: 100%;
+  max-width: 200px;
 }
 
 .line {

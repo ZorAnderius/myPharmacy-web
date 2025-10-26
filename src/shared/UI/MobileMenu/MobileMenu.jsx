@@ -41,6 +41,11 @@ const MobileMenu = ({ isOpen, setIsOpen }) => {
     }, 200);
   }, [setIsOpen]);
 
+  // Handle navigation clicks - close menu when navigating
+  const handleNavClick = useCallback(() => {
+    closeMenu();
+  }, [closeMenu]);
+
   useEffect(() => {
     if (isOpen) {
       // Add no-scroll class to body and html
@@ -107,14 +112,14 @@ const MobileMenu = ({ isOpen, setIsOpen }) => {
             )}
           >
             <div className={styles["line"]}></div>
-            <UserNavBar location={isHome} isMobile={true} />
+            <UserNavBar location={isHome} isMobile={true} onNavClick={handleNavClick} />
             {isAuthenticate && <div className={styles["line"]}></div>}
-            {isAuthenticate && <NavBar location={isHome} isMobile={true} />}
+            {isAuthenticate && <NavBar location={isHome} isMobile={true} onNavClick={handleNavClick} />}
             {isAuthenticate && (
               <>
                 <div className={styles["line"]}></div>
                 <div className={styles["logout-section"]}>
-                  <LogOutBtn className="mobile" />
+                  <LogOutBtn className="mobile" onNavClick={handleNavClick} />
                 </div>
               </>
             )}

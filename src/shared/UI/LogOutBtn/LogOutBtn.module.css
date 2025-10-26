@@ -41,4 +41,25 @@
   font-weight: 600;
   white-space: nowrap;
   flex-shrink: 0;
+  cursor: pointer;
+  pointer-events: auto;
+  touch-action: manipulation;
+  z-index: 1002;
+}
+
+.mobile-logout:is(:hover, :focus) {
+  background-color: var(--secondary-clr);
+  color: var(--primary-clr);
+}
+
+/* Ensure button works properly in mobile */
+.mobile-logout,
+.mobile-logout:visited,
+.mobile-logout:link {
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }

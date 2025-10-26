@@ -5,6 +5,7 @@
   font-size: 16px;
   font-weight: 500;
   color: var(--primary-txt-clr);
+  z-index: 1000;
 }
 
 .routes-list {
@@ -63,6 +64,12 @@
   gap: 2rem;
 }
 
+.routes-nav.mobile .routes-list {
+  display: flex !important;
+  flex-direction: column;
+  gap: 2rem;
+}
+
 /* Mobile specific button styles */
 .routes-nav.mobile .link-btn {
   padding: 15px 35px;
@@ -70,6 +77,13 @@
   background-color: var(--primary-clr);
   border: none;
   font-weight: 600;
+  cursor: pointer !important;
+  pointer-events: auto;
+  touch-action: manipulation;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .routes-nav.mobile .link-btn:is(:hover, :focus) {
@@ -85,6 +99,18 @@
 
 .routes-nav.mobile .link-btn.active-btn:is(:hover, :focus) {
   background-color: var(--icon-edit-bg-clr);
+}
+
+/* Ensure NavLink works properly in mobile */
+.routes-nav.mobile .link-btn,
+.routes-nav.mobile .link-btn:visited,
+.routes-nav.mobile .link-btn:link {
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 @media screen and (min-width: 768px) {

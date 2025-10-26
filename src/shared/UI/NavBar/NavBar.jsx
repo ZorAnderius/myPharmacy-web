@@ -13,8 +13,15 @@ const buildStyles = (isActive, location) => {
   );
 };
 
-const NavBar = ({ location, isMobile }) => {
+const NavBar = ({ location, isMobile, onNavClick }) => {
   const isAuthenticate = useSelector(selectIsAuthenticate);
+  
+  const handleNavClick = () => {
+    if (onNavClick) {
+      onNavClick();
+    }
+  };
+  
   return (
     <div
       className={clsx(
@@ -29,6 +36,7 @@ const NavBar = ({ location, isMobile }) => {
             <NavLink
               to={ROUTES.MAIN}
               className={({ isActive }) => buildStyles(isActive, location)}
+              onClick={handleNavClick}
             >
               Home
             </NavLink>
@@ -37,6 +45,7 @@ const NavBar = ({ location, isMobile }) => {
             <NavLink
               to={ROUTES.SHOP}
               className={({ isActive }) => buildStyles(isActive, location)}
+              onClick={handleNavClick}
             >
               Store
             </NavLink>

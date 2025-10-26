@@ -7,11 +7,18 @@ import { useSelector } from "react-redux";
 import LogOutBtn from "../LogOutBtn/LogOutBtn";
 import UserBar from "../UserBar/UserBar";
 
-const UserNavBar = ({ location, isMobile }) => {
+const UserNavBar = ({ location, isMobile, onNavClick }) => {
   const isAuthenticate = useSelector(selectIsAuthenticate);
   let prefix = "";
   if (location === ROUTES.MAIN) prefix = "-home";
   if (isMobile) prefix = "-mobile";
+  
+  const handleNavClick = () => {
+    if (onNavClick) {
+      onNavClick();
+    }
+  };
+  
   return !isAuthenticate ? (
     <ul
       className={clsx(
@@ -21,12 +28,12 @@ const UserNavBar = ({ location, isMobile }) => {
       )}
     >
       <li>
-        <LinkButton type={`login${prefix}`} direction={ROUTES.LOGIN}>
+        <LinkButton type={`login${prefix}`} direction={ROUTES.LOGIN} handleClick={handleNavClick}>
           Log In
         </LinkButton>
       </li>
       <li>
-        <LinkButton type={`register${prefix}`} direction={ROUTES.REGISTER}>
+        <LinkButton type={`register${prefix}`} direction={ROUTES.REGISTER} handleClick={handleNavClick}>
           Registration
         </LinkButton>
       </li>
@@ -41,7 +48,7 @@ const UserNavBar = ({ location, isMobile }) => {
     >
       {isMobile ? (
         <li>
-          <UserBar className="mobile" />
+          <UserBar className="mobile" onNavClick={handleNavClick} />
         </li>
       ) : (
         <>
